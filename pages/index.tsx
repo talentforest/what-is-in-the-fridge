@@ -1,12 +1,6 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import tw from 'tailwind-styled-components';
-
-const Title = tw.h1`
-  text-2xl 
-  font-bold 
-`;
 
 export default function Home() {
   return (
@@ -20,3 +14,8 @@ export default function Home() {
     </div>
   );
 }
+
+const Title = tw.h1`
+  text-2xl 
+  font-bold 
+`;
