@@ -7,8 +7,10 @@ import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
 import FoodName from '../addFood/FoodName';
 import FoodQuantity from '../addFood/FoodQuantity';
+import Modal from '../addFood/Modal';
 
 const AddFood = () => {
+  const [modal, setModal] = useState(false);
   const [foodType, setFoodType] = useState('');
   const [expiryDate, setExpiryDate] = useState(changeStrDate(new Date()));
   const nameRef = useRef<HTMLInputElement>(null);
@@ -16,8 +18,17 @@ const AddFood = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (
+      foodType.length !== 0 &&
+      expiryDate.length !== 0 &&
+      nameRef.current?.value.length !== 0 &&
+      quantityRef.current?.value.length !== 0
+    ) {
+      setModal((prev) => !prev);
+    } else {
+      alert('모든 곳을 작성해주세요.');
+    }
   };
-
   return (
     <>
       <AddFoodBox>
@@ -40,6 +51,17 @@ const AddFood = () => {
           <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
         </FoodForm>
       </AddFoodBox>
+      {modal && nameRef.current?.value ? (
+        <Modal
+          setModal={setModal}
+          foodType={foodType}
+          name={nameRef.current?.value}
+          quantity={quantityRef.current?.value}
+          expiryDate={expiryDate}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };
