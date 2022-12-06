@@ -43,7 +43,7 @@ const AddFood = () => {
     if (addFoodClose) {
       addFoodAnimation.start({ x: 0 });
     } else {
-      addFoodAnimation.start({ x: -255 });
+      addFoodAnimation.start({ x: -250 });
     }
     setAddFoodClose((prev) => !prev);
   };
@@ -108,8 +108,9 @@ const AddFoodBox = tw(motion.section)`
   top-0
   bottom-0
   w-65
-  p-5
-  pr-12
+  p-3
+  pt-6
+  pr-10
 `;
 const AddFoodHeader = tw.header`
   flex
@@ -127,7 +128,6 @@ const ItemTitle = tw.h4`
   mb-2
   mt-5
 `;
-
 const SubmitBtn = tw.button`
   border
   w-full

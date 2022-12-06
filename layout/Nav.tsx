@@ -14,16 +14,15 @@ export default function Layout() {
 const Nav = tw.nav`
   flex
   justify-between
-  align-middle
-  p-5
+  items-center
+  px-10
+  h-12
 `;
-
 const Logo = tw.h1`
   text-orange
   font-bold
   text-sm
 `;
-
 const Menu = tw.ul`
   text-base
   flex
