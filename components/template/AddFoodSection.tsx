@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useState } from 'react';
 import { changeStrDate } from '../../utils/changeStrDate';
+import { motion, useAnimation } from 'framer-motion';
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
@@ -18,6 +19,7 @@ export interface IFood {
 }
 
 const AddFood = () => {
+  const [addFoodClose, setAddFoodClose] = useState(false);
   const [modal, setModal] = useState(false);
   const [food, setFood] = useState({
     type: '',
@@ -26,6 +28,7 @@ const AddFood = () => {
     expiryDate: changeStrDate(new Date()),
     quantity: '',
   });
+  const addFoodAnimation = useAnimation();
 
   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -36,15 +39,39 @@ const AddFood = () => {
     }
   };
 
+  const onHandleOpenClick = () => {
+    if (addFoodClose) {
+      addFoodAnimation.start({ x: 0 });
+    } else {
+      addFoodAnimation.start({ x: -255 });
+    }
+    setAddFoodClose((prev) => !prev);
+  };
+
   return (
     <>
-      <AddFoodBox>
+      <AddFoodBox
+        transition={{ type: 'linear', duration: 0.3 }}
+        initial={{ x: 0 }}
+        animate={addFoodAnimation}
+      >
+        {addFoodClose ? (
+          <OpenAddFoodBtn onClick={onHandleOpenClick}>
+            <FontAwesomeIcon
+              icon={icon({ name: 'circle-arrow-right', style: 'solid' })}
+              className='cursor-pointer'
+            />
+          </OpenAddFoodBtn>
+        ) : (
+          <OpenAddFoodBtn onClick={onHandleOpenClick}>
+            <FontAwesomeIcon
+              icon={icon({ name: 'circle-xmark', style: 'solid' })}
+              className='cursor-pointer'
+            />
+          </OpenAddFoodBtn>
+        )}
         <AddFoodHeader>
-          <h2 className='text-gray-dark font-bold'>냉장실 식료품 추가하기</h2>
-          <FontAwesomeIcon
-            icon={icon({ name: 'circle-xmark', style: 'solid' })}
-            className='cursor-pointer'
-          />
+          <Title>냉장실 식료품 추가하기</Title>
         </AddFoodHeader>
         <FoodForm onSubmit={onSubmit}>
           <ItemTitle>식료품 카테고리 선택</ItemTitle>
@@ -58,25 +85,42 @@ const AddFood = () => {
           <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
         </FoodForm>
       </AddFoodBox>
-      {modal && <Modal setModal={setModal} food={food} />}
+      {modal && <Modal setModal={setModal} food={food} setFood={setFood} />}
     </>
   );
 };
 
-const AddFoodBox = tw.section`
+const OpenAddFoodBtn = tw(motion.button)`
+  border
+  w-8
+  h-full
+  absolute
+  top-0
+  right-0
+  bg-yellow
+  rounded-r-3xl
+  z-10
+  opacity-90
+`;
+const AddFoodBox = tw(motion.section)`
   rounded-r-3xl
   bg-yellow
   shadow-2xl
   absolute
   top-0
   bottom-0
-  w-64
+  w-65
   p-5
+  pr-10
 `;
 const AddFoodHeader = tw.header`
   flex
   justify-between
   items-center
+`;
+const Title = tw.h2`
+text-gray-dark
+  font-bold
 `;
 const FoodForm = tw.form``;
 const ItemTitle = tw.h4`
