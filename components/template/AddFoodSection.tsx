@@ -1,34 +1,41 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { changeStrDate } from '../../utils/changeStrDate';
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
-import FoodName from '../addFood/FoodName';
+import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
 import Modal from '../addFood/Modal';
 
+export interface IFood {
+  type: string;
+  name: string;
+  emoji: string;
+  expiryDate: string;
+  quantity: string;
+}
+
 const AddFood = () => {
   const [modal, setModal] = useState(false);
-  const [foodType, setFoodType] = useState('');
-  const [expiryDate, setExpiryDate] = useState(changeStrDate(new Date()));
-  const nameRef = useRef<HTMLInputElement>(null);
-  const quantityRef = useRef<HTMLInputElement>(null);
+  const [food, setFood] = useState({
+    type: '',
+    name: '',
+    emoji: '1f34b',
+    expiryDate: changeStrDate(new Date()),
+    quantity: '',
+  });
 
   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (
-      foodType.length !== 0 &&
-      expiryDate.length !== 0 &&
-      nameRef.current?.value.length !== 0 &&
-      quantityRef.current?.value.length !== 0
-    ) {
+    if (food.name.length !== 0) {
       setModal((prev) => !prev);
     } else {
       alert('모든 곳을 작성해주세요.');
     }
   };
+
   return (
     <>
       <AddFoodBox>
@@ -41,27 +48,17 @@ const AddFood = () => {
         </AddFoodHeader>
         <FoodForm onSubmit={onSubmit}>
           <ItemTitle>식료품 카테고리 선택</ItemTitle>
-          <FoodType foodType={foodType} setFoodType={setFoodType} />
+          <FoodType food={food} setFood={setFood} />
           <ItemTitle>식료품 이름</ItemTitle>
-          <FoodName nameRef={nameRef} />
+          <FoodIconName food={food} setFood={setFood} />
           <ItemTitle>식료품 개수</ItemTitle>
-          <FoodQuantity quantityRef={quantityRef} />
+          <FoodQuantity food={food} setFood={setFood} />
           <ItemTitle>식료품 유통기한</ItemTitle>
-          <ExpiryDate expiryDate={expiryDate} setExpiryDate={setExpiryDate} />
+          <ExpiryDate food={food} setFood={setFood} />
           <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
         </FoodForm>
       </AddFoodBox>
-      {modal && nameRef.current?.value ? (
-        <Modal
-          setModal={setModal}
-          foodType={foodType}
-          name={nameRef.current?.value}
-          quantity={quantityRef.current?.value}
-          expiryDate={expiryDate}
-        />
-      ) : (
-        <></>
-      )}
+      {modal && <Modal setModal={setModal} food={food} />}
     </>
   );
 };
@@ -75,8 +72,6 @@ const AddFoodBox = tw.section`
   bottom-0
   w-64
   p-5
-  overflow-auto
-  
 `;
 const AddFoodHeader = tw.header`
   flex
