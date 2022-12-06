@@ -1,22 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { Emoji, EmojiStyle } from 'emoji-picker-react';
+import { IFood } from '../template/AddFoodSection';
 import tw from 'tailwind-styled-components';
 
 interface IModalProps {
   setModal: (modal: boolean) => void;
-  foodType: string;
-  name: string | undefined;
-  quantity: string | undefined;
-  expiryDate: string;
+  food: IFood;
 }
 
-const Modal = ({
-  setModal,
-  foodType,
-  name,
-  quantity,
-  expiryDate,
-}: IModalProps) => {
+const Modal = ({ setModal, food }: IModalProps) => {
   const onAddClick = () => {
     alert('성공적으로 등록되었습니다!');
     setModal(false);
@@ -30,23 +23,25 @@ const Modal = ({
       <Overlay onClick={closeModal} />
       <ModalBox>
         <Title>추가하는 식료품 정보</Title>
-        <Img></Img>
+        <EmojiBox>
+          <Emoji unified={food.emoji} size={60} emojiStyle={EmojiStyle.APPLE} />
+        </EmojiBox>
         <Info>
           <Item>
             <Name>카테고리</Name>
-            {foodType}
+            {food.type}
           </Item>
           <Item>
             <Name>이름</Name>
-            {name}
+            {food.name}
           </Item>
           <Item>
             <Name>수량</Name>
-            {quantity}
+            {food.quantity}
           </Item>
           <Item>
             <Name>유통기한</Name>
-            {expiryDate}
+            {food.expiryDate}
           </Item>
         </Info>
         <Btns>
@@ -94,7 +89,10 @@ const ModalBox = tw.div`
 const Title = tw.h3`
   font-bold
 `;
-const Img = tw.div`
+const EmojiBox = tw.div`
+  flex
+  justify-center
+  items-center
   border
   h-28
   w-28

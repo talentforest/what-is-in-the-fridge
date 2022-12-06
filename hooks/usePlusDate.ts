@@ -1,7 +1,7 @@
-import { IExpiryDate } from '../components/addFood/ExpiryDate';
+import { IFoodProps } from '../components/addFood/FoodType';
 import { changeStrDate } from '../utils/changeStrDate';
 
-const usePlusDate = ({ expiryDate, setExpiryDate }: IExpiryDate) => {
+const usePlusDate = ({ food, setFood }: IFoodProps) => {
   function addDay(date: string, days: number) {
     const result = new Date(date);
     result.setDate(result.getDate() + days);
@@ -24,25 +24,30 @@ const usePlusDate = ({ expiryDate, setExpiryDate }: IExpiryDate) => {
   ) => {
     e.preventDefault();
     if (type === '하루') {
-      const nextday = addDay(expiryDate, 1);
-      setExpiryDate(nextday);
+      const nextday = addDay(food.expiryDate, 1);
+      const result = { ...food, expiryDate: nextday };
+      setFood(result);
     }
     if (type === '일주일') {
-      const nextWeek = addDay(expiryDate, 7);
-      setExpiryDate(nextWeek);
+      const nextWeek = addDay(food.expiryDate, 7);
+      const result = { ...food, expiryDate: nextWeek };
+      setFood(result);
     }
     if (type === '한달') {
-      const nextMonth = addMonth(expiryDate);
-      setExpiryDate(nextMonth);
+      const nextMonth = addMonth(food.expiryDate);
+      const result = { ...food, expiryDate: nextMonth };
+      setFood(result);
     }
     if (type === '일년') {
-      const nextYear = addYear(expiryDate);
-      setExpiryDate(nextYear);
+      const nextYear = addYear(food.expiryDate);
+      const result = { ...food, expiryDate: nextYear };
+      setFood(result);
     }
   };
 
   const onDateChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setExpiryDate(e.currentTarget.value);
+    const result = { ...food, expiryDate: e.currentTarget.value };
+    setFood(result);
   };
 
   return {

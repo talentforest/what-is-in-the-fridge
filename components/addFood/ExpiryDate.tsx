@@ -1,12 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import styled from 'styled-components';
+import { IFoodProps } from './FoodType';
 import usePlusDate from '../../hooks/usePlusDate';
-
-export interface IExpiryDate {
-  expiryDate: string;
-  setExpiryDate: (date: string) => void;
-}
+import styled from 'styled-components';
 
 const plusDateTypes = [
   { type: '하루', color: '#c2baff' },
@@ -15,15 +11,19 @@ const plusDateTypes = [
   { type: '일년', color: '#ffb87a' },
 ];
 
-const ExpiryDate = ({ expiryDate, setExpiryDate }: IExpiryDate) => {
+const ExpiryDate = ({ food, setFood }: IFoodProps) => {
   const { onDatePlusClick, onDateChange } = usePlusDate({
-    expiryDate,
-    setExpiryDate,
+    food,
+    setFood,
   });
 
   return (
     <>
-      <ExpiryDateInput type='date' value={expiryDate} onChange={onDateChange} />
+      <ExpiryDateInput
+        type='date'
+        value={food.expiryDate}
+        onChange={onDateChange}
+      />
       <PlusDate>
         {plusDateTypes.map((item) => (
           <DateBtn

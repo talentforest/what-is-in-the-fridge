@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import '../styles/emojiVar.css';
 import type { AppProps } from 'next/app';
 import Layout from '../layout/layout';
 import { config } from '@fortawesome/fontawesome-svg-core';

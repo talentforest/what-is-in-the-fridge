@@ -1,12 +1,14 @@
-import React, { RefObject } from 'react';
+import { ChangeEvent } from 'react';
+import { IFoodProps } from './FoodType';
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 
-interface IFoodQuantityProps {
-  quantityRef: RefObject<HTMLInputElement>;
-}
+const FoodQuantity = ({ food, setFood }: IFoodProps) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const result = { ...food, quantity: e.target?.value };
+    setFood(result);
+  };
 
-const FoodQuantity = ({ quantityRef }: IFoodQuantityProps) => {
   return (
     <>
       <Box>
@@ -14,7 +16,8 @@ const FoodQuantity = ({ quantityRef }: IFoodQuantityProps) => {
         <input
           type='number'
           placeholder='수량을 적어주세요.'
-          ref={quantityRef}
+          value={food.quantity}
+          onChange={onChange}
         />
         개
       </Box>
