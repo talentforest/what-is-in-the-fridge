@@ -91,16 +91,14 @@ const AddFood = () => {
 };
 
 const OpenAddFoodBtn = tw(motion.button)`
-  border
   w-8
   h-full
   absolute
   top-0
   right-0
-  bg-yellow
+  bg-yellow-light
   rounded-r-3xl
-  z-10
-  opacity-90
+  z-5
 `;
 const AddFoodBox = tw(motion.section)`
   rounded-r-3xl
@@ -111,7 +109,7 @@ const AddFoodBox = tw(motion.section)`
   bottom-0
   w-65
   p-5
-  pr-10
+  pr-12
 `;
 const AddFoodHeader = tw.header`
   flex

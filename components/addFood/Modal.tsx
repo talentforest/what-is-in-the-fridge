@@ -50,7 +50,7 @@ const Modal = ({ setModal, food, setFood }: IModalProps) => {
           </Item>
           <Item>
             <Name>유통기한</Name>
-            {food.expiryDate}
+            {new Date(food.expiryDate).toLocaleDateString()}
           </Item>
         </Info>
         <Btns>
@@ -76,6 +76,7 @@ const Overlay = tw.div`
   bg-gray-dark
   opacity-50
   cursor-pointer
+  z-10
 `;
 const ModalBox = tw.div`
   flex
@@ -94,6 +95,7 @@ const ModalBox = tw.div`
   h-fit
   rounded-3xl
   shadow-red
+  z-10
 `;
 const Title = tw.h3`
   font-bold
