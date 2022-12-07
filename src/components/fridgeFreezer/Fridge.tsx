@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import Compartment from './Compartment';
-import DoorShelf from './\bDoorShelf';
+import DoorShelf from './DoorShelf';
 import FridgeFreezerChangeBtn from './FridgeFreezerChangeBtn';
 
 interface IFridgeProps {

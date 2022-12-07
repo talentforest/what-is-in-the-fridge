@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { IFoodProps } from './FoodType';
-import usePlusDate from '../../hooks/usePlusDate';
+import usePlusDate from 'src/hooks/usePlusDate';
 import styled from 'styled-components';
 
 const plusDateTypes = [
