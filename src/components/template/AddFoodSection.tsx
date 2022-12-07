@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import { useState } from 'react';
-import { changeStrDate } from 'src/utils/changeStrDate';
 import { motion, useAnimation } from 'framer-motion';
+import { closeAddFoodArea } from 'src/lib/slice/closeAddFoodAreaSlice';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
@@ -18,34 +19,29 @@ export interface IFood {
   quantity: string;
 }
 
-const AddFood = () => {
-  const [addFoodClose, setAddFoodClose] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [food, setFood] = useState({
-    type: '',
-    name: '',
-    emoji: '1f34b',
-    expiryDate: changeStrDate(new Date()),
-    quantity: '',
-  });
+const AddFoodSection = () => {
+  const { close } = useAppSelector((state) => state.addFoodArea);
+  const { food_modal } = useAppSelector((state) => state.food_modal);
+  const { food } = useAppSelector((state) => state.food);
+  const dispatch = useAppDispatch();
   const addFoodAnimation = useAnimation();
 
   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (food.name.length !== 0) {
-      setModal((prev) => !prev);
+      dispatch(showFoodModal());
     } else {
       alert('모든 곳을 작성해주세요.');
     }
   };
 
   const onHandleOpenClick = () => {
-    if (addFoodClose) {
+    if (close) {
       addFoodAnimation.start({ x: 0 });
     } else {
       addFoodAnimation.start({ x: -250 });
     }
-    setAddFoodClose((prev) => !prev);
+    dispatch(closeAddFoodArea());
   };
 
   return (
@@ -55,7 +51,7 @@ const AddFood = () => {
         initial={{ x: 0 }}
         animate={addFoodAnimation}
       >
-        {addFoodClose ? (
+        {close ? (
           <OpenAddFoodBtn onClick={onHandleOpenClick}>
             <FontAwesomeIcon
               icon={icon({ name: 'circle-arrow-right', style: 'solid' })}
@@ -75,17 +71,17 @@ const AddFood = () => {
         </AddFoodHeader>
         <FoodForm onSubmit={onSubmit}>
           <ItemTitle>식료품 카테고리 선택</ItemTitle>
-          <FoodType food={food} setFood={setFood} />
+          <FoodType />
           <ItemTitle>식료품 이름</ItemTitle>
-          <FoodIconName food={food} setFood={setFood} />
+          <FoodIconName />
           <ItemTitle>식료품 개수</ItemTitle>
-          <FoodQuantity food={food} setFood={setFood} />
+          <FoodQuantity />
           <ItemTitle>식료품 유통기한</ItemTitle>
-          <ExpiryDate food={food} setFood={setFood} />
+          <ExpiryDate />
           <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
         </FoodForm>
       </AddFoodBox>
-      {modal && <Modal setModal={setModal} food={food} setFood={setFood} />}
+      {food_modal && <Modal />}
     </>
   );
 };
@@ -141,4 +137,4 @@ const SubmitBtn = tw.button`
   shadow-md
 `;
 
-export default AddFood;
+export default AddFoodSection;

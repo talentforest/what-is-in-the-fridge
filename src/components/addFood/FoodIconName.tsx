@@ -1,28 +1,38 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { Emoji, EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import { categoryConfig, Picker, previewConfig } from '../../utils/emojiConfig';
-import { IFoodProps } from './FoodType';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { showEmoji } from 'src/lib/slice/showEmojiSlice';
+import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 
-const FoodIconName = ({ food, setFood }: IFoodProps) => {
-  const [showEmoji, setShowEmoji] = useState(false);
+const FoodIconName = () => {
+  const { emoji } = useAppSelector((state) => state.emoji);
+  const { food } = useAppSelector((state) => state.food);
+  const dispatch = useAppDispatch();
 
   const onEmojiClick = (emojiData: EmojiClickData) => {
-    const result = { ...food, emoji: emojiData.unified };
-    setFood(result);
-    setShowEmoji(false);
+    const result = {
+      ...food,
+      emoji: emojiData.unified,
+    };
+    dispatch(changeFoodInfo(result));
+    dispatch(showEmoji());
   };
 
   const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const result = { ...food, name: e.currentTarget.value };
-    setFood(result);
+    const result = {
+      ...food,
+      name: e.currentTarget.value,
+    };
+    dispatch(changeFoodInfo(result));
   };
 
   return (
     <>
       <Name>
-        <Icon onClick={() => setShowEmoji((prev) => !prev)}>
+        <Icon onClick={() => dispatch(showEmoji())}>
           <Emoji unified={food.emoji} size={20} emojiStyle={EmojiStyle.APPLE} />
         </Icon>
         <input
@@ -31,7 +41,7 @@ const FoodIconName = ({ food, setFood }: IFoodProps) => {
           value={food.name}
           onChange={onNameChange}
         />
-        {showEmoji && (
+        {emoji && (
           <Picker
             onEmojiClick={onEmojiClick}
             previewConfig={previewConfig}
@@ -122,7 +132,6 @@ const Icon = styled.div`
   background-color: #e6ffe6;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
 `;
-
 const Desc = tw.span`
   text-xs
   text-orange

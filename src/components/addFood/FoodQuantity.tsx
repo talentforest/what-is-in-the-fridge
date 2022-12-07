@@ -1,12 +1,19 @@
 import { ChangeEvent } from 'react';
-import { IFoodProps } from './FoodType';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 
-const FoodQuantity = ({ food, setFood }: IFoodProps) => {
+const FoodQuantity = () => {
+  const { food } = useAppSelector((state) => state.food);
+  const dispatch = useAppDispatch();
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const result = { ...food, quantity: e.target?.value };
-    setFood(result);
+    const result = {
+      ...food,
+      quantity: e.target?.value,
+    };
+    dispatch(changeFoodInfo(result));
   };
 
   return (

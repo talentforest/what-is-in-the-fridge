@@ -3,21 +3,10 @@ import Compartment from './Compartment';
 import DoorShelf from './DoorShelf';
 import FridgeFreezerChangeBtn from './FridgeFreezerChangeBtn';
 
-interface IFridgeProps {
-  setShowFreezer: (show: boolean) => void;
-}
-
-const Fridge = ({ setShowFreezer }: IFridgeProps) => {
-  const onShowFreezerClick = () => {
-    setShowFreezer(true);
-  };
-
+const Fridge = () => {
   return (
     <>
-      <FridgeFreezerChangeBtn
-        btnName='냉동칸 보기'
-        onChangeClick={onShowFreezerClick}
-      />
+      <FridgeFreezerChangeBtn btnName='냉동칸 보기' />
       <FridgeSection>
         <FridgeBox>
           <Compartment />
@@ -41,20 +30,6 @@ const Fridge = ({ setShowFreezer }: IFridgeProps) => {
   );
 };
 
-const FreezerBtn = tw.button`
-  flex
-  justify-center
-  items-center
-  gap-2
-  h-12
-  bg-white-dark
-  w-[calc(2*theme(spacing.60))]
-  rounded-xl
-  shadow-inner
-  text-gray
-  font-bold
-  text-sm
-`;
 const FridgeSection = tw.section`
   flex
   gap-1
