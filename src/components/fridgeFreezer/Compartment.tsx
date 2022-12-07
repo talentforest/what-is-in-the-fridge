@@ -19,6 +19,7 @@ const Space = tw.div<{ $size: string }>`
   flex
   flex-col
   justify-end
+  cursor-pointer
 `;
 
 export default Compartment;

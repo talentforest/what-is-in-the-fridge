@@ -29,7 +29,7 @@ const FreezerSection = tw.section`
   flex
   gap-1
 `;
-const FreezerBox = tw.button`
+const FreezerBox = tw.div`
   flex
   flex-col
   justify-between

@@ -5,13 +5,20 @@ import { changeStrDate } from 'src/utils/changeStrDate';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
+import { addToShoppingBag } from 'src/lib/slice/shoppingBagSlice';
 import tw from 'tailwind-styled-components';
 
 const Modal = () => {
   const { food } = useAppSelector((state) => state.food);
+  const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
 
   const onAddClick = () => {
+    if (shoppingBagFoods.length >= 6) {
+      alert('장바구니에 식료품을 6개 이상 넣을 수 없습니다.');
+      dispatch(showFoodModal());
+      return;
+    }
     alert('성공적으로 등록되었습니다!');
     dispatch(showFoodModal());
     const initialState = {
@@ -21,6 +28,7 @@ const Modal = () => {
       expiryDate: changeStrDate(new Date()),
       quantity: '',
     };
+    dispatch(addToShoppingBag([...shoppingBagFoods, food]));
     dispatch(changeFoodInfo(initialState));
   };
 

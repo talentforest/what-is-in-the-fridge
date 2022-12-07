@@ -21,7 +21,7 @@ export interface IFood {
 
 const AddFoodSection = () => {
   const { close } = useAppSelector((state) => state.addFoodArea);
-  const { food_modal } = useAppSelector((state) => state.food_modal);
+  const { foodModal } = useAppSelector((state) => state.foodModal);
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
   const addFoodAnimation = useAnimation();
@@ -81,7 +81,7 @@ const AddFoodSection = () => {
           <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
         </FoodForm>
       </AddFoodBox>
-      {food_modal && <Modal />}
+      {foodModal && <Modal />}
     </>
   );
 };
