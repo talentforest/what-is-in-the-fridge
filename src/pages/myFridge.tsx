@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import AddFoodSection from '../components/template/AddFoodSection';
-import FridgeFreezerSection from '../components/template/FridgeFreezerSection';
+import AddFoodSection from 'src/components/template/AddFoodSection';
+import FridgeFreezerSection from 'src/components/template/FridgeFreezerSection';
 
 const MyFridge = () => {
   return (

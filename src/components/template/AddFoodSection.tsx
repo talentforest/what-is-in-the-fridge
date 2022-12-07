@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useState } from 'react';
-import { changeStrDate } from '../../utils/changeStrDate';
+import { changeStrDate } from 'src/utils/changeStrDate';
 import { motion, useAnimation } from 'framer-motion';
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';

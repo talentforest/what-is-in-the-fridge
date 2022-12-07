@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { IFood } from '../template/AddFoodSection';
-import { changeStrDate } from '../../utils/changeStrDate';
+import { changeStrDate } from 'src/utils/changeStrDate';
 import tw from 'tailwind-styled-components';
 
 interface IModalProps {
