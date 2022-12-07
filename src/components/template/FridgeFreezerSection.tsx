@@ -1,19 +1,12 @@
-import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import Freezer from '../fridgeFreezer/Freezer';
 import Fridge from '../fridgeFreezer/Fridge';
+import { useAppSelector } from 'src/lib/hooks';
 
 const FridgeFreezerSection = () => {
-  const [showFreezer, setShowFreezer] = useState(false);
-  return (
-    <FridgeFreezer>
-      {showFreezer ? (
-        <Freezer setShowFreezer={setShowFreezer} />
-      ) : (
-        <Fridge setShowFreezer={setShowFreezer} />
-      )}
-    </FridgeFreezer>
-  );
+  const { freezer } = useAppSelector((state) => state.freezer);
+
+  return <FridgeFreezer>{freezer ? <Freezer /> : <Fridge />}</FridgeFreezer>;
 };
 
 const FridgeFreezer = tw.section`

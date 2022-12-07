@@ -1,32 +1,20 @@
-import { IFood } from '../template/AddFoodSection';
 import { Emoji } from 'emoji-picker-react';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { changeFoodInfo } from 'src/lib/slice/foodSlice';
+import { foodTypes, IfoodType } from 'src/utils/foodType';
 import tw from 'tailwind-styled-components';
 
-export interface IFoodProps {
-  food: IFood;
-  setFood: (type: IFood) => void;
-}
-
-interface IfoodType {
-  id: number;
-  type: string;
-  emoji: string;
-}
-
-const foodTypes = [
-  { id: 1, type: '정육,수산', emoji: '1f969' },
-  { id: 2, type: '과일,채소', emoji: '1f9c5' },
-  { id: 3, type: '계란,유제품', emoji: '1f95a' },
-  { id: 4, type: '소스,잼,양념', emoji: '1f96b' },
-  { id: 5, type: '음료', emoji: '1f95b' },
-  { id: 6, type: '곡물', emoji: '1f35e' },
-];
-
-const FoodType = ({ food, setFood }: IFoodProps) => {
-  const { type } = food;
+const FoodType = () => {
+  const { food } = useAppSelector((state) => state.food);
+  const dispatch = useAppDispatch();
 
   const onClick = (foodTypes: IfoodType) => {
-    setFood({ ...food, type: foodTypes.type, emoji: foodTypes.emoji });
+    const result = {
+      ...food,
+      type: foodTypes.type,
+      emoji: foodTypes.emoji,
+    };
+    dispatch(changeFoodInfo(result));
   };
 
   return (
@@ -35,7 +23,7 @@ const FoodType = ({ food, setFood }: IFoodProps) => {
         <Type
           key={foodType.id}
           onClick={() => onClick(foodType)}
-          $color={type === foodType.type}
+          $color={food.type === foodType.type}
         >
           <Emoji unified={foodType.emoji} size={20} />
           <span>{foodType.type}</span>

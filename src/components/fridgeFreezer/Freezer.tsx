@@ -3,15 +3,7 @@ import Compartment from './Compartment';
 import DoorShelf from './DoorShelf';
 import FridgeFreezerChangeBtn from './FridgeFreezerChangeBtn';
 
-interface IFreezerProps {
-  setShowFreezer: (show: boolean) => void;
-}
-
-const Freezer = ({ setShowFreezer }: IFreezerProps) => {
-  const onShowFridgeClick = () => {
-    setShowFreezer(false);
-  };
-
+const Freezer = () => {
   return (
     <>
       <FreezerSection>
@@ -28,10 +20,7 @@ const Freezer = ({ setShowFreezer }: IFreezerProps) => {
           </Compartment>
         </FreezerDoor>
       </FreezerSection>
-      <FridgeFreezerChangeBtn
-        btnName='냉장칸 보기'
-        onChangeClick={onShowFridgeClick}
-      />
+      <FridgeFreezerChangeBtn btnName='냉장칸 보기' />
     </>
   );
 };

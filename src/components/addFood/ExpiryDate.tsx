@@ -1,21 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import { IFoodProps } from './FoodType';
+import { useAppSelector } from 'src/lib/hooks';
+import { dateType } from 'src/utils/dateType';
 import usePlusDate from 'src/hooks/usePlusDate';
 import styled from 'styled-components';
 
-const plusDateTypes = [
-  { type: '하루', color: '#c2baff' },
-  { type: '일주일', color: '#ffc1c1' },
-  { type: '한달', color: '#a4deca' },
-  { type: '일년', color: '#ffb87a' },
-];
-
-const ExpiryDate = ({ food, setFood }: IFoodProps) => {
-  const { onDatePlusClick, onDateChange } = usePlusDate({
-    food,
-    setFood,
-  });
+const ExpiryDate = () => {
+  const { onDatePlusClick, onDateChange } = usePlusDate();
+  const { food } = useAppSelector((state) => state.food);
 
   return (
     <>
@@ -25,7 +17,7 @@ const ExpiryDate = ({ food, setFood }: IFoodProps) => {
         onChange={onDateChange}
       />
       <PlusDate>
-        {plusDateTypes.map((item) => (
+        {dateType.map((item) => (
           <DateBtn
             key={item.type}
             $color={item.color}

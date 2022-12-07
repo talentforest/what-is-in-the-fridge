@@ -1,18 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { useAppDispatch } from 'src/lib/hooks';
+import { showFreezer } from 'src/lib/slice/showFreezerSlice';
 import tw from 'tailwind-styled-components';
 
 interface IFridgeFreezerChangeBtnProps {
   btnName: string;
-  onChangeClick: () => void;
 }
 
-const FridgeFreezerChangeBtn = ({
-  btnName,
-  onChangeClick,
-}: IFridgeFreezerChangeBtnProps) => {
+const FridgeFreezerChangeBtn = ({ btnName }: IFridgeFreezerChangeBtnProps) => {
+  const dispatch = useAppDispatch();
+
   return (
-    <FridgeBtn onClick={onChangeClick}>
+    <FridgeBtn onClick={() => dispatch(showFreezer())}>
       <span>{btnName}</span>
       <FontAwesomeIcon
         icon={

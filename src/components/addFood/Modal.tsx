@@ -1,30 +1,31 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
-import { IFood } from '../template/AddFoodSection';
 import { changeStrDate } from 'src/utils/changeStrDate';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
+import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import tw from 'tailwind-styled-components';
 
-interface IModalProps {
-  setModal: (modal: boolean) => void;
-  food: IFood;
-  setFood: (food: IFood) => void;
-}
+const Modal = () => {
+  const { food } = useAppSelector((state) => state.food);
+  const dispatch = useAppDispatch();
 
-const Modal = ({ setModal, food, setFood }: IModalProps) => {
   const onAddClick = () => {
     alert('성공적으로 등록되었습니다!');
-    setModal(false);
-    setFood({
+    dispatch(showFoodModal());
+    const initialState = {
       type: '',
       name: '',
       emoji: '1f34b',
       expiryDate: changeStrDate(new Date()),
       quantity: '',
-    });
+    };
+    dispatch(changeFoodInfo(initialState));
   };
+
   const closeModal = () => {
-    setModal(false);
+    dispatch(showFoodModal());
   };
 
   return (
