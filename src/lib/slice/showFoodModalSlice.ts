@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  food_modal: false,
+  foodModal: false,
 };
 
 const showFoodModalSlice = createSlice({
-  name: 'food_modal',
+  name: 'foodModal',
   initialState,
   reducers: {
     showFoodModal: (state) => {
-      state.food_modal = !state.food_modal;
+      state.foodModal = !state.foodModal;
     },
   },
 });
