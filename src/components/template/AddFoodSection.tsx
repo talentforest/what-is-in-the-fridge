@@ -12,6 +12,7 @@ import FoodQuantity from '../addFood/FoodQuantity';
 import Modal from '../addFood/Modal';
 
 export interface IFood {
+  id?: number;
   type: string;
   name: string;
   emoji: string;
@@ -39,7 +40,7 @@ const AddFoodSection = () => {
     if (close) {
       addFoodAnimation.start({ x: 0 });
     } else {
-      addFoodAnimation.start({ x: -250 });
+      addFoodAnimation.start({ x: -245 });
     }
     dispatch(closeAddFoodArea());
   };
@@ -103,7 +104,7 @@ const AddFoodBox = tw(motion.section)`
   absolute
   top-0
   bottom-0
-  w-65
+  w-68
   p-3
   pt-6
   pr-10

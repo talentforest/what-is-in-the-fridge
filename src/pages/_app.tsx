@@ -6,13 +6,17 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { Provider } from 'react-redux';
 import { store } from '../lib/store';
 config.autoAddCss = false;
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider store={store}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <DndProvider backend={HTML5Backend}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </DndProvider>
     </Provider>
   );
 };

@@ -1,26 +1,39 @@
 import tw from 'tailwind-styled-components';
 import Compartment from './Compartment';
-import DoorShelf from './DoorShelf';
 import FridgeFreezerChangeBtn from './FridgeFreezerChangeBtn';
+import ShoppingBagFood from './ShoppingBagFood';
+import { useAppSelector } from 'src/lib/hooks';
+import { Shelf } from './Fridge';
 
 const Freezer = () => {
+  const { freezer } = useAppSelector((state) => state.freezerFoods);
+
   return (
     <>
       <FreezerSection>
         <FreezerBox>
-          <Compartment />
-          <Compartment size='large' />
+          {Object.keys(freezer.inner).map((spaceKey: string) => (
+            <Compartment
+              key={spaceKey}
+              foods={freezer.inner[spaceKey]}
+              spaceKey={spaceKey}
+            />
+          ))}
         </FreezerBox>
         <FreezerDoor>
-          <Compartment size='medium'>
-            <DoorShelf />
-          </Compartment>
-          <Compartment size='medium'>
-            <DoorShelf />
-          </Compartment>
+          {Object.keys(freezer.door).map((spaceKey: string) => (
+            <Compartment
+              key={spaceKey}
+              foods={freezer.door[spaceKey]}
+              spaceKey={spaceKey}
+            >
+              <Shelf />
+            </Compartment>
+          ))}
         </FreezerDoor>
       </FreezerSection>
       <FridgeFreezerChangeBtn btnName='냉장칸 보기' />
+      <ShoppingBagFood />
     </>
   );
 };
@@ -28,6 +41,7 @@ const Freezer = () => {
 const FreezerSection = tw.section`
   flex
   gap-1
+  h-64
 `;
 const FreezerBox = tw.div`
   flex

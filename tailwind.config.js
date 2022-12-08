@@ -6,7 +6,13 @@ module.exports = {
     './src/layout/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    screens: {
+      mobile: '400px',
+      tablet: '640px',
+      desktop: '1024px',
+    },
     colors: {
+      transparent: 'transparent',
       red: '#FF2424',
       'red-light': '#FF7E7E',
       blue: '#6AC8FF',

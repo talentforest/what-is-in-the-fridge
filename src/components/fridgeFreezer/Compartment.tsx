@@ -1,18 +1,48 @@
+import { Emoji } from 'emoji-picker-react';
 import tw from 'tailwind-styled-components';
+import { IFood } from '../template/AddFoodSection';
+import { useDrop } from 'react-dnd';
 
 interface ICompartmentProps {
-  size?: string;
   children?: any;
+  foods: IFood[];
+  spaceKey: string;
 }
 
-const Compartment = ({ size, children }: ICompartmentProps) => {
-  return <Space $size={size}>{children}</Space>;
+const Compartment = ({ children, foods, spaceKey }: ICompartmentProps) => {
+  const [{ canDrop, isOver }, drop] = useDrop({
+    accept: 'space',
+    drop: () => ({
+      name: spaceKey,
+    }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  });
+  const isDragActive = canDrop && isOver;
+
+  return (
+    <Space
+      ref={drop}
+      style={{
+        scale: isDragActive ? '1.05' : '1',
+        transition: isDragActive ? 'scale 0.2s ease-out' : '1',
+      }}
+    >
+      {children}
+      <FoodList>
+        {foods?.map((food: IFood) => (
+          <Emoji key={food.id} unified={food.emoji} size={30} />
+        ))}
+      </FoodList>
+    </Space>
+  );
 };
 
-const Space = tw.div<{ $size: string }>`
+const Space = tw.div`
   w-full
-  ${(p: { $size: string }) =>
-    p.$size === 'large' ? 'h-32' : p.$size === 'medium' ? 'h-28' : 'h-24'}
+  flex-1
   bg-white
   rounded-lg
   shadow-inner
@@ -20,6 +50,10 @@ const Space = tw.div<{ $size: string }>`
   flex-col
   justify-end
   cursor-pointer
+`;
+const FoodList = tw.ul`
+  grid
+  grid-cols-7
 `;
 
 export default Compartment;
