@@ -1,31 +1,38 @@
 import tw from 'tailwind-styled-components';
 import Compartment from './Compartment';
-import DoorShelf from './DoorShelf';
 import FridgeFreezerChangeBtn from './FridgeFreezerChangeBtn';
+import ShoppingBagFood from './ShoppingBagFood';
+import { useAppSelector } from 'src/lib/hooks';
 
 const Fridge = () => {
+  const { fridge } = useAppSelector((state) => state.fridgeFoods);
+
   return (
     <>
       <FridgeFreezerChangeBtn btnName='냉동칸 보기' />
       <FridgeSection>
         <FridgeBox>
-          <Compartment />
-          <Compartment />
-          <Compartment />
-          <Compartment size='large' />
+          {Object.keys(fridge.inner).map((spaceKey: string) => (
+            <Compartment
+              key={spaceKey}
+              foods={fridge.inner[spaceKey]}
+              spaceKey={spaceKey}
+            />
+          ))}
         </FridgeBox>
         <FridgeDoor>
-          <Compartment>
-            <DoorShelf />
-          </Compartment>
-          <Compartment size='large'>
-            <DoorShelf />
-          </Compartment>
-          <Compartment size='large'>
-            <DoorShelf />
-          </Compartment>
+          {Object.keys(fridge.door).map((spaceKey: string) => (
+            <Compartment
+              key={spaceKey}
+              foods={fridge.door[spaceKey]}
+              spaceKey={spaceKey}
+            >
+              <Shelf />
+            </Compartment>
+          ))}
         </FridgeDoor>
       </FridgeSection>
+      <ShoppingBagFood />
     </>
   );
 };
@@ -33,6 +40,8 @@ const Fridge = () => {
 const FridgeSection = tw.section`
   flex
   gap-1
+  h-3/4
+  border
 `;
 const FridgeBox = tw.div`
   flex
@@ -46,6 +55,16 @@ const FridgeBox = tw.div`
   bg-gray-light
 `;
 const FridgeDoor = tw(FridgeBox)`
+`;
+export const Shelf = tw.div`
+  w-full
+  absolute
+  right-0
+  shadow-inner
+  bg-gray-light
+  opacity-50
+  rounded-b-lg
+  h-12
 `;
 
 export default Fridge;

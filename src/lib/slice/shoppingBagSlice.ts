@@ -16,11 +16,17 @@ const shoppingBagSlice = createSlice({
     addToShoppingBag: (state, action) => {
       state.shoppingBagFoods = action.payload;
     },
+    removeShoppingBagFood: (state, action) => {
+      state.shoppingBagFoods = state.shoppingBagFoods.filter(
+        (item) => item.name !== action.payload.name
+      );
+    },
   },
 });
 
 const { reducer: addToShoppingBagReducer } = shoppingBagSlice;
 
-export const { addToShoppingBag } = shoppingBagSlice.actions;
+export const { addToShoppingBag, removeShoppingBagFood } =
+  shoppingBagSlice.actions;
 
 export default addToShoppingBagReducer;

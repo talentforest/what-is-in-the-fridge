@@ -19,7 +19,6 @@ const Modal = () => {
       dispatch(showFoodModal());
       return;
     }
-    alert('성공적으로 등록되었습니다!');
     dispatch(showFoodModal());
     const initialState = {
       type: '',
