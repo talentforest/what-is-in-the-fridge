@@ -13,6 +13,14 @@ import Modal from '../addFood/Modal';
 
 export interface IFood {
   id?: number;
+  spaceType:
+    | 'space_1'
+    | 'space_2'
+    | 'space_3'
+    | 'space_4'
+    | 'space_5'
+    | 'space_6'
+    | 'space_7';
   type: string;
   name: string;
   emoji: string;
