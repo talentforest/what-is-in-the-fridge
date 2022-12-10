@@ -2,6 +2,7 @@ import { Emoji } from 'emoji-picker-react';
 import tw from 'tailwind-styled-components';
 import { IFood } from '../template/AddFoodSection';
 import { useDrop } from 'react-dnd';
+import DraggableFood from './DraggableFood';
 
 interface ICompartmentProps {
   children?: any;
@@ -32,8 +33,8 @@ const Compartment = ({ children, foods, spaceKey }: ICompartmentProps) => {
     >
       {children}
       <FoodList>
-        {foods?.map((food: IFood) => (
-          <Emoji key={food.id} unified={food.emoji} size={30} />
+        {foods?.map((food: IFood, index) => (
+          <DraggableFood key={index} food={food} />
         ))}
       </FoodList>
     </Space>
@@ -54,6 +55,7 @@ const Space = tw.div`
 const FoodList = tw.ul`
   grid
   grid-cols-7
+
 `;
 
 export default Compartment;

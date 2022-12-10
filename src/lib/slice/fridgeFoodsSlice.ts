@@ -31,6 +31,7 @@ const initialState: IShoppingBagFoods = {
       space_1: [
         {
           id: 1,
+          spaceType: 'space_1',
           name: '1',
           type: '정육,수산',
           emoji: '1f969',

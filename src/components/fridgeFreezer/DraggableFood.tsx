@@ -33,18 +33,26 @@ const DraggableFood = ({ food }: IFoodProps) => {
       spaceKey === 'space_6' ||
       spaceKey === 'space_7';
     if (doorSpace) {
-      const doorSpaceState = [
-        ...fridge.door[spaceKey],
-        { id: fridge.door[spaceKey].length + 1, ...item },
-      ];
-      const fridgeDoorState = { ...fridge.door, [spaceKey]: doorSpaceState };
+      const doorItem = {
+        ...item,
+        id: fridge.door[spaceKey].length + 1,
+        spaceType: spaceKey,
+      };
+      const fridgeDoorState = {
+        ...fridge.door,
+        [spaceKey]: [...fridge.door[spaceKey], doorItem],
+      };
       dispatch(changeDoorFoods(fridgeDoorState));
     } else {
-      const innerSpaceState = [
-        ...fridge.inner[spaceKey],
-        { id: fridge.inner[spaceKey].length + 1, ...item },
-      ];
-      const fridgeInnerState = { ...fridge.inner, [spaceKey]: innerSpaceState };
+      const innerItem = {
+        ...item,
+        id: fridge.inner[spaceKey].length + 1,
+        spaceType: spaceKey,
+      };
+      const fridgeInnerState = {
+        ...fridge.inner,
+        [spaceKey]: [...fridge.inner[spaceKey], innerItem],
+      };
       dispatch(changeInnerFoods(fridgeInnerState));
     }
   };
@@ -76,6 +84,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
     item: food,
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
+
       if (item && dropResult) {
         freezerMode
           ? changeFreezerState(dropResult.name, item)
@@ -97,7 +106,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
         opacity: isDragging ? 0.2 : 1,
       }}
     >
-      <Emoji unified={food.emoji} size={45} />
+      <Emoji unified={food.emoji} size={30} />
     </DragBox>
   );
 };

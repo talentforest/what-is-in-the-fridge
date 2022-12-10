@@ -58,6 +58,7 @@ const FridgeDoor = tw(FridgeBox)`
 `;
 export const Shelf = tw.div`
   w-full
+  border
   absolute
   right-0
   shadow-inner
