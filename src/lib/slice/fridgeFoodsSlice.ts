@@ -31,7 +31,7 @@ const initialState: IShoppingBagFoods = {
       space_1: [
         {
           id: 1,
-          spaceType: 'space_1',
+          space: 'space_1',
           name: '1',
           type: '정육,수산',
           emoji: '1f969',
@@ -55,10 +55,10 @@ const fridgeFoodsSlice = createSlice({
   name: 'fridgeFoods',
   initialState,
   reducers: {
-    changeInnerFoods: (state, action) => {
+    changeFridgeInner: (state, action) => {
       state.fridge.inner = action.payload;
     },
-    changeDoorFoods: (state, action) => {
+    changeFridgeDoor: (state, action) => {
       state.fridge.door = action.payload;
     },
   },
@@ -66,6 +66,6 @@ const fridgeFoodsSlice = createSlice({
 
 const { reducer: fridgeFoodsReducer } = fridgeFoodsSlice;
 
-export const { changeInnerFoods, changeDoorFoods } = fridgeFoodsSlice.actions;
+export const { changeFridgeInner, changeFridgeDoor } = fridgeFoodsSlice.actions;
 
 export default fridgeFoodsReducer;

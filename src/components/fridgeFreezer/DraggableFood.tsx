@@ -4,7 +4,7 @@ import { IFood } from '../template/AddFoodSection';
 import { removeShoppingBagFood } from 'src/lib/slice/shoppingBagSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import styled from 'styled-components';
-import useDragFridgeItem from 'src/hooks/useDragFridgeItem';
+import useDragItem from 'src/hooks/useDragItem';
 
 interface IFoodProps {
   food: IFood;
@@ -15,8 +15,7 @@ interface DropResult {
 }
 
 const DraggableFood = ({ food }: IFoodProps) => {
-  const { freezerMode } = useAppSelector((state) => state.freezerMode);
-  const { changeFridgeState } = useDragFridgeItem();
+  const { changeFoodsState } = useDragItem();
   const dispatch = useAppDispatch();
 
   const [{ isDragging }, dragRef] = useDrag({
@@ -25,7 +24,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
       if (item && dropResult) {
-        !freezerMode && changeFridgeState(dropResult.name, item);
+        changeFoodsState(dropResult.name, item);
         dispatch(removeShoppingBagFood(item));
       }
     },

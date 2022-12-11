@@ -13,7 +13,7 @@ import Modal from '../addFood/Modal';
 
 export interface IFood {
   id?: number;
-  spaceType:
+  space:
     | 'space_1'
     | 'space_2'
     | 'space_3'
