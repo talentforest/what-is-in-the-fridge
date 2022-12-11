@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IFood } from 'src/components/template/AddFoodSection';
+import { IFood } from 'src/lib/slice/foodSlice';
 
 interface IShoppingBagFoods {
   shoppingBagFoods: IFood[];

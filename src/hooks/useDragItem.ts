@@ -1,4 +1,4 @@
-import { IFood } from 'src/components/template/AddFoodSection';
+import { IFood } from 'src/lib/slice/foodSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
   changeFridgeDoor,
