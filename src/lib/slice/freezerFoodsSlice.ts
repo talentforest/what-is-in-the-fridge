@@ -39,10 +39,10 @@ const freezerFoodsSlice = createSlice({
   name: 'freezerFoods',
   initialState,
   reducers: {
-    changeFreezerInnerFoods: (state, action) => {
+    changeInnerFoods: (state, action) => {
       state.freezer.inner = action.payload;
     },
-    changeFreezerDoorFoods: (state, action) => {
+    changeDoorFoods: (state, action) => {
       state.freezer.door = action.payload;
     },
   },
@@ -50,7 +50,6 @@ const freezerFoodsSlice = createSlice({
 
 const { reducer: freezerFoodsReducer } = freezerFoodsSlice;
 
-export const { changeFreezerInnerFoods, changeFreezerDoorFoods } =
-  freezerFoodsSlice.actions;
+export const { changeInnerFoods, changeDoorFoods } = freezerFoodsSlice.actions;
 
 export default freezerFoodsReducer;

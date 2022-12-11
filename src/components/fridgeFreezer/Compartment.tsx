@@ -12,7 +12,7 @@ interface ICompartmentProps {
 
 const Compartment = ({ children, foods, spaceKey }: ICompartmentProps) => {
   const [{ canDrop, isOver }, drop] = useDrop({
-    accept: 'space',
+    accept: 'spaces',
     drop: () => ({
       name: spaceKey,
     }),
