@@ -13,6 +13,15 @@ const Modal = () => {
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
 
+  const initialState = {
+    type: '',
+    name: '',
+    space: 'shoppingBag',
+    emoji: '1f34b',
+    expiryDate: changeStrDate(new Date()),
+    quantity: '',
+  };
+
   const onAddClick = () => {
     if (shoppingBagFoods.length >= 6) {
       alert('장바구니에 식료품을 6개 이상 넣을 수 없습니다.');
@@ -20,27 +29,20 @@ const Modal = () => {
       return;
     }
     dispatch(showFoodModal());
-    const initialState = {
-      type: '',
-      name: '',
-      space: 'shoppingBag',
-      emoji: '1f34b',
-      expiryDate: changeStrDate(new Date()),
-      quantity: '',
-    };
     dispatch(changeFoodInfo(initialState));
     dispatch(addToShoppingBag([...shoppingBagFoods, food]));
   };
 
   const closeModal = () => {
     dispatch(showFoodModal());
+    dispatch(changeFoodInfo(initialState));
   };
 
   return (
     <>
       <Overlay onClick={closeModal} />
       <ModalBox>
-        <Title>추가하는 식료품 정보</Title>
+        <Title>내 식료품 정보</Title>
         <EmojiBox>
           <Emoji unified={food.emoji} size={60} emojiStyle={EmojiStyle.APPLE} />
         </EmojiBox>

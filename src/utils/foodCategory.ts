@@ -1,10 +1,10 @@
-export interface IfoodType {
+export interface IfoodCategory {
   id: number;
   type: string;
   emoji: string;
 }
 
-export const foodTypes = [
+export const foodCategories = [
   { id: 1, type: '정육,수산', emoji: '1f969' },
   { id: 2, type: '과일,채소', emoji: '1f9c5' },
   { id: 3, type: '계란,유제품', emoji: '1f95a' },

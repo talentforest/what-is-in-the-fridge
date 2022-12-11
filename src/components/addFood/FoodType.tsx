@@ -1,14 +1,14 @@
 import { Emoji } from 'emoji-picker-react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
-import { foodTypes, IfoodType } from 'src/utils/foodType';
+import { foodCategories, IfoodCategory } from 'src/utils/foodCategory';
 import tw from 'tailwind-styled-components';
 
 const FoodType = () => {
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
 
-  const onClick = (foodTypes: IfoodType) => {
+  const onClick = (foodTypes: IfoodCategory) => {
     const result = {
       ...food,
       type: foodTypes.type,
@@ -19,7 +19,7 @@ const FoodType = () => {
 
   return (
     <FoodTypeList>
-      {foodTypes.map((foodType) => (
+      {foodCategories.map((foodType) => (
         <Type
           key={foodType.id}
           onClick={() => onClick(foodType)}

@@ -11,24 +11,6 @@ import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
 import Modal from '../addFood/Modal';
 
-export interface IFood {
-  id?: number;
-  space:
-    | 'space_1'
-    | 'space_2'
-    | 'space_3'
-    | 'space_4'
-    | 'space_5'
-    | 'space_6'
-    | 'space_7'
-    | 'shoppingBag';
-  type: string;
-  name: string;
-  emoji: string;
-  expiryDate: string;
-  quantity: string;
-}
-
 const AddFoodSection = () => {
   const { close } = useAppSelector((state) => state.addFoodArea);
   const { foodModal } = useAppSelector((state) => state.foodModal);

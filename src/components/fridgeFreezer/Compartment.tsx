@@ -1,8 +1,7 @@
-import { Emoji } from 'emoji-picker-react';
-import tw from 'tailwind-styled-components';
-import { IFood } from '../template/AddFoodSection';
+import { IFood } from 'src/lib/slice/foodSlice';
 import { useDrop } from 'react-dnd';
 import DraggableFood from './DraggableFood';
+import tw from 'tailwind-styled-components';
 
 interface ICompartmentProps {
   children?: any;
