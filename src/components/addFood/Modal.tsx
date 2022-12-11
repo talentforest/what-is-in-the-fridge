@@ -3,9 +3,9 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { changeStrDate } from 'src/utils/changeStrDate';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import { addToShoppingBag } from 'src/lib/slice/shoppingBagSlice';
+import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
 import tw from 'tailwind-styled-components';
 
 const Modal = () => {
@@ -82,6 +82,7 @@ const Modal = () => {
 const Overlay = tw.div`
   absolute
   top-0
+  right-0
   w-full
   h-screen
   bg-gray-dark
@@ -101,7 +102,7 @@ const ModalBox = tw.div`
   right-0
   bottom-0
   m-auto
-  bg-yellow-light
+  bg-orange-light
   w-80
   h-fit
   rounded-3xl

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  foodModal: false,
+  modal: false,
 };
 
 const showFoodModalSlice = createSlice({
@@ -9,7 +9,7 @@ const showFoodModalSlice = createSlice({
   initialState,
   reducers: {
     showFoodModal: (state) => {
-      state.foodModal = !state.foodModal;
+      state.modal = !state.modal;
     },
   },
 });

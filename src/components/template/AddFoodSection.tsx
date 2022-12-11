@@ -12,27 +12,23 @@ import FoodQuantity from '../addFood/FoodQuantity';
 import Modal from '../addFood/Modal';
 
 const AddFoodSection = () => {
+  const { modal } = useAppSelector((state) => state.foodModal);
   const { close } = useAppSelector((state) => state.addFoodArea);
-  const { foodModal } = useAppSelector((state) => state.foodModal);
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
   const addFoodAnimation = useAnimation();
 
   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (food.name.length !== 0) {
-      dispatch(showFoodModal());
-    } else {
-      alert('모든 곳을 작성해주세요.');
-    }
+    food.name.length !== 0
+      ? dispatch(showFoodModal())
+      : alert('모든 곳을 작성해주세요.');
   };
 
   const onHandleOpenClick = () => {
-    if (close) {
-      addFoodAnimation.start({ x: 0 });
-    } else {
-      addFoodAnimation.start({ x: -245 });
-    }
+    close
+      ? addFoodAnimation.start({ x: 0 })
+      : addFoodAnimation.start({ x: -245 });
     dispatch(closeAddFoodArea());
   };
 
@@ -73,7 +69,7 @@ const AddFoodSection = () => {
           <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
         </FoodForm>
       </AddFoodBox>
-      {foodModal && <Modal />}
+      {modal && <Modal />}
     </>
   );
 };

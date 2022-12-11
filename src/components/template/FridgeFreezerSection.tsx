@@ -20,6 +20,7 @@ const FridgeFreezer = tw.section`
   justify-center
   items-center
   gap-1
+  relative
 `;
 
 export default FridgeFreezerSection;
