@@ -3,6 +3,7 @@ import { changeStrDate } from 'src/utils/changeStrDate';
 
 const initialState = {
   food: {
+    spaceType: 'shoppingBag',
     type: '',
     name: '',
     emoji: '1f34b',

@@ -20,7 +20,8 @@ export interface IFood {
     | 'space_4'
     | 'space_5'
     | 'space_6'
-    | 'space_7';
+    | 'space_7'
+    | 'shoppingBag';
   type: string;
   name: string;
   emoji: string;

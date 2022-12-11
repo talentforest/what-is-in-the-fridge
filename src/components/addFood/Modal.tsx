@@ -23,12 +23,13 @@ const Modal = () => {
     const initialState = {
       type: '',
       name: '',
+      spaceType: 'shoppingBag',
       emoji: '1f34b',
       expiryDate: changeStrDate(new Date()),
       quantity: '',
     };
-    dispatch(addToShoppingBag([...shoppingBagFoods, food]));
     dispatch(changeFoodInfo(initialState));
+    dispatch(addToShoppingBag([...shoppingBagFoods, food]));
   };
 
   const closeModal = () => {
