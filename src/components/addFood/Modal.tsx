@@ -6,12 +6,19 @@ import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import { addToShoppingBag } from 'src/lib/slice/shoppingBagSlice';
 import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
+import { showAddedFoodModal } from 'src/lib/slice/showAddedFoodModal';
 import tw from 'tailwind-styled-components';
 
-const Modal = () => {
+interface IModalProps {
+  addedFoodModal?: boolean;
+}
+
+const Modal = ({ addedFoodModal }: IModalProps) => {
   const { food } = useAppSelector((state) => state.food);
+  const { addedFood } = useAppSelector((state) => state.addedFood);
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
+  const foodInfo = addedFoodModal ? addedFood : food;
 
   const initialState = {
     type: '',
@@ -22,7 +29,16 @@ const Modal = () => {
     quantity: '',
   };
 
-  const onAddClick = () => {
+  const closeModal = () => {
+    if (addedFoodModal) {
+      dispatch(showAddedFoodModal());
+    } else {
+      dispatch(showFoodModal());
+      dispatch(changeFoodInfo(initialState));
+    }
+  };
+
+  const onAddFoodClick = () => {
     if (shoppingBagFoods.length >= 6) {
       alert('장바구니에 식료품을 6개 이상 넣을 수 없습니다.');
       dispatch(showFoodModal());
@@ -33,55 +49,59 @@ const Modal = () => {
     dispatch(addToShoppingBag([...shoppingBagFoods, food]));
   };
 
-  const closeModal = () => {
-    dispatch(showFoodModal());
-    dispatch(changeFoodInfo(initialState));
-  };
-
   return (
     <>
-      <Overlay onClick={closeModal} />
-      <ModalBox>
-        <Title>내 식료품 정보</Title>
+      <Overlay onClick={closeModal} $addedFoodModal={addedFoodModal} />
+      <ModalBox $addedFoodModal={addedFoodModal}>
+        <Title>
+          {addedFoodModal ? '내 식료품 정보' : '추가하는 식료품 정보'}
+        </Title>
         <EmojiBox>
-          <Emoji unified={food.emoji} size={60} emojiStyle={EmojiStyle.APPLE} />
+          <Emoji
+            unified={foodInfo.emoji}
+            size={60}
+            emojiStyle={EmojiStyle.APPLE}
+          />
         </EmojiBox>
         <Info>
           <Item>
             <Name>카테고리</Name>
-            {food.type}
+            {foodInfo.type}
           </Item>
           <Item>
             <Name>이름</Name>
-            {food.name}
+            {foodInfo.name}
           </Item>
           <Item>
             <Name>수량</Name>
-            {food.quantity}
+            {foodInfo.quantity}
           </Item>
           <Item>
             <Name>유통기한</Name>
-            {new Date(food.expiryDate).toLocaleDateString()}
+            {new Date(foodInfo.expiryDate).toLocaleDateString()}
           </Item>
         </Info>
-        <Btns>
-          <Btn onClick={onAddClick}>
-            <FontAwesomeIcon icon={icon({ name: 'plus', style: 'solid' })} />
-            <span>추가하기</span>
-          </Btn>
-          <Btn onClick={closeModal} $color>
-            <FontAwesomeIcon icon={icon({ name: 'xmark', style: 'solid' })} />
-            <span>취소하기</span>
-          </Btn>
-        </Btns>
+        {!addedFoodModal && (
+          <Btns>
+            <Btn onClick={onAddFoodClick}>
+              <FontAwesomeIcon icon={icon({ name: 'plus', style: 'solid' })} />
+              <span>추가하기</span>
+            </Btn>
+            <Btn onClick={closeModal} $color>
+              <FontAwesomeIcon icon={icon({ name: 'xmark', style: 'solid' })} />
+              <span>취소하기</span>
+            </Btn>
+          </Btns>
+        )}
       </ModalBox>
     </>
   );
 };
 
-const Overlay = tw.div`
+const Overlay = tw.div<{ $addedFoodModal: boolean }>`
   absolute
-  top-0
+  ${(p: { $addedFoodModal: boolean }) =>
+    p.$addedFoodModal ? '-top-12' : 'top-0'}
   right-0
   w-full
   h-screen
@@ -90,14 +110,15 @@ const Overlay = tw.div`
   cursor-pointer
   z-10
 `;
-const ModalBox = tw.div`
+const ModalBox = tw.div<{ $addedFoodModal: boolean }>`
   flex
   flex-col
   items-center
   justify-between
   p-5
   absolute
-  top-0
+  ${(p: { $addedFoodModal: boolean }) =>
+    p.$addedFoodModal ? '-top-12' : 'top-0'}
   left-0
   right-0
   bottom-0

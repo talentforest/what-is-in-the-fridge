@@ -28,7 +28,7 @@ const AddFoodSection = () => {
   const onHandleOpenClick = () => {
     close
       ? addFoodAnimation.start({ x: 0 })
-      : addFoodAnimation.start({ x: -245 });
+      : addFoodAnimation.start({ x: -270 });
     dispatch(closeAddFoodArea());
   };
 
