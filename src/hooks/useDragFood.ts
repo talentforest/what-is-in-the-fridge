@@ -11,7 +11,7 @@ import {
 
 type spaceType = 'door' | 'inner' | 'shoppingBag';
 
-const useDragItem = () => {
+const useDragFood = () => {
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
@@ -144,4 +144,4 @@ const useDragItem = () => {
   };
 };
 
-export default useDragItem;
+export default useDragFood;

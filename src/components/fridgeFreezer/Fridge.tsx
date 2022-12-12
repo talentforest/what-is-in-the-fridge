@@ -6,7 +6,7 @@ import { useAppSelector } from 'src/lib/hooks';
 
 const Fridge = () => {
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
-
+  console.log(fridge);
   return (
     <>
       <FridgeFreezerChangeBtn btnName='냉동칸 보기' />

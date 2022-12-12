@@ -1,13 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
-import { changeStrDate } from 'src/utils/changeStrDate';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
-import { addToShoppingBag } from 'src/lib/slice/shoppingBagSlice';
-import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
-import { showAddedFoodModal } from 'src/lib/slice/showAddedFoodModal';
+import { useAppSelector } from 'src/lib/hooks';
+import { foodInfoNames, stringKeyObj } from 'src/utils/foodCategory';
 import tw from 'tailwind-styled-components';
+import useEditFoodInfo from 'src/hooks/useEditFoodInfo';
+import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
+import FoodToAddBtns from './FoodToAddBtns';
+import useAddFood from 'src/hooks/useAddFood';
 
 interface IModalProps {
   addedFoodModal?: boolean;
@@ -16,38 +14,19 @@ interface IModalProps {
 const Modal = ({ addedFoodModal }: IModalProps) => {
   const { food } = useAppSelector((state) => state.food);
   const { addedFood } = useAppSelector((state) => state.addedFood);
-  const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
-  const dispatch = useAppDispatch();
-  const foodInfo = addedFoodModal ? addedFood : food;
+  const {
+    edit,
+    setEdit,
+    closeAddedFoodModal,
+    onEditSubmitClick,
+    nameRef,
+    quantityRef,
+    dateRef,
+  } = useEditFoodInfo();
+  const { closeFoodModal } = useAddFood();
 
-  const initialState = {
-    type: '',
-    name: '',
-    space: 'shoppingBag',
-    emoji: '1f34b',
-    expiryDate: changeStrDate(new Date()),
-    quantity: '',
-  };
-
-  const closeModal = () => {
-    if (addedFoodModal) {
-      dispatch(showAddedFoodModal());
-    } else {
-      dispatch(showFoodModal());
-      dispatch(changeFoodInfo(initialState));
-    }
-  };
-
-  const onAddFoodClick = () => {
-    if (shoppingBagFoods.length >= 6) {
-      alert('장바구니에 식료품을 6개 이상 넣을 수 없습니다.');
-      dispatch(showFoodModal());
-      return;
-    }
-    dispatch(showFoodModal());
-    dispatch(changeFoodInfo(initialState));
-    dispatch(addToShoppingBag([...shoppingBagFoods, food]));
-  };
+  const foodInfo: stringKeyObj = addedFoodModal ? addedFood : food;
+  const closeModal = addedFoodModal ? closeAddedFoodModal : closeFoodModal;
 
   return (
     <>
@@ -63,42 +42,57 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
             emojiStyle={EmojiStyle.APPLE}
           />
         </EmojiBox>
-        <Info>
-          <Item>
-            <Name>카테고리</Name>
-            {foodInfo.type}
-          </Item>
-          <Item>
-            <Name>이름</Name>
-            {foodInfo.name}
-          </Item>
-          <Item>
-            <Name>수량</Name>
-            {foodInfo.quantity}
-          </Item>
-          <Item>
-            <Name>유통기한</Name>
-            {new Date(foodInfo.expiryDate).toLocaleDateString()}
-          </Item>
-        </Info>
-        {!addedFoodModal && (
-          <Btns>
-            <Btn onClick={onAddFoodClick}>
-              <FontAwesomeIcon icon={icon({ name: 'plus', style: 'solid' })} />
-              <span>추가하기</span>
-            </Btn>
-            <Btn onClick={closeModal} $color>
-              <FontAwesomeIcon icon={icon({ name: 'xmark', style: 'solid' })} />
-              <span>취소하기</span>
-            </Btn>
-          </Btns>
+        {edit ? (
+          <Info>
+            <Item>
+              <Name>카테고리</Name>
+              {foodInfo.type}
+            </Item>
+            <Item>
+              <Name>이름</Name>
+              <Input type='text' defaultValue={foodInfo.name} ref={nameRef} />
+            </Item>
+            <Item>
+              <Name>수량</Name>
+              <Input
+                type='number'
+                defaultValue={foodInfo.quantity}
+                ref={quantityRef}
+              />
+            </Item>
+            <Item>
+              <Name>유통기한</Name>
+              <Input
+                type='date'
+                defaultValue={foodInfo.expiryDate}
+                ref={dateRef}
+              />
+            </Item>
+            <SubmitBtn onClick={onEditSubmitClick}>수정완료</SubmitBtn>
+          </Info>
+        ) : (
+          <>
+            <Info>
+              {Object.keys(foodInfoNames).map((name) => (
+                <Item key={name}>
+                  <Name>{foodInfoNames[name]}</Name>
+                  {foodInfo[name]}
+                </Item>
+              ))}
+            </Info>
+            {addedFoodModal ? (
+              <AddedFoodBtns setEdit={() => setEdit((prev) => !prev)} />
+            ) : (
+              <FoodToAddBtns />
+            )}
+          </>
         )}
       </ModalBox>
     </>
   );
 };
 
-const Overlay = tw.div<{ $addedFoodModal: boolean }>`
+const Overlay = tw.div`
   absolute
   ${(p: { $addedFoodModal: boolean }) =>
     p.$addedFoodModal ? '-top-12' : 'top-0'}
@@ -110,7 +104,7 @@ const Overlay = tw.div<{ $addedFoodModal: boolean }>`
   cursor-pointer
   z-10
 `;
-const ModalBox = tw.div<{ $addedFoodModal: boolean }>`
+const ModalBox = tw.div`
   flex
   flex-col
   items-center
@@ -148,39 +142,39 @@ const EmojiBox = tw.div`
 const Info = tw.ul`
   flex
   flex-col
-  gap-1
+  gap-2
   py-3
   px-5
   my-2
   text-sm
+  w-56
 `;
 const Item = tw.li`
   flex
-  gap-8
+  gap-2
+  items-center
 `;
 const Name = tw.div`
   w-20
   text-gray
 `;
-const Btns = tw.div`
-  flex
-  justify-between
-  gap-3
-  mt-4
-`;
-const Btn = tw.button`
-  ${(p: { $color: boolean }) => (p.$color ? 'bg-red-light' : 'bg-green')}
-  cursor-pointer
-  shadow-md
-  rounded-md
-  py-2
-  px-3
-  flex
-  gap-2
-  justify-between
-  items-center
-  text-white
+const Input = tw.input`
+  w-full
+  rounded-lg
+  px-1.5
+  py-1
+  shadow-lg
   text-sm
-  font-bold
 `;
+const SubmitBtn = tw.button`
+  mt-3
+  text-xs
+  p-2
+  rounded-lg
+  bg-green
+  shadow-lg
+  text-white
+  font-semibold
+`;
+
 export default Modal;
