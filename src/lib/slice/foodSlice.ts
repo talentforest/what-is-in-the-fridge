@@ -32,7 +32,7 @@ const initialState = {
   },
 };
 
-const showEmojiSlice = createSlice({
+const foodSlice = createSlice({
   name: 'food',
   initialState,
   reducers: {
@@ -42,8 +42,8 @@ const showEmojiSlice = createSlice({
   },
 });
 
-const { reducer: changeFoodReducer } = showEmojiSlice;
+const { reducer: changeFoodReducer } = foodSlice;
 
-export const { changeFoodInfo } = showEmojiSlice.actions;
+export const { changeFoodInfo } = foodSlice.actions;
 
 export default changeFoodReducer;

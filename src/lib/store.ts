@@ -7,6 +7,8 @@ import showEmojiReducer from './slice/showEmojiSlice';
 import showFoodModalReducer from './slice/showFoodModalSlice';
 import changeModeReducer from './slice/freezerModeReducer';
 import freezerFoodsReducer from './slice/freezerFoodsSlice';
+import changeAddedFoodReducer from './slice/addedFood';
+import showAddedFoodModalReducer from './slice/showAddedFoodModal';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ export const store = configureStore({
     shoppingBag: addToShoppingBagReducer,
     fridgeFoods: fridgeFoodsReducer,
     freezerFoods: freezerFoodsReducer,
+    addedFood: changeAddedFoodReducer,
+    addedFoodModal: showAddedFoodModalReducer,
   },
 });
 
