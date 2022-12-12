@@ -5,7 +5,7 @@ import { useAppDispatch } from 'src/lib/hooks';
 import { IFood } from 'src/lib/slice/foodSlice';
 import { showAddedFoodModal } from 'src/lib/slice/showAddedFoodModal';
 import { changeAddedFoodInfo } from 'src/lib/slice/addedFood';
-import useDragItem from 'src/hooks/useDragItem';
+import useDragFood from 'src/hooks/useDragFood';
 import styled from 'styled-components';
 
 interface IFoodProps {
@@ -17,7 +17,7 @@ interface DropResult {
 }
 
 const DraggableFood = ({ food }: IFoodProps) => {
-  const { changeFoodsState } = useDragItem();
+  const { changeFoodsState } = useDragFood();
   const dispatch = useAppDispatch();
 
   const [{ isDragging }, dragRef] = useDrag({

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { changeStrDate } from 'src/utils/changeStrDate';
 
-type spaceName =
+export type spaceName =
   | 'space_1'
   | 'space_2'
   | 'space_3'
