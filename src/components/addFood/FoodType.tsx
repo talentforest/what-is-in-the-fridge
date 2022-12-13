@@ -1,4 +1,3 @@
-import { Emoji } from 'emoji-picker-react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import { foodCategories, IfoodCategory } from 'src/utils/foodCategory';
@@ -25,7 +24,6 @@ const FoodType = () => {
           onClick={() => onClick(foodType)}
           $color={food.type === foodType.type}
         >
-          <Emoji unified={foodType.emoji} size={20} />
           <span>{foodType.type}</span>
         </Type>
       ))}
@@ -35,8 +33,8 @@ const FoodType = () => {
 
 const FoodTypeList = tw.ul`
   grid
-  grid-cols-3
-  gap-2
+  grid-cols-2
+  gap-1.5
 `;
 const Type = tw.li`
   cursor-pointer
@@ -49,8 +47,9 @@ hover:bg-green
   gap-2
   items-center
   justify-center
-  text-[10px]
-  shadow-md
+  text-xs
+  shadow-lg
+  
 `;
 
 export default FoodType;

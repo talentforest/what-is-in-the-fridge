@@ -40,7 +40,6 @@ const useEditFoodInfo = () => {
     const spaceArr = [...currentMode[spaceType][addedFood.space]];
     const foodIndex = spaceArr.findIndex((food) => food.id === addedFood.id);
     spaceArr.splice(foodIndex, 1, editedFood);
-    console.log(spaceArr);
 
     const newState = {
       ...currentMode[spaceType],

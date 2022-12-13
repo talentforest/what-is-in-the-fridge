@@ -35,7 +35,7 @@ const FoodIconName = () => {
         <Icon onClick={() => dispatch(showEmoji())}>
           <Emoji unified={food.emoji} size={20} emojiStyle={EmojiStyle.APPLE} />
         </Icon>
-        <input
+        <Input
           type='text'
           placeholder='식료품의 이름을 적어주세요.'
           value={food.name}
@@ -64,13 +64,6 @@ const Name = styled.div`
   align-items: center;
   gap: 5px;
   height: 30px;
-  input {
-    border-radius: 10px;
-    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    padding: 5px;
-    font-size: 14px;
-  }
   aside {
     z-index: 20 !important;
     position: absolute !important;
@@ -121,16 +114,25 @@ const Name = styled.div`
   }
 `;
 
-const Icon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 10px;
-  width: 18%;
-  height: inherit;
-  background-color: #e6ffe6;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+export const Input = tw.input`
+  rounded-lg
+  shadow-lg
+  w-full
+  h-8
+  p-2
+  text-sm
+`;
+
+const Icon = tw.div`
+  flex
+  justify-center
+  items-center
+  cursor-pointer
+  rounded-lg
+  w-10
+  h-8
+  bg-yellow-light
+  shadow-lg
 `;
 const Desc = tw.span`
   text-xs

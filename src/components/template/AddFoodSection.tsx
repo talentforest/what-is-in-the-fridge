@@ -20,15 +20,19 @@ const AddFoodSection = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    food.name.length !== 0
-      ? dispatch(showFoodModal())
-      : alert('모든 곳을 작성해주세요.');
+    if (food.name.length === 0) return alert('식료품 이름을 적어주세요.');
+    if (food.type.length === 0) return alert('식료품 카테고리를 적어주세요.');
+    if (food.expiryDate.length === 0)
+      return alert('식료품 유통기한을 적어주세요.');
+    if (food.quantity.length === 0) return alert('식료품 개수를 적어주세요.');
+
+    return dispatch(showFoodModal());
   };
 
   const onHandleOpenClick = () => {
     close
       ? addFoodAnimation.start({ x: 0 })
-      : addFoodAnimation.start({ x: -270 });
+      : addFoodAnimation.start({ x: -240 });
     dispatch(closeAddFoodArea());
   };
 
