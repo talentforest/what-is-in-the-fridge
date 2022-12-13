@@ -10,7 +10,7 @@ import {
   changeFridgeDoor,
   changeFridgeInner,
 } from 'src/lib/slice/fridgeFoodsSlice';
-import { showAddedFoodModal } from 'src/lib/slice/showAddedFoodModal';
+import { showAddedFoodModal } from 'src/lib/slice/openCloseState/showAddedFoodModal';
 import { getSpaceType } from 'src/utils/getSpaceType';
 
 const useEditFoodInfo = () => {

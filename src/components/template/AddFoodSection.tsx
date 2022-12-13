@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { motion, useAnimation } from 'framer-motion';
-import { closeAddFoodArea } from 'src/lib/slice/closeAddFoodAreaSlice';
+import { closeAddFoodArea } from 'src/lib/slice/openCloseState/closeAddFoodAreaSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
+import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
@@ -32,7 +32,7 @@ const AddFoodSection = () => {
   const onHandleOpenClick = () => {
     close
       ? addFoodAnimation.start({ x: 0 })
-      : addFoodAnimation.start({ x: -240 });
+      : addFoodAnimation.start({ x: -225 });
     dispatch(closeAddFoodArea());
   };
 
@@ -95,7 +95,7 @@ const AddFoodBox = tw(motion.section)`
   absolute
   top-0
   bottom-0
-  w-68
+  w-64
   p-3
   pt-6
   pr-10
@@ -117,7 +117,6 @@ const ItemTitle = tw.h4`
   mt-5
 `;
 const SubmitBtn = tw.button`
-  border
   w-full
   mt-4
   rounded-lg

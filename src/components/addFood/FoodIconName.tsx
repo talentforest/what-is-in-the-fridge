@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import { Emoji, EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import { categoryConfig, Picker, previewConfig } from '../../utils/emojiConfig';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { showEmoji } from 'src/lib/slice/showEmojiSlice';
+import { showEmoji } from 'src/lib/slice/openCloseState/showEmojiSlice';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';

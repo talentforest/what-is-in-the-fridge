@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import { addToShoppingBag } from 'src/lib/slice/shoppingBagSlice';
-import { showFoodModal } from 'src/lib/slice/showFoodModalSlice';
+import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
 import { changeStrDate } from 'src/utils/changeStrDate';
 
 const useAddFood = () => {
