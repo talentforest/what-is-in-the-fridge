@@ -21,14 +21,12 @@ const useEditFoodInfo = () => {
   const { addedFood } = useAppSelector((state) => state.addedFood);
   const dispatch = useAppDispatch();
   const currentMode = freezerMode ? freezer : fridge;
+  const changeDoorState = freezerMode ? changeFreezerDoor : changeFridgeDoor;
+  const changeInnerState = freezerMode ? changeFreezerInner : changeFridgeInner;
 
   const nameRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
-
-  const closeAddedFoodModal = () => {
-    dispatch(showAddedFoodModal());
-  };
 
   const onEditSubmitClick = () => {
     const editedFood = {
@@ -37,34 +35,31 @@ const useEditFoodInfo = () => {
       quantity: quantityRef.current?.value,
       expiryDate: dateRef.current?.value,
     } as IFood;
+
     const spaceType = getSpaceType(addedFood.space, freezerMode);
     const spaceArr = [...currentMode[spaceType][addedFood.space]];
-    if (addedFood.id) {
-      spaceArr[addedFood.id - 1] = editedFood;
-    }
+    const foodIndex = spaceArr.findIndex((food) => food.id === addedFood.id);
+    spaceArr.splice(foodIndex, 1, editedFood);
+    console.log(spaceArr);
+
     const newState = {
       ...currentMode[spaceType],
       [addedFood.space]: spaceArr,
     };
-    if (freezerMode) {
-      if (spaceType === 'door') {
-        dispatch(changeFreezerDoor(newState));
-        dispatch(changeAddedFoodInfo(editedFood));
-      } else {
-        dispatch(changeFreezerInner(newState));
-        dispatch(changeAddedFoodInfo(editedFood));
-      }
+
+    if (spaceType === 'door') {
+      dispatch(changeDoorState(newState));
+      dispatch(changeAddedFoodInfo(editedFood));
     } else {
-      if (spaceType === 'door') {
-        dispatch(changeFridgeDoor(newState));
-        dispatch(changeAddedFoodInfo(editedFood));
-      } else {
-        dispatch(changeFridgeInner(newState));
-        dispatch(changeAddedFoodInfo(editedFood));
-      }
+      dispatch(changeInnerState(newState));
+      dispatch(changeAddedFoodInfo(editedFood));
     }
 
     setEdit((prev) => !prev);
+  };
+
+  const closeAddedFoodModal = () => {
+    dispatch(showAddedFoodModal());
   };
 
   return {

@@ -11,7 +11,9 @@ export type spaceName =
   | 'space_7'
   | 'shoppingBag';
 
-export interface IFood {
+type spaceType = { [key: string]: string | spaceName };
+
+export interface IFood extends spaceType {
   id: string;
   space: spaceName;
   type: string;

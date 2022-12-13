@@ -1,18 +1,15 @@
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { useAppSelector } from 'src/lib/hooks';
-import { foodInfoNames, stringKeyObj } from 'src/utils/foodCategory';
+import { foodInfoNames } from 'src/utils/foodCategory';
 import tw from 'tailwind-styled-components';
 import useEditFoodInfo from 'src/hooks/useEditFoodInfo';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from './FoodToAddBtns';
 import useAddFood from 'src/hooks/useAddFood';
-import { IFood } from 'src/lib/slice/foodSlice';
 
 interface IModalProps {
   addedFoodModal?: boolean;
 }
-
-type spaceType = { [key: string]: IFood };
 
 const Modal = ({ addedFoodModal }: IModalProps) => {
   const { food } = useAppSelector((state) => state.food);
@@ -79,7 +76,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
               {Object.keys(foodInfoNames).map((name) => (
                 <Item key={name}>
                   <Name>{foodInfoNames[name]}</Name>
-                  {/* {foodInfo[name] as spaceType} */}
+                  {foodInfo[name]}
                 </Item>
               ))}
             </Info>

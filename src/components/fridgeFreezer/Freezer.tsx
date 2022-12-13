@@ -7,7 +7,7 @@ import { Shelf } from './Fridge';
 
 const Freezer = () => {
   const { freezer } = useAppSelector((state) => state.freezerFoods);
-
+  console.log(freezer.inner);
   return (
     <>
       <FreezerSection>

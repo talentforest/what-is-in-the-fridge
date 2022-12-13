@@ -20,11 +20,13 @@ const useHandleAddedFood = () => {
 
   const currentMode = freezerMode ? freezer : fridge;
   const changeMode = freezerMode ? fridge : freezer;
+  const changeDoorState = freezerMode ? changeFreezerDoor : changeFridgeDoor;
+  const changeInnerState = freezerMode ? changeFreezerInner : changeFridgeInner;
 
   const moveToAnotherMode = () => {
+    removeAddedFood();
     const movedItem = {
       ...addedFood,
-      id: changeMode.inner.space_1.length + 1,
       space: 'space_1' as IFood['space'],
     };
     const newState = {
@@ -34,7 +36,6 @@ const useHandleAddedFood = () => {
     freezerMode
       ? dispatch(changeFridgeInner(newState))
       : dispatch(changeFreezerInner(newState));
-    removeAddedFood();
   };
 
   const removeAddedFood = () => {
@@ -47,15 +48,9 @@ const useHandleAddedFood = () => {
       ...currentMode[spaceType],
       [space]: removedSpaceArr,
     };
-    if (freezerMode) {
-      getSpaceType(space, freezerMode) === 'door'
-        ? dispatch(changeFreezerDoor(newState))
-        : dispatch(changeFreezerInner(newState));
-    } else {
-      getSpaceType(space, freezerMode) === 'door'
-        ? dispatch(changeFridgeDoor(newState))
-        : dispatch(changeFridgeInner(newState));
-    }
+    getSpaceType(space, freezerMode) === 'door'
+      ? dispatch(changeDoorState(newState))
+      : dispatch(changeInnerState(newState));
 
     dispatch(showAddedFoodModal());
   };
