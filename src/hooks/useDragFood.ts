@@ -1,4 +1,4 @@
-import { IFood } from 'src/lib/slice/foodSlice';
+import { IFood, spaceName } from 'src/lib/slice/foodSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
   changeFridgeDoor,
@@ -8,8 +8,8 @@ import {
   changeFreezerDoor,
   changeFreezerInner,
 } from 'src/lib/slice/freezerFoodsSlice';
-
-type spaceType = 'door' | 'inner' | 'shoppingBag';
+import { v4 as uuidv4 } from 'uuid';
+import { getSpaceType } from 'src/utils/getSpaceType';
 
 const useDragFood = () => {
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
@@ -21,120 +21,81 @@ const useDragFood = () => {
   const changeDoorState = freezerMode ? changeFreezerDoor : changeFridgeDoor;
   const changeInnerState = freezerMode ? changeFreezerInner : changeFridgeInner;
 
-  const spaceType = (spaceKey: string, spaceType: spaceType) => {
-    switch (spaceType) {
-      case 'door':
-        return Object.keys(currentMode.door).includes(spaceKey);
-      case 'inner':
-        return Object.keys(currentMode.inner).includes(spaceKey);
-      case 'shoppingBag':
-        return spaceKey === 'shoppingBag';
-      default:
-        break;
-    }
-  };
-
-  const addItemToDoor = (spaceKey: string, prevItem: IFood) => {
-    const doorItem = {
-      ...prevItem,
-      id: currentMode.door[spaceKey].length + 1,
+  const addFoodAtNewSpace = (spaceKey: spaceName, prevFood: IFood) => {
+    const itemToAdd: IFood = {
+      ...prevFood,
+      id: prevFood.space === 'shoppingBag' ? uuidv4() : prevFood.id,
       space: spaceKey as IFood['space'],
     };
-    const doorState = {
-      ...currentMode.door,
-      [spaceKey]: [...currentMode.door[spaceKey], doorItem],
+    const spaceType = getSpaceType(spaceKey, freezerMode);
+    const newState = {
+      ...currentMode[spaceType],
+      [spaceKey]: [...currentMode[spaceType][spaceKey], itemToAdd],
     };
-    return dispatch(changeDoorState(doorState));
+    return spaceType === 'door'
+      ? dispatch(changeDoorState(newState))
+      : dispatch(changeInnerState(newState));
   };
-  const addItemToInner = (spaceKey: string, prevItem: IFood) => {
+
+  const removeFoodFromPrevSpace = (prevFood: IFood) => {
+    const removingSpaceType = getSpaceType(prevFood.space, freezerMode);
+    const newState = {
+      ...currentMode[removingSpaceType],
+      [prevFood.space]: currentMode[removingSpaceType][prevFood.space].filter(
+        (food) => food.id !== prevFood.id
+      ),
+    };
+    return removingSpaceType === 'door'
+      ? dispatch(changeDoorState(newState))
+      : dispatch(changeInnerState(newState));
+  };
+
+  const addAndRemoveFoods = (spaceKey: spaceName, prevFood: IFood) => {
     const innerItem = {
-      ...prevItem,
-      id: currentMode.inner[spaceKey].length + 1,
-      space: spaceKey,
-    };
-    const innerState = {
-      ...currentMode.inner,
-      [spaceKey]: [...currentMode.inner[spaceKey], innerItem],
-    };
-    return dispatch(changeInnerState(innerState));
-  };
-
-  const removeItemFromInner = (prevItem: IFood) => {
-    const innerState = {
-      ...currentMode.inner,
-      [prevItem.space]: currentMode.inner[prevItem.space]?.filter(
-        (innerItem) => innerItem.id !== prevItem.id
-      ),
-    };
-    return dispatch(changeInnerState(innerState));
-  };
-  const removeItemFromDoor = (prevItem: IFood) => {
-    const doorState = {
-      ...currentMode.door,
-      [prevItem.space]: currentMode.door[prevItem.space].filter(
-        (doorItem) => doorItem.id !== prevItem.id
-      ),
-    };
-    return dispatch(changeDoorState(doorState));
-  };
-
-  const addAndRemoveFromDoor = (spaceKey: string, prevItem: IFood) => {
-    const doorItem = {
-      ...prevItem,
-      id: currentMode.door[spaceKey].length + 1,
+      ...prevFood,
       space: spaceKey as IFood['space'],
     };
-    const doorState = {
-      ...currentMode.door,
-      [spaceKey]: [...currentMode.door[spaceKey], doorItem],
-      [prevItem.space]: currentMode.door[prevItem.space].filter(
-        (doorItem) => doorItem.id !== prevItem.id
+    const spaceType = getSpaceType(spaceKey, freezerMode);
+    const prevSpaceType = getSpaceType(prevFood.space, freezerMode);
+    const newState = {
+      ...currentMode[spaceType],
+      [spaceKey]: [...currentMode[spaceType][spaceKey], innerItem],
+      [prevFood.space]: currentMode[prevSpaceType][prevFood.space].filter(
+        (innerItem) => innerItem.id !== prevFood.id
       ),
     };
-    return dispatch(changeDoorState(doorState));
-  };
-  const addAndRemoveFromInner = (spaceKey: string, prevItem: IFood) => {
-    const innerItem = {
-      ...prevItem,
-      id: currentMode.inner[spaceKey].length + 1,
-      space: spaceKey as IFood['space'],
-    };
-    const innerState = {
-      ...currentMode.inner,
-      [spaceKey]: [...currentMode.inner[spaceKey], innerItem],
-      [prevItem.space]: currentMode.inner[prevItem.space].filter(
-        (innerItem) => innerItem.id !== prevItem.id
-      ),
-    };
-    return dispatch(changeInnerState(innerState));
+    return spaceType === 'door'
+      ? dispatch(changeDoorState(newState))
+      : dispatch(changeInnerState(newState));
   };
 
-  const changeDoorItems = (spaceKey: string, prevItem: IFood) => {
-    if (spaceType(prevItem.space, 'door')) {
-      if (prevItem.space === spaceKey) return; // door -> door
-      addAndRemoveFromDoor(spaceKey, prevItem);
+  const changeDoorItems = (spaceKey: spaceName, prevItem: IFood) => {
+    const prevSpaceType = getSpaceType(prevItem.space, freezerMode);
+    if (prevSpaceType === 'door') {
+      addAndRemoveFoods(spaceKey, prevItem); // door -> door
     } else {
-      removeItemFromInner(prevItem); // inner -> door
-      addItemToDoor(spaceKey, prevItem);
-    }
-  };
-  const changeInnerItems = (spaceKey: string, prevItem: IFood) => {
-    if (spaceType(prevItem.space, 'door')) {
-      removeItemFromDoor(prevItem); // door -> inner
-      addItemToInner(spaceKey, prevItem);
-    } else {
-      if (prevItem.space === spaceKey) return; // inner -> inner
-      addAndRemoveFromInner(spaceKey, prevItem);
+      removeFoodFromPrevSpace(prevItem); // inner -> door
+      addFoodAtNewSpace(spaceKey, prevItem);
     }
   };
 
-  const changeFoodsState = (spaceKey: string, prevItem: IFood) => {
-    if (spaceType(prevItem.space, 'shoppingBag')) {
-      return spaceType(spaceKey, 'door')
-        ? addItemToDoor(spaceKey, prevItem)
-        : addItemToInner(spaceKey, prevItem);
+  const changeInnerItems = (spaceKey: spaceName, prevItem: IFood) => {
+    const prevSpaceType = getSpaceType(prevItem.space, freezerMode);
+    if (prevSpaceType === 'inner') {
+      addAndRemoveFoods(spaceKey, prevItem); // inner -> inner
+    } else {
+      removeFoodFromPrevSpace(prevItem); // door -> inner
+      addFoodAtNewSpace(spaceKey, prevItem);
     }
-    spaceType(spaceKey, 'door')
+  };
+
+  const changeFoodsState = (spaceKey: spaceName, prevItem: IFood) => {
+    const spaceType = getSpaceType(spaceKey, freezerMode);
+    if (prevItem.space === 'shoppingBag') {
+      return addFoodAtNewSpace(spaceKey, prevItem);
+    }
+    if (prevItem.space === spaceKey) return;
+    spaceType === 'door'
       ? changeDoorItems(spaceKey, prevItem)
       : changeInnerItems(spaceKey, prevItem);
   };

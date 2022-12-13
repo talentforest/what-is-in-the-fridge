@@ -12,7 +12,7 @@ export type spaceName =
   | 'shoppingBag';
 
 export interface IFood {
-  id?: number;
+  id: string;
   space: spaceName;
   type: string;
   name: string;
@@ -21,8 +21,9 @@ export interface IFood {
   quantity: string;
 }
 
-const initialState = {
+const initialState: { food: IFood } = {
   food: {
+    id: '',
     space: 'shoppingBag',
     type: '',
     name: '',
