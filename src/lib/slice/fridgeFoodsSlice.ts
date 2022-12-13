@@ -30,9 +30,9 @@ const initialState: IShoppingBagFoods = {
     inner: {
       space_1: [
         {
-          id: 1,
+          id: 'fridge_example',
           space: 'space_1',
-          name: '1',
+          name: '삼겹살',
           type: '정육,수산',
           emoji: '1f969',
           expiryDate: '2022-12-09',

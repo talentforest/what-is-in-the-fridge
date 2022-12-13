@@ -2,15 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import { changeStrDate } from 'src/utils/changeStrDate';
 import { IFood } from './foodSlice';
 
-const initialState = {
+const initialState: { addedFood: IFood } = {
   addedFood: {
+    id: '',
     space: 'shoppingBag',
     type: '',
     name: '',
     emoji: '1f34b',
     expiryDate: changeStrDate(new Date()),
     quantity: '',
-  } as IFood,
+  },
 };
 
 const addedFoodSlice = createSlice({

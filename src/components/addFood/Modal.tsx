@@ -6,10 +6,13 @@ import useEditFoodInfo from 'src/hooks/useEditFoodInfo';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from './FoodToAddBtns';
 import useAddFood from 'src/hooks/useAddFood';
+import { IFood } from 'src/lib/slice/foodSlice';
 
 interface IModalProps {
   addedFoodModal?: boolean;
 }
+
+type spaceType = { [key: string]: IFood };
 
 const Modal = ({ addedFoodModal }: IModalProps) => {
   const { food } = useAppSelector((state) => state.food);
@@ -25,7 +28,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
   } = useEditFoodInfo();
   const { closeFoodModal } = useAddFood();
 
-  const foodInfo: stringKeyObj = addedFoodModal ? addedFood : food;
+  const foodInfo = addedFoodModal ? addedFood : food;
   const closeModal = addedFoodModal ? closeAddedFoodModal : closeFoodModal;
 
   return (
@@ -76,7 +79,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
               {Object.keys(foodInfoNames).map((name) => (
                 <Item key={name}>
                   <Name>{foodInfoNames[name]}</Name>
-                  {foodInfo[name]}
+                  {/* {foodInfo[name] as spaceType} */}
                 </Item>
               ))}
             </Info>
