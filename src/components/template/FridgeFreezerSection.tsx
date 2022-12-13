@@ -18,8 +18,6 @@ const FridgeFreezerSection = () => {
 
 const FridgeFreezer = tw.section`
   h-[calc(100vh-theme(spacing.12))]
-  mobile:pr-0
-  tablet:pr-20
   flex
   flex-col
   justify-center

@@ -6,7 +6,7 @@ import { useAppSelector } from 'src/lib/hooks';
 
 const Fridge = () => {
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
-  console.log(fridge);
+
   return (
     <>
       <FridgeFreezerChangeBtn btnName='냉동칸 보기' />
@@ -41,7 +41,7 @@ const FridgeSection = tw.section`
   flex
   gap-1
   h-3/4
-  border
+  
 `;
 const FridgeBox = tw.div`
   flex

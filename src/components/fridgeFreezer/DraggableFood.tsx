@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import { removeShoppingBagFood } from 'src/lib/slice/shoppingBagSlice';
 import { useAppDispatch } from 'src/lib/hooks';
 import { IFood } from 'src/lib/slice/foodSlice';
-import { showAddedFoodModal } from 'src/lib/slice/showAddedFoodModal';
+import { showAddedFoodModal } from 'src/lib/slice/openCloseState/showAddedFoodModal';
 import { changeAddedFoodInfo } from 'src/lib/slice/addedFood';
 import useDragFood from 'src/hooks/useDragFood';
 import styled from 'styled-components';

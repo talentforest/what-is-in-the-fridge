@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import closeAddFoodAreaReducer from './slice/closeAddFoodAreaSlice';
+import closeAddFoodAreaReducer from './slice/openCloseState/closeAddFoodAreaSlice';
 import changeFoodReducer from './slice/foodSlice';
 import fridgeFoodsReducer from './slice/fridgeFoodsSlice';
 import addToShoppingBagReducer from './slice/shoppingBagSlice';
-import showEmojiReducer from './slice/showEmojiSlice';
-import showFoodModalReducer from './slice/showFoodModalSlice';
+import showEmojiReducer from './slice/openCloseState/showEmojiSlice';
+import showFoodModalReducer from './slice/openCloseState/showFoodModalSlice';
 import changeModeReducer from './slice/freezerModeReducer';
 import freezerFoodsReducer from './slice/freezerFoodsSlice';
 import changeAddedFoodReducer from './slice/addedFood';
-import showAddedFoodModalReducer from './slice/showAddedFoodModal';
+import showAddedFoodModalReducer from './slice/openCloseState/showAddedFoodModal';
 
 export const store = configureStore({
   reducer: {
