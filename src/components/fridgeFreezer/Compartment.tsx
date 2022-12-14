@@ -41,7 +41,9 @@ const Compartment = ({ children, foods, spaceKey }: ICompartmentProps) => {
 };
 
 const Space = tw.div`
+  p-1
   w-full
+
   flex-1
   bg-white
   rounded-lg
@@ -50,10 +52,13 @@ const Space = tw.div`
   flex-col
   justify-end
   cursor-pointer
+  border
+  border-red-light
 `;
 const FoodList = tw.ul`
   grid
-  grid-cols-7
+  gap-1
+  grid-cols-6
 
 `;
 

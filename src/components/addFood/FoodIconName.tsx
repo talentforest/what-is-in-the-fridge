@@ -1,3 +1,4 @@
+import styles from 'styles/EmojiBox.module.css';
 import { ChangeEvent } from 'react';
 import { Emoji, EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import { categoryConfig, Picker, previewConfig } from '../../utils/emojiConfig';
@@ -31,7 +32,7 @@ const FoodIconName = () => {
 
   return (
     <>
-      <Name>
+      <div className={styles.emojiBox}>
         <Icon onClick={() => dispatch(showEmoji())}>
           <Emoji unified={food.emoji} size={20} emojiStyle={EmojiStyle.APPLE} />
         </Icon>
@@ -51,68 +52,11 @@ const FoodIconName = () => {
             skinTonesDisabled={true}
           />
         )}
-      </Name>
+      </div>
       <Desc>아이콘을 선택해주세요.</Desc>
     </>
   );
 };
-
-const Name = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-  height: 30px;
-  aside {
-    z-index: 20 !important;
-    position: absolute !important;
-    top: 55px;
-    &.EmojiPickerReact {
-      --epr-emoji-size: 20px !important;
-      --epr-search-input-height: 30px !important;
-      --epr-category-navigation-button-size: 20px !important;
-      --epr-preview-height: 40px !important;
-    }
-    div {
-      &.epr-header {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 80px !important;
-      }
-      &.epr-category-nav {
-        padding: 0 10px !important;
-        margin-bottom: 5px;
-      }
-      &.epr-body {
-        ul {
-          li {
-            div {
-              &.epr-emoji-category-label {
-                background-color: #fff;
-                z-index: 10;
-              }
-            }
-          }
-        }
-      }
-      &.epr-preview {
-        align-items: center;
-        gap: 5px;
-        div {
-          img {
-            width: 25px !important;
-            height: 25px !important;
-          }
-          &.epr-preview-emoji-label {
-            padding-top: 3px !important;
-          }
-        }
-      }
-    }
-  }
-`;
 
 export const Input = tw.input`
   rounded-lg

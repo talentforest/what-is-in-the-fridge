@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 import Freezer from '../fridgeFreezer/Freezer';
 import Fridge from '../fridgeFreezer/Fridge';
-import Modal from '../addFood/Modal';
+import Modal from '../common/Modal';
 import { useAppSelector } from 'src/lib/hooks';
 
 const FridgeFreezerSection = () => {

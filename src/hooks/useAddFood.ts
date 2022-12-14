@@ -19,7 +19,7 @@ const useAddFood = () => {
   };
 
   const onAddFoodClick = () => {
-    if (shoppingBagFoods.length >= 6) {
+    if (shoppingBagFoods.length >= 7) {
       alert('장바구니에 식료품을 6개 이상 넣을 수 없습니다.');
       dispatch(showFoodModal());
       return;

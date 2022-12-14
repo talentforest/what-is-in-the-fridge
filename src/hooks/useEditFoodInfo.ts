@@ -38,12 +38,15 @@ const useEditFoodInfo = () => {
 
     const spaceType = getSpaceType(addedFood.space, freezerMode);
     const spaceArr = [...currentMode[spaceType][addedFood.space]];
-    const foodIndex = spaceArr.findIndex((food) => food.id === addedFood.id);
-    spaceArr.splice(foodIndex, 1, editedFood);
-
+    const targetIndex = spaceArr.findIndex((food) => food.id === addedFood.id);
+    const editedSpaceArr = [
+      ...spaceArr.slice(0, targetIndex),
+      editedFood,
+      ...spaceArr.slice(targetIndex + 1),
+    ];
     const newState = {
       ...currentMode[spaceType],
-      [addedFood.space]: spaceArr,
+      [addedFood.space]: editedSpaceArr,
     };
 
     if (spaceType === 'door') {

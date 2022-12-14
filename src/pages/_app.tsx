@@ -8,14 +8,19 @@ import { store } from '../lib/store';
 config.autoAddCss = false;
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import localFont from '@next/font/local';
+
+const myFont = localFont({ src: './NanumSquareRoundB.ttf' });
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <main className={myFont.className}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
       </DndProvider>
     </Provider>
   );

@@ -1,10 +1,14 @@
-import Nav from './Nav';
+import useMediaQuery from 'src/hooks/useMediaQuery';
+import DesktopNav from './DesktopNav';
+import MobileNav from './MobileNav';
 
 export default function Layout({ children }: any) {
+  const { showMobileNav } = useMediaQuery();
+
   return (
     <>
-      <Nav />
-      <main>{children}</main>
+      {showMobileNav ? <MobileNav /> : <DesktopNav />}
+      {children}
     </>
   );
 }

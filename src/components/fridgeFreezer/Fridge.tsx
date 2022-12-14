@@ -40,15 +40,19 @@ const Fridge = () => {
 const FridgeSection = tw.section`
   flex
   gap-1
-  h-3/4
-  
+  desktop:h-4/5
+  tablet:h-2/4
+  mobile:h-4/5
+  border
+  border-red
 `;
 const FridgeBox = tw.div`
   flex
   flex-col
   justify-between
   gap-2
-  w-60
+  tablet:w-64
+  mobile: w-32
   p-3
   rounded-2xl
   shadow-2xl
@@ -61,6 +65,7 @@ export const Shelf = tw.div`
   border
   absolute
   right-0
+  -bottom-1
   shadow-inner
   bg-gray-light
   opacity-50

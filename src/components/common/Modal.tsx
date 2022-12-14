@@ -4,7 +4,7 @@ import { foodInfoNames } from 'src/utils/foodCategory';
 import tw from 'tailwind-styled-components';
 import useEditFoodInfo from 'src/hooks/useEditFoodInfo';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
-import FoodToAddBtns from './FoodToAddBtns';
+import FoodToAddBtns from '../addFood/FoodToAddBtns';
 import useAddFood from 'src/hooks/useAddFood';
 
 interface IModalProps {
@@ -118,7 +118,8 @@ const ModalBox = tw.div`
   bottom-0
   m-auto
   bg-orange-light
-  w-80
+  tablet:w-80
+  mobile:w-64
   h-fit
   rounded-3xl
   shadow-red

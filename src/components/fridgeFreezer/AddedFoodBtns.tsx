@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import {
+  faDiceD6,
+  faEdit,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
 import tw from 'tailwind-styled-components';
 import useHandleAddedFood from 'src/hooks/useHandleAddedFood';
 import { useAppSelector } from 'src/lib/hooks';
@@ -15,10 +19,7 @@ const AddedFoodBtns = ({ setEdit }: IAddedFoodBtnsProps) => {
   return (
     <Btns>
       <Btn $color='bg-green' onClick={setEdit}>
-        <FontAwesomeIcon
-          icon={icon({ name: 'edit', style: 'solid' })}
-          size='2x'
-        />
+        <FontAwesomeIcon icon={faEdit} size='2x' />
         <BtnName>
           식료품
           <br />
@@ -26,10 +27,7 @@ const AddedFoodBtns = ({ setEdit }: IAddedFoodBtnsProps) => {
         </BtnName>
       </Btn>
       <Btn $color='bg-red-light' onClick={removeAddedFood}>
-        <FontAwesomeIcon
-          icon={icon({ name: 'trash-can', style: 'solid' })}
-          size='2x'
-        />
+        <FontAwesomeIcon icon={faTrashCan} size='2x' />
         <BtnName>
           {freezerMode ? (
             <>
@@ -47,10 +45,7 @@ const AddedFoodBtns = ({ setEdit }: IAddedFoodBtnsProps) => {
         </BtnName>
       </Btn>
       <Btn $color='bg-blue' onClick={moveToAnotherMode}>
-        <FontAwesomeIcon
-          icon={icon({ name: 'dice-d6', style: 'solid' })}
-          size='2x'
-        />
+        <FontAwesomeIcon icon={faDiceD6} size='2x' />
         <BtnName>
           {freezerMode ? (
             <>
