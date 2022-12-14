@@ -41,19 +41,22 @@ const Freezer = () => {
 const FreezerSection = tw.section`
   flex
   gap-1
-  h-64
+  h-80
+  border
+  border-red
 `;
 const FreezerBox = tw.div`
   flex
   flex-col
   justify-between
   gap-2
-  border
-  w-60
+  tablet:w-64
+  mobile:w-36
   p-3
   rounded-2xl
   shadow-2xl
   bg-gray-light
+  
 `;
 const FreezerDoor = tw(FreezerBox)`
 `;

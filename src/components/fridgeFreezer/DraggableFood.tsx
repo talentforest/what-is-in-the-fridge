@@ -2,11 +2,11 @@ import { Emoji } from 'emoji-picker-react';
 import { useDrag } from 'react-dnd';
 import { removeShoppingBagFood } from 'src/lib/slice/shoppingBagSlice';
 import { useAppDispatch } from 'src/lib/hooks';
-import { IFood } from 'src/lib/slice/foodSlice';
+import { IFood, spaceName } from 'src/lib/slice/foodSlice';
 import { showAddedFoodModal } from 'src/lib/slice/openCloseState/showAddedFoodModal';
 import { changeAddedFoodInfo } from 'src/lib/slice/addedFood';
 import useDragFood from 'src/hooks/useDragFood';
-import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 
 interface IFoodProps {
   food: IFood;
@@ -26,7 +26,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
       if (item && dropResult) {
-        changeFoodsState(dropResult.name, item);
+        changeFoodsState(dropResult.name as spaceName, item);
         dispatch(removeShoppingBagFood(item));
       }
     },
@@ -45,15 +45,20 @@ const DraggableFood = ({ food }: IFoodProps) => {
 
   return (
     <DragBox ref={dragRef} style={isDraggingStyle} onClick={onClick}>
-      <Emoji unified={food.emoji} size={30} />
+      <Emoji
+        unified={food.emoji}
+        size={food.space === 'shoppingBag' ? 30 : 35}
+      />
     </DragBox>
   );
 };
 
-const DragBox = styled.button`
-  position: relative;
-  height: fit-content;
-  transform: translate(0, 0);
+const DragBox = tw.button`
+  relative;
+  h-fit
+  
+  translate-x-0
+  translate-y-0
 `;
 
 export default DraggableFood;

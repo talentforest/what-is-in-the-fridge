@@ -20,7 +20,7 @@ const FoodQuantity = () => {
   return (
     <>
       <Box>
-        <span>수량</span>
+        <Name>수량</Name>
         <Input
           type='number'
           placeholder='수량을 적어주세요.'
@@ -34,16 +34,17 @@ const FoodQuantity = () => {
   );
 };
 
-const Box = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-  height: 30px;
-  span {
-    border-radius: 10px;
-    width: 30%;
-  }
+const Box = tw.div`
+  flex
+  justify-between
+  items-center
+  gap-2
+  h-8
+  text-[14px]
+`;
+const Name = tw.span`
+  rounded-sm
+  w-1/5
 `;
 const Desc = tw.span`
   text-xs

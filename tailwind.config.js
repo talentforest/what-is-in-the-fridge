@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: true,
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
@@ -7,7 +8,7 @@ module.exports = {
   ],
   theme: {
     screens: {
-      mobile: '400px',
+      mobile: '280px',
       tablet: '640px',
       desktop: '1024px',
     },
@@ -33,6 +34,9 @@ module.exports = {
       base: ['16px', '18px'],
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
+    },
+    scaleX: {
+      '-1': '-1',
     },
     extend: {},
   },

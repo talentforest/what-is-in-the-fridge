@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import tw from 'tailwind-styled-components';
 import useAddFood from 'src/hooks/useAddFood';
 
@@ -8,11 +8,11 @@ const FoodToAddBtns = () => {
   return (
     <Btns>
       <Btn onClick={onAddFoodClick} $color='bg-green'>
-        <FontAwesomeIcon icon={icon({ name: 'plus', style: 'solid' })} />
+        <FontAwesomeIcon icon={faPlus} />
         <BtnName>추가하기</BtnName>
       </Btn>
       <Btn onClick={closeFoodModal} $color='bg-red-light'>
-        <FontAwesomeIcon icon={icon({ name: 'xmark', style: 'solid' })} />
+        <FontAwesomeIcon icon={faXmark} />
         <BtnName>취소하기</BtnName>
       </Btn>
     </Btns>
@@ -21,12 +21,12 @@ const FoodToAddBtns = () => {
 
 const Btns = tw.div`
   flex
-  ${(p: { $addedFoodModal: boolean }) =>
-    p.$addedFoodModal ? 'flex-col' : 'flex-row'}
+  flex-row
   gap-1
 `;
 const Btn = tw.button`
-  w-20
+  tablet:w-20
+  mobile:w-24
   flex
   flex-col
   gap-2
@@ -42,16 +42,6 @@ const Btn = tw.button`
 `;
 const BtnName = tw.span`
   leading-3
-`;
-const SubmitBtn = tw.button`
-  mt-3
-  text-xs
-  p-2
-  rounded-lg
-  bg-green
-  shadow-lg
-  text-white
-  font-semibold
 `;
 
 export default FoodToAddBtns;

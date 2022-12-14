@@ -1,5 +1,5 @@
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useAppDispatch } from 'src/lib/hooks';
 import { changeMode } from 'src/lib/slice/freezerModeReducer';
 import tw from 'tailwind-styled-components';
@@ -15,15 +15,7 @@ const FridgeFreezerChangeBtn = ({ btnName }: IFridgeFreezerChangeBtnProps) => {
     <FridgeBtn onClick={() => dispatch(changeMode())}>
       <span>{btnName}</span>
       <FontAwesomeIcon
-        icon={
-          btnName === '냉장칸 보기'
-            ? icon({
-                name: 'arrow-down',
-              })
-            : icon({
-                name: 'arrow-up',
-              })
-        }
+        icon={btnName === '냉장칸 보기' ? faArrowUp : faArrowDown}
       />
     </FridgeBtn>
   );
@@ -36,7 +28,8 @@ const FridgeBtn = tw.button`
   gap-2
   h-12
   bg-white-dark
-  w-[calc(2*theme(spacing.60))]
+  tablet:w-[calc(2*theme(spacing.64))]
+  mobile:w-[calc(2*theme(spacing.36))]
   rounded-xl
   shadow-inner
   text-gray

@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import ShoppingBag from 'src/assets/ShoppingBag.svg';
+import Cart from 'src/assets/Cart.svg';
 import DraggableFood from './DraggableFood';
 import { useAppSelector } from 'src/lib/hooks';
 
@@ -8,7 +8,7 @@ const ShoppingBagFood = () => {
 
   return (
     <ShoppingBagBox>
-      <BagIcon />
+      <CartIcon />
       <EmojiBox>
         {shoppingBagFoods?.map((food, index) => (
           <DraggableFood key={index} food={food} />
@@ -20,22 +20,30 @@ const ShoppingBagFood = () => {
 
 const ShoppingBagBox = tw.div`
   absolute
-  right-0
-  bottom-0
-  w-52
-  h-52
+  right-2
+  bottom-2
+  tablet:w-48
+  tablet:h-48
+  mobile:w-40
+  mobile:h-40
 `;
-const BagIcon = tw(ShoppingBag)`
+const CartIcon = tw(Cart)`
+  mt-3
   absolute
+  scale-x-[-1]
+  stroke-2
+  stroke-green
+  fill-white-dark
+  drop-shadow-lg
 `;
 const EmojiBox = tw.div`
   absolute
   gap-1
-  pt-3
-  top-20
-  left-6
-  w-40
-  h-28
+  pt-1
+  top-6
+  left-3
+  w-36
+  h-20
   flex
   flex-wrap
   justify-center

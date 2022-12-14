@@ -1,15 +1,21 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { motion, useAnimation } from 'framer-motion';
 import { closeAddFoodArea } from 'src/lib/slice/openCloseState/closeAddFoodAreaSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
+import { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
 import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
-import Modal from '../addFood/Modal';
+import Modal from '../common/Modal';
+import {
+  faCircleArrowRight,
+  faCircleXmark,
+} from '@fortawesome/free-solid-svg-icons';
+
+const CLOSE_X = -255;
 
 const AddFoodSection = () => {
   const { modal } = useAppSelector((state) => state.foodModal);
@@ -17,6 +23,13 @@ const AddFoodSection = () => {
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
   const addFoodAnimation = useAnimation();
+
+  useEffect(() => {
+    if (close) {
+      addFoodAnimation.start({ x: CLOSE_X });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -32,7 +45,7 @@ const AddFoodSection = () => {
   const onHandleOpenClick = () => {
     close
       ? addFoodAnimation.start({ x: 0 })
-      : addFoodAnimation.start({ x: -225 });
+      : addFoodAnimation.start({ x: CLOSE_X });
     dispatch(closeAddFoodArea());
   };
 
@@ -46,16 +59,13 @@ const AddFoodSection = () => {
         {close ? (
           <OpenAddFoodBtn onClick={onHandleOpenClick}>
             <FontAwesomeIcon
-              icon={icon({ name: 'circle-arrow-right', style: 'solid' })}
+              icon={faCircleArrowRight}
               className='cursor-pointer'
             />
           </OpenAddFoodBtn>
         ) : (
           <OpenAddFoodBtn onClick={onHandleOpenClick}>
-            <FontAwesomeIcon
-              icon={icon({ name: 'circle-xmark', style: 'solid' })}
-              className='cursor-pointer'
-            />
+            <FontAwesomeIcon icon={faCircleXmark} className='cursor-pointer' />
           </OpenAddFoodBtn>
         )}
         <AddFoodHeader>
@@ -83,22 +93,21 @@ const OpenAddFoodBtn = tw(motion.button)`
   h-full
   absolute
   top-0
-  right-0
+  -right-8
   bg-yellow-light
   rounded-r-3xl
   z-5
+  
 `;
 const AddFoodBox = tw(motion.section)`
-  rounded-r-3xl
   bg-yellow
   shadow-2xl
   absolute
   top-0
   bottom-0
   w-64
-  p-3
-  pt-6
-  pr-10
+  px-2
+  pt-5
 `;
 const AddFoodHeader = tw.header`
   flex
