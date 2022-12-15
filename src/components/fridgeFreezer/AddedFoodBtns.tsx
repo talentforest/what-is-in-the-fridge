@@ -67,6 +67,7 @@ const AddedFoodBtns = ({ setEdit }: IAddedFoodBtnsProps) => {
 };
 
 const Btns = tw.div`
+  mt-3
   flex
   ${(p: { $addedFoodModal: boolean }) =>
     p.$addedFoodModal ? 'flex-col' : 'flex-row'}

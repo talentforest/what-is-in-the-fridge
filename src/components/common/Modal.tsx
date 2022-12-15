@@ -119,8 +119,10 @@ const ModalBox = tw.div`
   m-auto
   bg-orange-light
   tablet:w-80
-  mobile:w-64
-  h-fit
+  mobile:w-4/5
+  desktop:h-4/5
+  tablet:h-2/5
+  mobile:h-2/3
   rounded-3xl
   shadow-red
   z-10
@@ -135,7 +137,7 @@ const EmojiBox = tw.div`
   border
   h-28
   w-28
-  mt-4
+  my-4
   rounded-lg
   shadow-md
   bg-white
@@ -144,32 +146,29 @@ const Info = tw.ul`
   flex
   flex-col
   gap-2
-  py-3
-  px-5
-  my-2
-  text-sm
-  w-56
+  px-3
+  w-60
 `;
 const Item = tw.li`
   flex
-  gap-2
+  gap-1
   items-center
+  justify-between
 `;
 const Name = tw.div`
-  w-20
+  w-16
   text-gray
 `;
 const Input = tw.input`
-  w-full
+  text-end
+  w-36
   rounded-lg
-  px-1.5
+  px-2
   py-1
   shadow-lg
-  text-sm
 `;
 const SubmitBtn = tw.button`
   mt-3
-  text-xs
   p-2
   rounded-lg
   bg-green

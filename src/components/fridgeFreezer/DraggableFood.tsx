@@ -45,10 +45,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
 
   return (
     <DragBox ref={dragRef} style={isDraggingStyle} onClick={onClick}>
-      <Emoji
-        unified={food.emoji}
-        size={food.space === 'shoppingBag' ? 30 : 35}
-      />
+      <Emoji unified={food.emoji} size={30} />
     </DragBox>
   );
 };
@@ -56,7 +53,6 @@ const DraggableFood = ({ food }: IFoodProps) => {
 const DragBox = tw.button`
   relative;
   h-fit
-  
   translate-x-0
   translate-y-0
 `;
