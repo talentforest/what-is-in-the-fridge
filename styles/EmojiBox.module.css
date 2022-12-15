@@ -11,42 +11,33 @@
   z-index: 20 !important;
   position: absolute !important;
   top: 55px;
-}
-
-.EmojiPickerReact {
   --epr-emoji-size: 20px !important;
   --epr-search-input-height: 30px !important;
   --epr-category-navigation-button-size: 20px !important;
   --epr-preview-height: 40px !important;
 }
 
-.epr-header {
+.emojiBox > aside > div:first-child {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 80px !important;
 }
 
-.epr-category-nav {
+.emojiBox > aside > div:first-child > div:last-child {
   padding: 0 10px !important;
   margin-bottom: 5px;
 }
 
-.epr-emoji-category-label {
-  background-color: #fff;
-  z-index: 10;
-}
-
-.epr-preview {
+.emojiBox > aside > div:last-child {
   align-items: center;
   gap: 5px;
 }
 
-.epr-preview div img {
+.emojiBox > aside > div:last-child > div > img {
   width: 25px !important;
   height: 25px !important;
 }
-
-.epr-preview-emoji-label {
+.emojiBox > aside > div:last-child > div:nth-child(2) {
   padding-top: 3px !important;
 }
