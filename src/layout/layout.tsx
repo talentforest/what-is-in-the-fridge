@@ -1,14 +1,17 @@
-import useMediaQuery from 'src/hooks/useMediaQuery';
+import useWindowSize from 'src/hooks/useWindowSize';
+import { screens } from 'src/utils/screen';
 import DesktopNav from './DesktopNav';
 import MobileNav from './MobileNav';
 
 export default function Layout({ children }: any) {
-  const { showMobileNav } = useMediaQuery();
+  const { windowSize } = useWindowSize();
 
-  return (
+  return windowSize.width !== 0 ? (
     <>
-      {showMobileNav ? <MobileNav /> : <DesktopNav />}
+      {screens.tablet >= windowSize.width ? <MobileNav /> : <DesktopNav />}
       {children}
     </>
+  ) : (
+    <div>Loading...</div>
   );
 }

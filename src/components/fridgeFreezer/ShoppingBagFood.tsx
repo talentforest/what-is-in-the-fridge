@@ -6,7 +6,7 @@ import { useAppSelector } from 'src/lib/hooks';
 const ShoppingBagFood = () => {
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
 
-  return (
+  return shoppingBagFoods.length !== 0 ? (
     <ShoppingBagBox>
       <CartIcon />
       <EmojiBox>
@@ -15,35 +15,42 @@ const ShoppingBagFood = () => {
         ))}
       </EmojiBox>
     </ShoppingBagBox>
+  ) : (
+    <></>
   );
 };
 
 const ShoppingBagBox = tw.div`
   absolute
   right-2
-  bottom-2
+  bottom-0
   tablet:w-48
   tablet:h-48
   mobile:w-40
   mobile:h-40
+  
 `;
 const CartIcon = tw(Cart)`
   mt-3
   absolute
   scale-x-[-1]
   stroke-2
-  stroke-green
-  fill-white-dark
+  stroke-orange
+  fill-orange-light
   drop-shadow-lg
 `;
 const EmojiBox = tw.div`
   absolute
-  gap-1
+  tablet:gap-1
+  mobile:gap-0
   pt-1
   top-6
-  left-3
-  w-36
-  h-20
+  tablet:left-3
+  mobile:left-1
+  tablet:w-36
+  tablet:h-20
+  mobile:w-32
+  mobile:h-16
   flex
   flex-wrap
   justify-center

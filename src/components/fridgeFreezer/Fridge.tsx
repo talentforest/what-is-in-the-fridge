@@ -11,7 +11,7 @@ const Fridge = () => {
     <>
       <FridgeFreezerChangeBtn btnName='냉동칸 보기' />
       <FridgeSection>
-        <FridgeBox>
+        <FridgeInner>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
             <Compartment
               key={spaceKey}
@@ -19,7 +19,7 @@ const Fridge = () => {
               spaceKey={spaceKey}
             />
           ))}
-        </FridgeBox>
+        </FridgeInner>
         <FridgeDoor>
           {Object.keys(fridge.door).map((spaceKey: string) => (
             <Compartment
@@ -39,26 +39,29 @@ const Fridge = () => {
 
 const FridgeSection = tw.section`
   flex
-  gap-1
+  gap-0.5
   desktop:h-4/5
   tablet:h-2/4
   mobile:h-4/5
-  border
-  border-red
+  tablet:w-2/3
+  mobile:w-11/12
+  pb-2
 `;
-const FridgeBox = tw.div`
+const FridgeInner = tw.div`
   flex
   flex-col
   justify-between
   gap-2
-  tablet:w-64
-  mobile: w-32
-  p-3
+  w-1/2
+  tablet:p-3
+  mobile:p-2
   rounded-2xl
   shadow-2xl
   bg-gray-light
+  border
+  border-gray
 `;
-const FridgeDoor = tw(FridgeBox)`
+const FridgeDoor = tw(FridgeInner)`
 `;
 export const Shelf = tw.div`
   w-full

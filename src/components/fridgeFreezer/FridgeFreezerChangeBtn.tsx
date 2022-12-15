@@ -15,7 +15,7 @@ const FridgeFreezerChangeBtn = ({ btnName }: IFridgeFreezerChangeBtnProps) => {
     <FridgeBtn onClick={() => dispatch(changeMode())}>
       <span>{btnName}</span>
       <FontAwesomeIcon
-        icon={btnName === '냉장칸 보기' ? faArrowUp : faArrowDown}
+        icon={btnName === '냉장칸 보기' ? faArrowDown : faArrowUp}
       />
     </FridgeBtn>
   );
@@ -26,15 +26,17 @@ const FridgeBtn = tw.button`
   justify-center
   items-center
   gap-2
-  h-12
+  tablet:h-16
+  mobile:h-10
   bg-white-dark
-  tablet:w-[calc(2*theme(spacing.64))]
-  mobile:w-[calc(2*theme(spacing.36))]
+  tablet:w-2/3
+  mobile:w-11/12
   rounded-xl
   shadow-inner
   text-gray
   font-bold
-  text-sm
+  border
+  border-gray
 `;
 
 export default FridgeFreezerChangeBtn;
