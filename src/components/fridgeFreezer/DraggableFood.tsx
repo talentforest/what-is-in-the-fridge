@@ -51,7 +51,8 @@ const DraggableFood = ({ food }: IFoodProps) => {
 };
 
 const DragBox = tw.button`
-  relative;
+  basis-7
+  relative
   h-fit
   translate-x-0
   translate-y-0

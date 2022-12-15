@@ -17,13 +17,19 @@ const FridgeFreezerSection = () => {
 };
 
 const FridgeFreezer = tw.section`
-  h-[calc(100vh-theme(spacing.12))]
+  desktop:h-[calc(100vh-theme(spacing.12))]
+  tablet:h-[calc(100vh-theme(spacing.12))]
+  mobile:h-[calc(100vh-theme(spacing.12))]
   flex
   flex-col
-  justify-center
   items-center
   gap-1
   relative
+  tablet:justify-center
+  desktop:pb-0
+  tablet:pt-0
+  tablet:pb-32
+  mobile:pt-10
 `;
 
 export default FridgeFreezerSection;

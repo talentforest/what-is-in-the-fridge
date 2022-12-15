@@ -50,15 +50,14 @@ const Space = tw.div`
   flex
   flex-col
   justify-end
+  
   cursor-pointer
-  border
 `;
 const FoodList = tw.ul`
-  grid
+  flex
+  flex-wrap-reverse
   tablet:gap-1
   mobile:gap-0
-  tablet:grid-cols-7
-  mobile:grid-cols-5
 `;
 
 export default Compartment;

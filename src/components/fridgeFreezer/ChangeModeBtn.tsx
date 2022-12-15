@@ -4,32 +4,32 @@ import { useAppDispatch } from 'src/lib/hooks';
 import { changeMode } from 'src/lib/slice/freezerModeReducer';
 import tw from 'tailwind-styled-components';
 
-interface IFridgeFreezerChangeBtnProps {
+interface IChangeModeBtnProps {
   btnName: string;
 }
 
-const FridgeFreezerChangeBtn = ({ btnName }: IFridgeFreezerChangeBtnProps) => {
+const ChangeModeBtn = ({ btnName }: IChangeModeBtnProps) => {
   const dispatch = useAppDispatch();
 
   return (
-    <FridgeBtn onClick={() => dispatch(changeMode())}>
+    <ChangeBtn onClick={() => dispatch(changeMode())}>
       <span>{btnName}</span>
       <FontAwesomeIcon
         icon={btnName === '냉장칸 보기' ? faArrowDown : faArrowUp}
       />
-    </FridgeBtn>
+    </ChangeBtn>
   );
 };
 
-const FridgeBtn = tw.button`
+const ChangeBtn = tw.button`
   flex
   justify-center
   items-center
-  gap-2
-  tablet:h-16
-  mobile:h-10
   bg-white-dark
-  tablet:w-2/3
+  gap-2
+  tablet:h-12
+  mobile:h-10
+  tablet:w-[calc(2*theme(spacing.64))]
   mobile:w-11/12
   rounded-xl
   shadow-inner
@@ -39,4 +39,4 @@ const FridgeBtn = tw.button`
   border-gray
 `;
 
-export default FridgeFreezerChangeBtn;
+export default ChangeModeBtn;

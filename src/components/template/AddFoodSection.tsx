@@ -53,11 +53,11 @@ const AddFoodSection = () => {
 
   return (
     <>
-      {screens.tablet >= windowSize.width ? (
+      {screens.desktop >= windowSize.width ? (
         <>
-          <Menu onClick={onMobileClick}>
-            <Icon icon={faCartPlus} size='xl' color='#f9641f' />
-          </Menu>
+          <PlusIconBox onClick={onMobileClick}>
+            <PlusIcon icon={faCartPlus} color='#66a8ea' />
+          </PlusIconBox>
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
             transition={{ type: 'linear', duration: 0.3 }}
@@ -92,18 +92,36 @@ const AddFoodSection = () => {
   );
 };
 
-const Icon = tw(FontAwesomeIcon)`
-  cursor-pointer
-`;
-const Menu = tw.button`
+const PlusIconBox = tw.button`
+  bg-yellow
+  shadow-xl
+  rounded-full
+  tablet:h-40
+  tablet:w-40
+  mobile:w-24
+  mobile:h-24
   absolute
-  top-3
-  right-4
+  tablet:bottom-12
+  tablet:right-12
+  mobile:bottom-4
+  mobile:right-4
   flex
-  justify-between
+  justify-center
   items-center
   gap-5
   text-gray-dark
+`;
+const Icon = tw(FontAwesomeIcon)`
+  cursor-pointer
+`;
+const PlusIcon = tw(FontAwesomeIcon)`
+  cursor-pointer
+  tablet:w-20
+  tablet:h-20
+  mobile:w-12
+  mobile:h-12
+  pt-2
+  pr-1.5
 `;
 const Overlay = tw.div`
   absolute
@@ -130,7 +148,7 @@ const OpenAddFoodBtn = tw(motion.button)`
   z-5
 `;
 const AddFoodBox = tw(motion.section)`
-bg-orange-light
+  bg-orange-light
   shadow-3xl
   absolute
   top-0
@@ -139,7 +157,7 @@ bg-orange-light
   pt-5
   tablet:px-2
   mobile:px-4
-  tablet:rounded-none
+  desktop:rounded-none
   mobile:rounded-r-3xl
   z-5
 `;

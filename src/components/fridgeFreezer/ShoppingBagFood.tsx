@@ -9,7 +9,7 @@ const ShoppingBagFood = () => {
 
   return (
     <ShoppingBagBox>
-      <CartIcon icon={faBagShopping} color='#c2baff' />
+      <CartIcon icon={faBagShopping} color='#72b8ff' />
       <EmojiBox>
         {shoppingBagFoods?.map((food) => (
           <DraggableFood key={food.id} food={food} />
@@ -21,34 +21,36 @@ const ShoppingBagFood = () => {
 
 const ShoppingBagBox = tw.div`
   absolute
-  right-2
-  bottom-2
-  tablet:w-48
-  tablet:h-48
+  desktop:right-2
+  desktop:bottom-4
+  desktop:left-auto
+  tablet:left-12
+  tablet:bottom-12
+  tablet:w-56
+  tablet:h-56
+  mobile:left-4
+  mobile:bottom-2
   mobile:w-40
   mobile:h-40
 `;
 const CartIcon = tw(FontAwesomeIcon)`
-  tablet:w-48
-  tablet:h-48
+  tablet:w-56
+  tablet:h-56
   mobile:w-40
   mobile:h-40
   absolute
   scale-x-[-1]
-  stroke-2
-  stroke-orange
   drop-shadow-lg
 `;
 const EmojiBox = tw.div`
   absolute
   tablet:gap-1
-  mobile:gap-0
-  pt-1
+  mobile:gap-1
   bottom-3
-  tablet:left-3
+  tablet:left-4
   mobile:left-4
-  tablet:w-36
-  tablet:h-20
+  tablet:w-48
+  tablet:h-24
   mobile:w-32
   mobile:h-16
   flex
