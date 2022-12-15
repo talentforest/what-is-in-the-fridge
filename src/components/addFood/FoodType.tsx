@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import { foodCategories, IfoodCategory } from 'src/utils/foodCategory';
+import { v4 as uuidv4 } from 'uuid';
 import tw from 'tailwind-styled-components';
 
 const FoodType = () => {
@@ -12,6 +13,7 @@ const FoodType = () => {
       ...food,
       type: foodTypes.type,
       emoji: foodTypes.emoji,
+      id: uuidv4(),
     };
     dispatch(changeFoodInfo(result));
   };

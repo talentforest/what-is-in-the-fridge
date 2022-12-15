@@ -1,23 +1,28 @@
 import tw from 'tailwind-styled-components';
 import Link from 'next/link';
+import useWindowSize from 'src/hooks/useWindowSize';
 import { useRouter } from 'next/router';
+import { screens } from 'src/utils/screen';
 
-export default function DesktopNav() {
+export default function Navigation() {
   const { pathname } = useRouter();
+  const { windowSize } = useWindowSize();
 
   return (
     <Nav>
       <Link href='/'>
-        <Logo>What is in my FRIDGE</Logo>
+        <Logo>What is in my FRIDGE?</Logo>
       </Link>
-      <Menu>
-        <List href='/my-fridge' $active={pathname === '/my-fridge'}>
-          나의 냉장고
-        </List>
-        <List href='/my-setting' $active={pathname === '/my-setting'}>
-          나의 설정
-        </List>
-      </Menu>
+      {windowSize.width >= screens.tablet && (
+        <Menu>
+          <List href='/my-fridge' $active={pathname === '/my-fridge'}>
+            나의 냉장고
+          </List>
+          <List href='/my-setting' $active={pathname === '/my-setting'}>
+            나의 설정
+          </List>
+        </Menu>
+      )}
     </Nav>
   );
 }

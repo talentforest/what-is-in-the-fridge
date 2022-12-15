@@ -18,7 +18,7 @@ const shoppingBagSlice = createSlice({
     },
     removeShoppingBagFood: (state, action) => {
       state.shoppingBagFoods = state.shoppingBagFoods.filter(
-        (item) => item.name !== action.payload.name
+        (item) => item.id !== action.payload.id
       );
     },
   },
