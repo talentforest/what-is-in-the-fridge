@@ -64,9 +64,9 @@ export const Input = tw.input`
   w-full
   h-8
   p-2
-  text-sm
+  text-[14px]
+  focus:outline-yellow
 `;
-
 const Icon = tw.div`
   flex
   justify-center

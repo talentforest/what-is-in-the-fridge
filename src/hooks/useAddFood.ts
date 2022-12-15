@@ -5,6 +5,7 @@ import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
 import { changeStrDate } from 'src/utils/changeStrDate';
 
 const useAddFood = () => {
+  const { open } = useAppSelector((state) => state.addFoodArea);
   const { food } = useAppSelector((state) => state.food);
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();

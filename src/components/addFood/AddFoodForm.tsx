@@ -54,7 +54,7 @@ text-gray-dark
 const FoodForm = tw.form`
 `;
 const ItemTitle = tw.h4`
-  text-gray-dark
+  text-gray
   text-xs 
   mb-2
   mt-5

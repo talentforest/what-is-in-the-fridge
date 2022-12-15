@@ -12,9 +12,9 @@ import {
   faCircleArrowRight,
   faCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import { screens } from 'src/utils/screen';
 import tw from 'tailwind-styled-components';
 import AddFoodForm from '../addFood/AddFoodForm';
-import { screens } from 'src/utils/screen';
 import useWindowSize from 'src/hooks/useWindowSize';
 
 const CLOSE_X = -260;
@@ -38,10 +38,10 @@ const AddFoodSection = () => {
   };
 
   const onMobileClick = () => {
-    dispatch(openAddFoodArea());
     open
       ? slideXAnimation.start({ x: CLOSE_X })
       : slideXAnimation.start({ x: 0 });
+    dispatch(openAddFoodArea());
   };
 
   const onDesktopClick = () => {
@@ -56,12 +56,7 @@ const AddFoodSection = () => {
       {screens.tablet >= windowSize.width ? (
         <>
           <Menu onClick={onMobileClick}>
-            <FontAwesomeIcon
-              icon={faCartPlus}
-              size='xl'
-              color='#f9641f'
-              style={{ cursor: 'pointer' }}
-            />
+            <Icon icon={faCartPlus} size='xl' color='#f9641f' />
           </Menu>
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
@@ -81,17 +76,11 @@ const AddFoodSection = () => {
           >
             {close ? (
               <OpenAddFoodBtn onClick={onDesktopClick}>
-                <FontAwesomeIcon
-                  icon={faCircleArrowRight}
-                  className='cursor-pointer'
-                />
+                <Icon icon={faCircleArrowRight} />
               </OpenAddFoodBtn>
             ) : (
               <OpenAddFoodBtn onClick={onDesktopClick}>
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className='cursor-pointer'
-                />
+                <Icon icon={faCircleXmark} />
               </OpenAddFoodBtn>
             )}
             <AddFoodForm onSubmit={onSubmit} />
@@ -103,6 +92,19 @@ const AddFoodSection = () => {
   );
 };
 
+const Icon = tw(FontAwesomeIcon)`
+  cursor-pointer
+`;
+const Menu = tw.button`
+  absolute
+  top-3
+  right-4
+  flex
+  justify-between
+  items-center
+  gap-5
+  text-gray-dark
+`;
 const Overlay = tw.div`
   absolute
   ${(p: { $addedFoodModal: boolean }) =>
@@ -115,19 +117,6 @@ const Overlay = tw.div`
   cursor-pointer
   z-1
 `;
-
-const Menu = tw.ul`
-  absolute
-  top-3
-  right-4
-
-  flex
-  justify-between
-  items-center
-  gap-5
-  text-gray-dark
-`;
-
 const OpenAddFoodBtn = tw(motion.button)`
   tablet:block
   mobile:hidden

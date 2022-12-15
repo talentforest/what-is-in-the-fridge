@@ -18,7 +18,7 @@ const ExpiryDate = () => {
         {dateType.map((item) => (
           <DateBtn
             key={item.type}
-            $color={item.color}
+            style={{ backgroundColor: item.color }}
             onClick={(e: React.FormEvent<HTMLButtonElement>) =>
               onDatePlusClick(e, item.type)
             }
@@ -42,7 +42,6 @@ const DateBtn = tw.button<{ $color: string }>`
   py-1
   px-2
   rounded-3xl
-  ${(p: { $color: string }) => (p.$color ? 'bg-green' : 'bg-red')};
   flex
   items-center
   gap-1
