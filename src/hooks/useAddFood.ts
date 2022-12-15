@@ -5,12 +5,12 @@ import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
 import { changeStrDate } from 'src/utils/changeStrDate';
 
 const useAddFood = () => {
-  const { open } = useAppSelector((state) => state.addFoodArea);
   const { food } = useAppSelector((state) => state.food);
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
 
   const initialState = {
+    id: '',
     type: '',
     name: '',
     space: 'shoppingBag',
@@ -20,8 +20,8 @@ const useAddFood = () => {
   };
 
   const onAddFoodClick = () => {
-    if (shoppingBagFoods.length >= 7) {
-      alert('장바구니에 식료품을 6개 이상 넣을 수 없습니다.');
+    if (shoppingBagFoods.length >= 8) {
+      alert('장바구니에 식료품을 8개 넣을 수 없습니다.');
       dispatch(showFoodModal());
       return;
     }

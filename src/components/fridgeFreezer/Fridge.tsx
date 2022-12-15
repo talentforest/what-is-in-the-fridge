@@ -42,10 +42,10 @@ const FridgeSection = tw.section`
   gap-0.5
   desktop:h-4/5
   tablet:h-2/4
-  mobile:h-4/5
+  mobile:h-2/3
   tablet:w-2/3
   mobile:w-11/12
-  pb-2
+  mb-24
 `;
 const FridgeInner = tw.div`
   flex

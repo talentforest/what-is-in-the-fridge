@@ -8,7 +8,6 @@ import {
   changeFreezerDoor,
   changeFreezerInner,
 } from 'src/lib/slice/freezerFoodsSlice';
-import { v4 as uuidv4 } from 'uuid';
 import { getSpaceType } from 'src/utils/getSpaceType';
 
 const useDragFood = () => {
@@ -24,7 +23,6 @@ const useDragFood = () => {
   const addFoodAtNewSpace = (spaceKey: spaceName, prevFood: IFood) => {
     const itemToAdd: IFood = {
       ...prevFood,
-      id: prevFood.space === 'shoppingBag' ? uuidv4() : prevFood.id,
       space: spaceKey as IFood['space'],
     };
     const spaceType = getSpaceType(spaceKey, freezerMode);
@@ -90,11 +88,11 @@ const useDragFood = () => {
   };
 
   const changeFoodsState = (spaceKey: spaceName, prevItem: IFood) => {
+    if (prevItem.space === spaceKey) return;
     const spaceType = getSpaceType(spaceKey, freezerMode);
     if (prevItem.space === 'shoppingBag') {
       return addFoodAtNewSpace(spaceKey, prevItem);
     }
-    if (prevItem.space === spaceKey) return;
     spaceType === 'door'
       ? changeDoorItems(spaceKey, prevItem)
       : changeInnerItems(spaceKey, prevItem);

@@ -1,42 +1,42 @@
 import tw from 'tailwind-styled-components';
-import Cart from 'src/assets/Cart.svg';
 import DraggableFood from './DraggableFood';
 import { useAppSelector } from 'src/lib/hooks';
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ShoppingBagFood = () => {
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
 
-  return shoppingBagFoods.length !== 0 ? (
+  return (
     <ShoppingBagBox>
-      <CartIcon />
+      <CartIcon icon={faBagShopping} color='#c2baff' />
       <EmojiBox>
-        {shoppingBagFoods?.map((food, index) => (
-          <DraggableFood key={index} food={food} />
+        {shoppingBagFoods?.map((food) => (
+          <DraggableFood key={food.id} food={food} />
         ))}
       </EmojiBox>
     </ShoppingBagBox>
-  ) : (
-    <></>
   );
 };
 
 const ShoppingBagBox = tw.div`
   absolute
   right-2
-  bottom-0
+  bottom-2
   tablet:w-48
   tablet:h-48
   mobile:w-40
   mobile:h-40
-  
 `;
-const CartIcon = tw(Cart)`
-  mt-3
+const CartIcon = tw(FontAwesomeIcon)`
+  tablet:w-48
+  tablet:h-48
+  mobile:w-40
+  mobile:h-40
   absolute
   scale-x-[-1]
   stroke-2
   stroke-orange
-  fill-orange-light
   drop-shadow-lg
 `;
 const EmojiBox = tw.div`
@@ -44,9 +44,9 @@ const EmojiBox = tw.div`
   tablet:gap-1
   mobile:gap-0
   pt-1
-  top-6
+  bottom-3
   tablet:left-3
-  mobile:left-1
+  mobile:left-4
   tablet:w-36
   tablet:h-20
   mobile:w-32
