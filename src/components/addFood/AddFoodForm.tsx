@@ -30,7 +30,7 @@ const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
 };
 
 const Form = tw.div`
-  z-10
+  z-5
   bg-orange-light
   w-64
   p-4
@@ -39,7 +39,8 @@ const Form = tw.div`
   top-0
   left-0
   h-full
-  shadow-xl
+  tablet:shadow-none
+  mobile:shadow-3xl
 `;
 
 const AddFoodHeader = tw.header`

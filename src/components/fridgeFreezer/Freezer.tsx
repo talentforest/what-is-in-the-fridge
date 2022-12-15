@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import Compartment from './Compartment';
-import FridgeFreezerChangeBtn from './FridgeFreezerChangeBtn';
+import ChangeModeBtn from './ChangeModeBtn';
 import ShoppingBagFood from './ShoppingBagFood';
 import { useAppSelector } from 'src/lib/hooks';
 import { Shelf } from './Fridge';
@@ -32,18 +32,21 @@ const Freezer = () => {
           ))}
         </FreezerDoor>
       </FreezerSection>
-      <FridgeFreezerChangeBtn btnName='냉장칸 보기' />
+      <ChangeModeBtn btnName='냉장칸 보기' />
       <ShoppingBagFood />
     </>
   );
 };
 
 const FreezerSection = tw.section`
+  tablet:mt-0
+  mobile:mt-10
   flex
   gap-1
-  h-80
-  border
-  border-red
+  tablet:h-64
+  tablet:w-fit
+  mobile:h-2/5
+  mobile:w-11/12
 `;
 const FreezerBox = tw.div`
   flex
@@ -51,12 +54,13 @@ const FreezerBox = tw.div`
   justify-between
   gap-2
   tablet:w-64
-  mobile:w-36
-  p-3
+  mobile:w-1/2
+  p-2
   rounded-2xl
   shadow-2xl
   bg-gray-light
-  
+  border
+  border-gray
 `;
 const FreezerDoor = tw(FreezerBox)`
 `;

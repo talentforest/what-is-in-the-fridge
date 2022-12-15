@@ -94,7 +94,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
 
 const Overlay = tw.div`
   absolute
-  ${(p: { $addedFoodModal: boolean }) =>
+  mobile:${(p: { $addedFoodModal: boolean }) =>
     p.$addedFoodModal ? '-top-12' : 'top-0'}
   right-0
   w-full
@@ -118,10 +118,9 @@ const ModalBox = tw.div`
   bottom-0
   m-auto
   bg-orange-light
-  tablet:w-80
+  tablet:w-96
+  tablet:h-[450px]
   mobile:w-4/5
-  desktop:h-4/5
-  tablet:h-2/5
   mobile:h-2/3
   rounded-3xl
   shadow-red

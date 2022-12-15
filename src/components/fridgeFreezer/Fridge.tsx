@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import Compartment from './Compartment';
-import FridgeFreezerChangeBtn from './FridgeFreezerChangeBtn';
+import ChangeModeBtn from './ChangeModeBtn';
 import ShoppingBagFood from './ShoppingBagFood';
 import { useAppSelector } from 'src/lib/hooks';
 
@@ -9,7 +9,7 @@ const Fridge = () => {
 
   return (
     <>
-      <FridgeFreezerChangeBtn btnName='냉동칸 보기' />
+      <ChangeModeBtn btnName='냉동칸 보기' />
       <FridgeSection>
         <FridgeInner>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
@@ -41,18 +41,19 @@ const FridgeSection = tw.section`
   flex
   gap-0.5
   desktop:h-4/5
-  tablet:h-2/4
+  tablet:h-4/5
+  tablet:max-h-[500px]
+  tablet:w-fit
   mobile:h-2/3
-  tablet:w-2/3
   mobile:w-11/12
-  mb-24
 `;
 const FridgeInner = tw.div`
   flex
   flex-col
   justify-between
   gap-2
-  w-1/2
+  tablet:w-64
+  mobile:w-1/2
   tablet:p-3
   mobile:p-2
   rounded-2xl

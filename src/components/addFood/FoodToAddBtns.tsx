@@ -8,11 +8,11 @@ const FoodToAddBtns = () => {
   return (
     <Btns>
       <Btn onClick={onAddFoodClick} $color='bg-green'>
-        <FontAwesomeIcon icon={faPlus} />
+        <FontAwesomeIcon icon={faPlus} size='2x' />
         <BtnName>추가하기</BtnName>
       </Btn>
       <Btn onClick={closeFoodModal} $color='bg-red-light'>
-        <FontAwesomeIcon icon={faXmark} />
+        <FontAwesomeIcon icon={faXmark} size='2x' />
         <BtnName>취소하기</BtnName>
       </Btn>
     </Btns>
