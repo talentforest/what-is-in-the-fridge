@@ -16,14 +16,15 @@ import { screens } from 'src/utils/screen';
 import tw from 'tailwind-styled-components';
 import AddFoodForm from '../addFood/AddFoodForm';
 import useWindowSize from 'src/hooks/useWindowSize';
+import Search from '../addFood/Search';
 
 const CLOSE_X = -260;
 
 const AddFoodSection = () => {
-  const { modal } = useAppSelector((state) => state.foodModal);
   const { food } = useAppSelector((state) => state.food);
-  const { windowSize } = useWindowSize();
+  const { modal } = useAppSelector((state) => state.foodModal);
   const { open, close } = useAppSelector((state) => state.addFoodArea);
+  const { windowSize } = useWindowSize();
   const slideXAnimation = useAnimation();
   const dispatch = useAppDispatch();
 
@@ -64,33 +65,57 @@ const AddFoodSection = () => {
             initial={{ x: CLOSE_X }}
             animate={slideXAnimation}
           >
-            <AddFoodForm onSubmit={onSubmit} />
+            <FormBox>
+              <FormTitle>냉장실 식료품 추가하기</FormTitle>
+              <Search />
+              <AddFoodForm onSubmit={onSubmit} />
+            </FormBox>
           </AddFoodBox>
         </>
       ) : (
-        <>
-          <AddFoodBox
-            transition={{ type: 'linear', duration: 0.3 }}
-            initial={close ? { x: -255 } : { x: 0 }}
-            animate={slideXAnimation}
-          >
-            {close ? (
-              <OpenAddFoodBtn onClick={onDesktopClick}>
-                <Icon icon={faCircleArrowRight} />
-              </OpenAddFoodBtn>
-            ) : (
-              <OpenAddFoodBtn onClick={onDesktopClick}>
-                <Icon icon={faCircleXmark} />
-              </OpenAddFoodBtn>
-            )}
-            <AddFoodForm onSubmit={onSubmit} />
-          </AddFoodBox>
-        </>
+        <AddFoodBox
+          transition={{ type: 'linear', duration: 0.3 }}
+          initial={close ? { x: -255 } : { x: 0 }}
+          animate={slideXAnimation}
+        >
+          {close ? (
+            <OpenAddFoodBtn onClick={onDesktopClick}>
+              <Icon icon={faCircleArrowRight} />
+            </OpenAddFoodBtn>
+          ) : (
+            <OpenAddFoodBtn onClick={onDesktopClick}>
+              <Icon icon={faCircleXmark} />
+            </OpenAddFoodBtn>
+          )}
+          <FormBox>
+            <FormTitle>냉장실 식료품 추가하기</FormTitle>
+          </FormBox>
+          {/* <AddFoodForm onSubmit={onSubmit} /> */}
+        </AddFoodBox>
       )}
       {modal && <Modal />}
     </>
   );
 };
+
+const FormBox = tw.div`
+  z-5
+  bg-orange-light
+  w-64
+  p-4
+  rounded-r-3xl
+  absolute
+  top-0
+  left-0
+  h-full
+  tablet:shadow-none
+  mobile:shadow-3xl
+`;
+
+const FormTitle = tw.h2`
+text-gray-dark
+  font-bold
+`;
 
 const PlusIconBox = tw.button`
   bg-yellow

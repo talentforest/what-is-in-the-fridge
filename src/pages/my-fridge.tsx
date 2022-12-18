@@ -1,8 +1,27 @@
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { searchFood } from 'src/lib/slice/searchFood';
+import { getProductInfo } from './api/productInfo';
 import Head from 'next/head';
-import AddFoodSection from 'src/components/template/AddFoodSection';
+import Image from 'next/image';
 import FridgeFreezerSection from 'src/components/template/FridgeFreezerSection';
+import AddFoodSection from 'src/components/template/AddFoodSection';
+import tw from 'tailwind-styled-components';
 
 const MyFridge = () => {
+  const { food } = useAppSelector((state) => state.food);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const productName = food.name;
+    if (productName) {
+      getProductInfo(productName).then((data) => {
+        dispatch(searchFood(data.body));
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [food.name]);
+
   return (
     <>
       <Head>
