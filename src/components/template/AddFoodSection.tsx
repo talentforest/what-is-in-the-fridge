@@ -13,10 +13,13 @@ import {
   faCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screen';
+import { useEffect } from 'react';
+import { getProductInfo } from 'src/pages/api/productInfo';
+import { searchFood } from 'src/lib/slice/searchFood';
 import tw from 'tailwind-styled-components';
 import AddFoodForm from '../addFood/AddFoodForm';
 import useWindowSize from 'src/hooks/useWindowSize';
-import Search from '../addFood/Search';
+import SearchResult from '../addFood/SearchResult';
 
 const CLOSE_X = -260;
 
@@ -28,7 +31,17 @@ const AddFoodSection = () => {
   const slideXAnimation = useAnimation();
   const dispatch = useAppDispatch();
 
-  const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+  useEffect(() => {
+    const productName = food.name;
+    if (productName) {
+      getProductInfo(productName).then((data) => {
+        dispatch(searchFood(data.body));
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [food.name]);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (food.name.length === 0) return alert('식료품 이름을 적어주세요.');
     if (food.type.length === 0) return alert('식료품 카테고리를 적어주세요.');
@@ -54,11 +67,15 @@ const AddFoodSection = () => {
 
   return (
     <>
-      {screens.desktop >= windowSize.width ? (
+      {screens.desktop >= windowSize.width ? ( // 데스크탑보다 작은 기기
         <>
-          <PlusIconBox onClick={onMobileClick}>
-            <PlusIcon icon={faCartPlus} color='#66a8ea' />
-          </PlusIconBox>
+          <CartIconBtn
+            role='button'
+            onClick={onMobileClick}
+            icon={faCartPlus}
+            color='#66a8ea'
+            size='sm'
+          />
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
             transition={{ type: 'linear', duration: 0.3 }}
@@ -67,30 +84,34 @@ const AddFoodSection = () => {
           >
             <FormBox>
               <FormTitle>냉장실 식료품 추가하기</FormTitle>
-              <Search />
-              <AddFoodForm onSubmit={onSubmit} />
+              {!food.id ? (
+                <SearchResult />
+              ) : (
+                <AddFoodForm onSubmit={onSubmit} />
+              )}
             </FormBox>
           </AddFoodBox>
         </>
       ) : (
+        // 데스크탑 이상 화면
         <AddFoodBox
-          transition={{ type: 'linear', duration: 0.3 }}
-          initial={close ? { x: -255 } : { x: 0 }}
+          transition={{ type: 'linear', duration: 0.3, color: '#2d67d2' }}
+          initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
           {close ? (
-            <OpenAddFoodBtn onClick={onDesktopClick}>
+            <OpenBtn onClick={onDesktopClick}>
               <Icon icon={faCircleArrowRight} />
-            </OpenAddFoodBtn>
+            </OpenBtn>
           ) : (
-            <OpenAddFoodBtn onClick={onDesktopClick}>
+            <OpenBtn onClick={onDesktopClick}>
               <Icon icon={faCircleXmark} />
-            </OpenAddFoodBtn>
+            </OpenBtn>
           )}
           <FormBox>
             <FormTitle>냉장실 식료품 추가하기</FormTitle>
+            {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}
           </FormBox>
-          {/* <AddFoodForm onSubmit={onSubmit} /> */}
         </AddFoodBox>
       )}
       {modal && <Modal />}
@@ -99,8 +120,6 @@ const AddFoodSection = () => {
 };
 
 const FormBox = tw.div`
-  z-5
-  bg-orange-light
   w-64
   p-4
   rounded-r-3xl
@@ -111,42 +130,32 @@ const FormBox = tw.div`
   tablet:shadow-none
   mobile:shadow-3xl
 `;
-
 const FormTitle = tw.h2`
 text-gray-dark
   font-bold
+  mb-3
 `;
-
-const PlusIconBox = tw.button`
+const Icon = tw(FontAwesomeIcon)`
+  cursor-pointer
+`;
+const CartIconBtn = tw(FontAwesomeIcon)`
+  p-8
+  cursor-pointer
   bg-yellow
   shadow-xl
   rounded-full
   tablet:h-40
   tablet:w-40
-  mobile:w-24
-  mobile:h-24
+  mobile:w-20
+  mobile:h-20
   absolute
   tablet:bottom-12
   tablet:right-12
-  mobile:bottom-4
+  mobile:bottom-2
   mobile:right-4
   flex
   justify-center
   items-center
-  gap-5
-  text-gray-dark
-`;
-const Icon = tw(FontAwesomeIcon)`
-  cursor-pointer
-`;
-const PlusIcon = tw(FontAwesomeIcon)`
-  cursor-pointer
-  tablet:w-20
-  tablet:h-20
-  mobile:w-12
-  mobile:h-12
-  pt-2
-  pr-1.5
 `;
 const Overlay = tw.div`
   absolute
@@ -160,7 +169,7 @@ const Overlay = tw.div`
   cursor-pointer
   z-1
 `;
-const OpenAddFoodBtn = tw(motion.button)`
+const OpenBtn = tw(motion.button)`
   tablet:block
   mobile:hidden
   w-8

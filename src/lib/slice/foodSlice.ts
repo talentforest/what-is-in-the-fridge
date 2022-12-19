@@ -23,11 +23,15 @@ export interface IFood extends spaceType {
   quantity: string;
 }
 
-const initialState: { food: IFood } = {
+export interface ISearchedFood extends IFood {
+  imgUrl: string;
+}
+
+const initialState: { food: IFood | ISearchedFood } = {
   food: {
     id: '',
     space: 'shoppingBag',
-    type: '',
+    type: '🥩 정육,수산',
     name: '',
     emoji: '1f34b',
     expiryDate: changeStrDate(new Date()),

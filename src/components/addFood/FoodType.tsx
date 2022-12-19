@@ -41,7 +41,7 @@ const FoodTypeList = tw.ul`
 const Type = tw.li`
   cursor-pointer
   ${(p: { $color: boolean }) => (p.$color ? 'bg-green' : 'bg-yellow-light')}
-hover:bg-green
+  hover:bg-green
   p-2
   rounded-lg
   flex
@@ -51,7 +51,6 @@ hover:bg-green
   justify-center
   text-xs
   shadow-lg
-  
 `;
 
 export default FoodType;

@@ -31,28 +31,34 @@ const FoodIconName = () => {
 
   return (
     <>
-      <div className={styles.emojiBox}>
-        <Icon onClick={() => dispatch(showEmoji())}>
-          <Emoji unified={food.emoji} size={20} emojiStyle={EmojiStyle.APPLE} />
-        </Icon>
-        <Input
-          type='text'
-          placeholder='식료품의 이름을 적어주세요.'
-          value={food.name}
-          onChange={onNameChange}
-        />
-        {emoji && (
-          <Picker
-            onEmojiClick={onEmojiClick}
-            previewConfig={previewConfig}
-            categories={categoryConfig}
-            width='250px'
-            height='300px'
-            skinTonesDisabled={true}
-          />
-        )}
-      </div>
-      <Desc>아이콘을 선택해주세요.</Desc>
+      {!food.imgUrl && (
+        <div className={styles.emojiBox}>
+          <Icon onClick={() => dispatch(showEmoji())}>
+            <Emoji
+              unified={food.emoji}
+              size={30}
+              emojiStyle={EmojiStyle.APPLE}
+            />
+          </Icon>
+          {emoji && (
+            <Picker
+              onEmojiClick={onEmojiClick}
+              previewConfig={previewConfig}
+              categories={categoryConfig}
+              width='250px'
+              height='300px'
+              skinTonesDisabled={true}
+            />
+          )}
+          <Desc>아이콘을 선택해주세요.</Desc>
+        </div>
+      )}
+      <Input
+        type='text'
+        placeholder='식료품의 이름을 적어주세요.'
+        value={food.name}
+        onChange={onNameChange}
+      />
     </>
   );
 };
@@ -63,7 +69,7 @@ export const Input = tw.input`
   w-full
   h-8
   p-2
-  text-[14px]
+  text-[13px]
   focus:outline-yellow
 `;
 const Icon = tw.div`
@@ -72,8 +78,8 @@ const Icon = tw.div`
   items-center
   cursor-pointer
   rounded-lg
-  w-10
-  h-8
+  w-12
+  h-12
   bg-yellow-light
   shadow-lg
 `;
