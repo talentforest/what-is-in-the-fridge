@@ -4,7 +4,7 @@ import useWindowSize from 'src/hooks/useWindowSize';
 import { useRouter } from 'next/router';
 import { screens } from 'src/utils/screen';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping, faGear } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navigation() {
   const { pathname } = useRouter();
@@ -15,22 +15,27 @@ export default function Navigation() {
       <Link href='/'>
         <Logo>What is in my FRIDGE?</Logo>
       </Link>
-      {windowSize.width >= screens.tablet ? (
-        <Menu>
-          <List href='/my-fridge' $active={pathname === '/my-fridge'}>
-            나의 냉장고
-          </List>
-          <List href='/my-setting' $active={pathname === '/my-setting'}>
-            나의 설정
-          </List>
-        </Menu>
-      ) : (
-        <Menu>
-          <List href='/my-setting' $active={pathname === '/my-setting'}>
-            <FontAwesomeIcon icon={faGear} size='xl' color='#ff7b00' />
-          </List>
-        </Menu>
-      )}
+      <Menu>
+        {windowSize.width >= screens.tablet ? (
+          <>
+            <List href='/my-fridge' $active={pathname === '/my-fridge'}>
+              나의 냉장고
+            </List>
+            <List href='/setting' $active={pathname === '/setting'}>
+              나의 설정
+            </List>
+          </>
+        ) : (
+          <>
+            <List href='/my-fridge' $active={pathname === '/my-fridge'}>
+              <FontAwesomeIcon icon={faBagShopping} size='xl' color='#ff7b00' />
+            </List>
+            <List href='/setting' $active={pathname === '/setting'}>
+              <FontAwesomeIcon icon={faGear} size='xl' color='#ff7b00' />
+            </List>
+          </>
+        )}
+      </Menu>
     </Nav>
   );
 }
