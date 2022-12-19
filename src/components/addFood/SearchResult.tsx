@@ -2,11 +2,11 @@ import tw from 'tailwind-styled-components';
 import Image from 'next/image';
 import { changeFoodInfo } from 'src/lib/slice/foodSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { faCartPlus, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faPen, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { v4 as uuidv4 } from 'uuid';
 import { Input } from './FoodIconName';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { cutLetter } from 'src/utils/cutLetter';
 import { searchFood } from 'src/lib/slice/searchFood';
 
@@ -17,8 +17,17 @@ const SearchResult = () => {
   const dispatch = useAppDispatch();
 
   const onKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    const { value } = e.target;
     setKeyword(value);
+  };
+
+  const onProductNameSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const result = {
+      ...food,
+      name: keyword,
+    };
+    dispatch(changeFoodInfo(result));
   };
 
   const onCartIconClick = (name: string, imgUrl: string) => {
@@ -27,15 +36,6 @@ const SearchResult = () => {
       name,
       id: uuidv4(),
       imgUrl,
-    };
-    dispatch(changeFoodInfo(result));
-  };
-
-  const onProductNameSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const result = {
-      ...food,
-      name: keyword,
     };
     dispatch(changeFoodInfo(result));
   };
@@ -52,22 +52,22 @@ const SearchResult = () => {
 
   return (
     <>
-      <SearchFoodForm onSubmit={onProductNameSubmit}>
-        <SearchTitle>식품 검색</SearchTitle>
-        <SearchInput>
-          <Input
-            value={keyword}
-            onChange={onKeywordChange}
-            type='text'
-            placeholder='찾으시는 식품을 검색해보세요'
-          />
-          <SearchBtn type='submit'>검색</SearchBtn>
-        </SearchInput>
-        <Desc>
-          검색 결과는 한국식품안전관리인증원 HACCP에 등록된 제품만 나오며,
-          찾으시는 제품이 나오지 않을 수 있습니다.
-        </Desc>
-      </SearchFoodForm>
+      <Title>식품 검색</Title>
+      <Form onSubmit={onProductNameSubmit}>
+        <Input
+          type='text'
+          value={keyword}
+          onChange={onKeywordChange}
+          placeholder='찾으시는 식품을 검색해보세요'
+        />
+        <SearchBtn type='submit'>
+          <FontAwesomeIcon icon={faSearch} size='lg' />
+        </SearchBtn>
+      </Form>
+      <Desc>
+        검색 결과는 한국식품안전관리인증원 HACCP에 등록된 제품만 나오며,
+        찾으시는 제품이 나오지 않을 수 있습니다.
+      </Desc>
       {!!+body?.totalCount?.length && (
         <>
           <CountBox>
@@ -85,7 +85,7 @@ const SearchResult = () => {
                       fill
                       sizes='(max-width: 768px) 300px,
                   (max-width: 1200px) 100px,
-                  30px'
+                  100px'
                       priority
                     />
                   </ImgBox>
@@ -149,39 +149,38 @@ const AddBox = tw.div<{ $color: boolean }>`
   text-white
   border
   w-full
-  h-16
+  h-12
   rounded-lg
   mb-2
 `;
-const SearchFoodForm = tw.form`
-`;
-const SearchTitle = tw.h4`
-  text-[13px]
-  text-gray-dark
-  mt-3
-`;
-const SearchInput = tw.div`
+const Form = tw.form`
   flex
   gap-1
-  items-center
-  justify-between
-  py-2
+  mb-2
+`;
+const Title = tw.h4`
+  text-[14px]
+  text-gray-dark
+  my-2
 `;
 const SearchBtn = tw.button`
-  border
-  border-gray-light
-  bg-gray-light
-  w-12
-  text-[12px]
-  rounded-lg
+  flex 
+  gap-2
+  justify-center
+  items-center
+  bg-green
+  w-3/12
+  h-10
+  text-[14px]
+  rounded-md
   shadow-lg
-  self-stretch
 `;
 const Desc = tw.p` 
   w-full
-  text-sm
+  text-[12px]
   text-blue-dark
-  leading-4
+  leading-4.5
+  mb-2
 `;
 const CountBox = tw.div`
   text-[12px]
@@ -198,7 +197,8 @@ const Results = tw.div`
   grid
   grid-cols-2
   gap-2
-  h-[430px]
+  mobile:h-[calc(100vh-theme(spacing.60))]
+  rounded-3xl
   overflow-scroll
 `;
 const ResultItem = tw.div`
@@ -216,7 +216,8 @@ const ResultItem = tw.div`
 `;
 const PlusCartBtn = tw(FontAwesomeIcon)`
   shadow-md
-  bg-yellow
+  bg-red-light
+  text-white
   hover:text-green
   hover:scale-105
   hover: ease-in-out
@@ -232,6 +233,7 @@ const PlusCartBtn = tw(FontAwesomeIcon)`
 `;
 const ImgBox = tw.div`
   border
+  border-gray-light
   relative
   w-24
   h-24

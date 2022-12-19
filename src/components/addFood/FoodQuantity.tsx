@@ -39,15 +39,15 @@ const Box = tw.div`
   justify-between
   items-center
   gap-2
-  h-8
   text-[14px]
+  mb-2
 `;
 const Name = tw.span`
   rounded-sm
   w-1/5
 `;
 const Desc = tw.span`
-  text-xs
+  text-[13px]
   text-orange
 `;
 export default FoodQuantity;

@@ -69,27 +69,17 @@ const AddFoodSection = () => {
     <>
       {screens.desktop >= windowSize.width ? ( // 데스크탑보다 작은 기기
         <>
-          <CartIconBtn
-            role='button'
-            onClick={onMobileClick}
-            icon={faCartPlus}
-            color='#66a8ea'
-            size='sm'
-          />
+          <CartBtn onClick={onMobileClick}>
+            <CartIconBtn icon={faCartPlus} color='#66a8ea' size='3x' />
+          </CartBtn>
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
             transition={{ type: 'linear', duration: 0.3 }}
             initial={{ x: CLOSE_X }}
             animate={slideXAnimation}
           >
-            <FormBox>
-              <FormTitle>냉장실 식료품 추가하기</FormTitle>
-              {!food.id ? (
-                <SearchResult />
-              ) : (
-                <AddFoodForm onSubmit={onSubmit} />
-              )}
-            </FormBox>
+            <Title>냉장실 식료품 추가하기</Title>
+            {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}
           </AddFoodBox>
         </>
       ) : (
@@ -99,19 +89,15 @@ const AddFoodSection = () => {
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
-          {close ? (
-            <OpenBtn onClick={onDesktopClick}>
+          <OpenBtn onClick={onDesktopClick}>
+            {close ? (
               <Icon icon={faCircleArrowRight} />
-            </OpenBtn>
-          ) : (
-            <OpenBtn onClick={onDesktopClick}>
+            ) : (
               <Icon icon={faCircleXmark} />
-            </OpenBtn>
-          )}
-          <FormBox>
-            <FormTitle>냉장실 식료품 추가하기</FormTitle>
-            {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}
-          </FormBox>
+            )}
+          </OpenBtn>
+          <Title>냉장실 식료품 추가하기</Title>
+          {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}
         </AddFoodBox>
       )}
       {modal && <Modal />}
@@ -119,35 +105,22 @@ const AddFoodSection = () => {
   );
 };
 
-const FormBox = tw.div`
-  w-64
-  p-4
-  rounded-r-3xl
-  absolute
-  top-0
-  left-0
-  h-full
-  tablet:shadow-none
-  mobile:shadow-3xl
-`;
-const FormTitle = tw.h2`
+const Title = tw.h2`
 text-gray-dark
   font-bold
-  mb-3
+  mb-2
 `;
 const Icon = tw(FontAwesomeIcon)`
   cursor-pointer
 `;
-const CartIconBtn = tw(FontAwesomeIcon)`
-  p-8
-  cursor-pointer
+const CartBtn = tw.button`
   bg-yellow
   shadow-xl
   rounded-full
   tablet:h-40
   tablet:w-40
-  mobile:w-20
-  mobile:h-20
+  mobile:w-24
+  mobile:h-24
   absolute
   tablet:bottom-12
   tablet:right-12
@@ -156,6 +129,11 @@ const CartIconBtn = tw(FontAwesomeIcon)`
   flex
   justify-center
   items-center
+  cursor-pointer
+`;
+const CartIconBtn = tw(FontAwesomeIcon)`
+  pr-1
+  pt-2
 `;
 const Overlay = tw.div`
   absolute
@@ -191,6 +169,7 @@ const AddFoodBox = tw(motion.section)`
   pt-5
   tablet:px-2
   mobile:px-4
+  pb-5
   desktop:rounded-none
   mobile:rounded-r-3xl
   z-5

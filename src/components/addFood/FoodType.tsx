@@ -42,14 +42,14 @@ const Type = tw.li`
   cursor-pointer
   ${(p: { $color: boolean }) => (p.$color ? 'bg-green' : 'bg-yellow-light')}
   hover:bg-green
-  p-2
+  py-1.5
   rounded-lg
   flex
   flex-col
   gap-2
   items-center
   justify-center
-  text-xs
+  text-[14px]
   shadow-lg
 `;
 

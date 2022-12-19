@@ -29,7 +29,7 @@ const FridgeFreezer = tw.section`
   desktop:pb-0
   tablet:pt-0
   tablet:pb-32
-  mobile:pt-10
+  mobile:pt-5
 `;
 
 export default FridgeFreezerSection;
