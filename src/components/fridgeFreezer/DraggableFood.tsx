@@ -2,14 +2,15 @@ import { Emoji } from 'emoji-picker-react';
 import { useDrag } from 'react-dnd';
 import { removeShoppingBagFood } from 'src/lib/slice/shoppingBagSlice';
 import { useAppDispatch } from 'src/lib/hooks';
-import { IFood, spaceName } from 'src/lib/slice/foodSlice';
+import { IFood, ISearchedFood, spaceName } from 'src/lib/slice/foodSlice';
 import { showAddedFoodModal } from 'src/lib/slice/openCloseState/showAddedFoodModal';
 import { changeAddedFoodInfo } from 'src/lib/slice/addedFood';
 import useDragFood from 'src/hooks/useDragFood';
 import tw from 'tailwind-styled-components';
+import Image from 'next/image';
 
 interface IFoodProps {
-  food: IFood;
+  food: IFood | ISearchedFood;
 }
 
 interface DropResult {
@@ -45,11 +46,37 @@ const DraggableFood = ({ food }: IFoodProps) => {
 
   return (
     <DragBox ref={dragRef} style={isDraggingStyle} onClick={onClick}>
-      <Emoji unified={food.emoji} size={30} />
+      {food.imgUrl ? (
+        <ImgBox>
+          <Img
+            src={food.imgUrl}
+            alt='Picture of Food'
+            fill
+            sizes='(max-width: 768px) 300px,
+              (max-width: 1200px) 100px,
+              30px'
+            priority
+          />
+        </ImgBox>
+      ) : (
+        <Emoji unified={food.emoji} size={30} />
+      )}
     </DragBox>
   );
 };
 
+const ImgBox = tw.div`
+  relative
+  w-7
+  h-7
+  rounded-full
+  overflow-hidden
+`;
+const Img = tw(Image)`
+  rounded-lg
+  object-cover
+  object-center
+`;
 const DragBox = tw.button`
   basis-7
   relative

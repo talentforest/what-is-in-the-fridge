@@ -1,59 +1,58 @@
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
-import FoodIconName, { Input } from '../addFood/FoodIconName';
+import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
-import { useRef } from 'react';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { useAppSelector } from 'src/lib/hooks';
+import Image from 'next/image';
 
 interface IAddFoodFormProps {
-  onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
   const { food } = useAppSelector((state) => state.food);
-  const searchFoodRef = useRef<HTMLInputElement>();
-  const dispatch = useAppDispatch();
-
-  const onProductNameSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const result = {
-      ...food,
-      name: searchFoodRef.current?.value,
-    };
-    dispatch(changeFoodInfo(result));
-  };
 
   return (
-    <>
-      <SearchFoodForm onSubmit={onProductNameSubmit}>
-        <Input
-          ref={searchFoodRef}
-          type='text'
-          placeholder='찾으시는 식품을 검색해보세요'
-        />
-        <Input type='submit' value='검색' />
-      </SearchFoodForm>
-      <FoodForm onSubmit={onSubmit}>
-        <ItemTitle>식료품 카테고리 선택</ItemTitle>
-        <FoodType />
-        <ItemTitle>식료품 이름</ItemTitle>
-        <FoodIconName />
-        <ItemTitle>식료품 개수</ItemTitle>
-        <FoodQuantity />
-        <ItemTitle>식료품 유통기한</ItemTitle>
-        <ExpiryDate />
-        <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
-      </FoodForm>
-    </>
+    <form onSubmit={onSubmit}>
+      {food.imgUrl && (
+        <ImgBox>
+          <Img
+            src={food.imgUrl}
+            alt='Picture of Food'
+            fill
+            sizes='(max-width: 768px) 300px,
+            (max-width: 1200px) 100px,
+            30px'
+            priority
+          />
+        </ImgBox>
+      )}
+      <ItemTitle>식료품 이름</ItemTitle>
+      <FoodIconName />
+      <ItemTitle>식료품 카테고리 선택</ItemTitle>
+      <FoodType />
+      <ItemTitle>식료품 개수</ItemTitle>
+      <FoodQuantity />
+      <ItemTitle>식료품 유통기한</ItemTitle>
+      <ExpiryDate />
+      <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
+    </form>
   );
 };
 
-const SearchFoodForm = tw.form`
- 
+const ImgBox = tw.div`
+  relative
+  w-20
+  h-20
+  rounded-lg
+  mt-3
 `;
-const FoodForm = tw.form`
+const Img = tw(Image)`
+  rounded-lg
+  border
+  object-cover
+  object-center
 `;
 const ItemTitle = tw.h4`
   text-gray

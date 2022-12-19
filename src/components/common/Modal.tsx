@@ -6,6 +6,7 @@ import useEditFoodInfo from 'src/hooks/useEditFoodInfo';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from '../addFood/FoodToAddBtns';
 import useAddFood from 'src/hooks/useAddFood';
+import Image from 'next/image';
 
 interface IModalProps {
   addedFoodModal?: boolean;
@@ -35,13 +36,27 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
         <Title>
           {addedFoodModal ? '내 식료품 정보' : '추가하는 식료품 정보'}
         </Title>
-        <EmojiBox>
-          <Emoji
-            unified={foodInfo.emoji}
-            size={60}
-            emojiStyle={EmojiStyle.APPLE}
-          />
-        </EmojiBox>
+        {!foodInfo.imgUrl ? (
+          <EmojiBox>
+            <Emoji
+              unified={foodInfo.emoji}
+              size={60}
+              emojiStyle={EmojiStyle.APPLE}
+            />
+          </EmojiBox>
+        ) : (
+          <EmojiBox>
+            <Img
+              src={foodInfo.imgUrl}
+              alt='Picture of Food'
+              fill
+              sizes='(max-width: 768px) 300px,
+                (max-width: 1200px) 100px,
+                30px'
+              priority
+            />
+          </EmojiBox>
+        )}
         {edit ? (
           <Info>
             <Item>
@@ -76,7 +91,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
               {Object.keys(foodInfoNames).map((name) => (
                 <Item key={name}>
                   <Name>{foodInfoNames[name]}</Name>
-                  {foodInfo[name]}
+                  <ItemInfo>{foodInfo[name]}</ItemInfo>
                 </Item>
               ))}
             </Info>
@@ -130,10 +145,10 @@ const Title = tw.h3`
   font-bold
 `;
 const EmojiBox = tw.div`
+  relative
   flex
   justify-center
   items-center
-  border
   h-28
   w-28
   my-4
@@ -141,22 +156,34 @@ const EmojiBox = tw.div`
   shadow-md
   bg-white
 `;
+const Img = tw(Image)`
+  rounded-lg
+  border
+  object-cover
+  object-center
+`;
 const Info = tw.ul`
   flex
   flex-col
   gap-2
   px-3
-  w-60
+  w-56
 `;
 const Item = tw.li`
   flex
   gap-1
   items-center
   justify-between
+  text-[14px]
 `;
 const Name = tw.div`
   w-16
   text-gray
+`;
+const ItemInfo = tw.span` 
+  text-end
+  break-keep
+  w-36
 `;
 const Input = tw.input`
   text-end
