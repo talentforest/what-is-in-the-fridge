@@ -67,9 +67,9 @@ export const Input = tw.input`
   rounded-lg
   shadow-lg
   w-full
-  h-8
-  p-2
-  text-[13px]
+  h-10
+  px-2
+  text-base
   focus:outline-yellow
 `;
 const Icon = tw.div`

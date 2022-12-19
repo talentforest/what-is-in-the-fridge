@@ -14,39 +14,51 @@ const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
   const { food } = useAppSelector((state) => state.food);
 
   return (
-    <form onSubmit={onSubmit}>
-      {food.imgUrl && (
-        <ImgBox>
-          <Img
-            src={food.imgUrl}
-            alt='Picture of Food'
-            fill
-            sizes='(max-width: 768px) 300px,
+    <>
+      <SubTitle>식료품 정보 추가하기</SubTitle>
+      <Form onSubmit={onSubmit}>
+        {food.imgUrl && (
+          <ImgBox>
+            <Img
+              src={food.imgUrl}
+              alt='Picture of Food'
+              fill
+              sizes='(max-width: 768px) 300px,
             (max-width: 1200px) 100px,
             30px'
-            priority
-          />
-        </ImgBox>
-      )}
-      <ItemTitle>식료품 이름</ItemTitle>
-      <FoodIconName />
-      <ItemTitle>식료품 카테고리 선택</ItemTitle>
-      <FoodType />
-      <ItemTitle>식료품 개수</ItemTitle>
-      <FoodQuantity />
-      <ItemTitle>식료품 유통기한</ItemTitle>
-      <ExpiryDate />
-      <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
-    </form>
+              priority
+            />
+          </ImgBox>
+        )}
+        <ItemTitle>식료품 이름</ItemTitle>
+        <FoodIconName />
+        <ItemTitle>식료품 카테고리 선택</ItemTitle>
+        <FoodType />
+        <ItemTitle>식료품 개수</ItemTitle>
+        <FoodQuantity />
+        <ItemTitle>식료품 유통기한</ItemTitle>
+        <ExpiryDate />
+        <SubmitBtn>냉장고에 식품 추가하기</SubmitBtn>
+      </Form>
+    </>
   );
 };
 
+const SubTitle = tw.h4`
+  text-[14px]
+`;
+const Form = tw.form`
+  mobile:h-[calc(100vh-theme(spacing.24))]
+  overflow-auto
+  rounded-lg
+  mt-1
+`;
 const ImgBox = tw.div`
   relative
-  w-20
-  h-20
+  w-28
+  h-28
   rounded-lg
-  mt-3
+  mt-1
 `;
 const Img = tw(Image)`
   rounded-lg
@@ -56,7 +68,7 @@ const Img = tw(Image)`
 `;
 const ItemTitle = tw.h4`
   text-gray
-  text-xs 
+  text-[14px]
   mb-2
   mt-5
 `;
