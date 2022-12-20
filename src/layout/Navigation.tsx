@@ -13,27 +13,17 @@ export default function Navigation() {
   return (
     <Nav>
       <Link href='/'>
-        <Logo>What is in my FRIDGE?</Logo>
+        <Logo>What&#39;s in my FRIDGE?</Logo>
       </Link>
       <Menu>
         {windowSize.width >= screens.tablet ? (
-          <>
-            <List href='/my-fridge' $active={pathname === '/my-fridge'}>
-              나의 냉장고
-            </List>
-            <List href='/setting' $active={pathname === '/setting'}>
-              나의 설정
-            </List>
-          </>
+          <List href='/my-fridge' $active={pathname === '/my-fridge'}>
+            나의 냉장고
+          </List>
         ) : (
-          <>
-            <List href='/my-fridge' $active={pathname === '/my-fridge'}>
-              <FontAwesomeIcon icon={faBagShopping} size='xl' color='#ff7b00' />
-            </List>
-            <List href='/setting' $active={pathname === '/setting'}>
-              <FontAwesomeIcon icon={faGear} size='xl' color='#ff7b00' />
-            </List>
-          </>
+          <List href='/my-fridge' $active={pathname === '/my-fridge'}>
+            <FontAwesomeIcon icon={faBagShopping} size='xl' color='#ff7b00' />
+          </List>
         )}
       </Menu>
     </Nav>
@@ -51,11 +41,12 @@ const Nav = tw.nav`
   mobile:text-[12px]
   tablet:px-10
   mobile:px-5
+  
 `;
 const Logo = tw.h1`
   text-orange
   font-bold
-  text-base
+  text-[13px]
 `;
 const Menu = tw.ul`
   flex
@@ -65,6 +56,7 @@ const Menu = tw.ul`
   text-gray-dark
 `;
 const List = tw(Link)<{ $active: boolean }>`
+  text-[13px]
   ${(p: { $active: boolean }) => (p.$active ? 'text-gray-dark' : 'text-gray')}
   ${(p: { $active: boolean }) => (p.$active ? 'font-bold' : 'font-normal')}
 `;
