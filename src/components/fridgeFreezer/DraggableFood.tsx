@@ -56,6 +56,8 @@ const DraggableFood = ({ food }: IFoodProps) => {
               (max-width: 1200px) 100px,
               30px'
             priority
+            oncontextmenu='return false'
+            style='-webkit-touch-callout:none'
           />
         </ImgBox>
       ) : (
