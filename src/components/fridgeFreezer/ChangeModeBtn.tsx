@@ -1,7 +1,7 @@
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch } from 'src/lib/hooks';
-import { changeMode } from 'src/lib/slice/freezerModeReducer';
+import { changeMode } from 'src/lib/slice/index';
 import tw from 'tailwind-styled-components';
 
 interface IChangeModeBtnProps {

@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
+import { changeFoodInfo } from 'src/lib/slice/index';
 import { changeStrDate } from '../utils/changeStrDate';
 
-const usePlusDate = () => {
+export const usePlusDate = () => {
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
 
@@ -27,25 +27,25 @@ const usePlusDate = () => {
     type: string
   ) => {
     e.preventDefault();
-    if (type === '하루') {
-      const nextday = addDay(food.expiryDate, 1);
-      const result = { ...food, expiryDate: nextday };
-      dispatch(changeFoodInfo(result));
-    }
-    if (type === '일주일') {
-      const nextWeek = addDay(food.expiryDate, 7);
-      const result = { ...food, expiryDate: nextWeek };
-      dispatch(changeFoodInfo(result));
-    }
-    if (type === '한달') {
-      const nextMonth = addMonth(food.expiryDate);
-      const result = { ...food, expiryDate: nextMonth };
-      dispatch(changeFoodInfo(result));
-    }
-    if (type === '일년') {
-      const nextYear = addYear(food.expiryDate);
-      const result = { ...food, expiryDate: nextYear };
-      dispatch(changeFoodInfo(result));
+    switch (type) {
+      case '하루':
+        const nextday = addDay(food.expiryDate, 1);
+        dispatch(changeFoodInfo({ ...food, expiryDate: nextday }));
+        break;
+      case '일주일':
+        const nextWeek = addDay(food.expiryDate, 7);
+        dispatch(changeFoodInfo({ ...food, expiryDate: nextWeek }));
+        break;
+      case '한달':
+        const nextMonth = addMonth(food.expiryDate);
+        dispatch(changeFoodInfo({ ...food, expiryDate: nextMonth }));
+        break;
+      case '일년':
+        const nextYear = addYear(food.expiryDate);
+        dispatch(changeFoodInfo({ ...food, expiryDate: nextYear }));
+        break;
+      default:
+        break;
     }
   };
 
@@ -59,5 +59,3 @@ const usePlusDate = () => {
     onDateChange,
   };
 };
-
-export default usePlusDate;

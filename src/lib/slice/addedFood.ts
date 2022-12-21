@@ -21,9 +21,6 @@ const addedFoodSlice = createSlice({
     changeAddedFoodInfo: (state, action) => {
       state.addedFood = action.payload;
     },
-    removeAddedFood: (state, action) => {
-      state.addedFood = action.payload;
-    },
   },
 });
 

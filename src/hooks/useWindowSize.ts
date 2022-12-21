@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { screens } from 'src/utils/screen';
 
 interface IWindowSize {
   width: number;
   height: number;
 }
 
-const useWindowSize = () => {
+export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<IWindowSize>({
     width: 0,
     height: 0,
@@ -26,5 +25,3 @@ const useWindowSize = () => {
   }, []);
   return { windowSize };
 };
-
-export default useWindowSize;

@@ -1,19 +1,17 @@
 import { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeAddedFoodInfo } from 'src/lib/slice/addedFood';
 import { IFood } from 'src/lib/slice/foodSlice';
 import {
   changeFreezerDoor,
   changeFreezerInner,
-} from 'src/lib/slice/freezerFoodsSlice';
-import {
   changeFridgeDoor,
   changeFridgeInner,
-} from 'src/lib/slice/fridgeFoodsSlice';
-import { showAddedFoodModal } from 'src/lib/slice/openCloseState/showAddedFoodModal';
+  changeAddedFoodInfo,
+  showAddedFoodModal,
+} from 'src/lib/slice/index';
 import { getSpaceType } from 'src/utils/getSpaceType';
 
-const useEditFoodInfo = () => {
+export const useEditFoodInfo = () => {
   const [edit, setEdit] = useState(false);
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
@@ -74,5 +72,3 @@ const useEditFoodInfo = () => {
     setEdit,
   };
 };
-
-export default useEditFoodInfo;

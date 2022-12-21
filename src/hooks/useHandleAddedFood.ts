@@ -3,15 +3,13 @@ import { IFood } from 'src/lib/slice/foodSlice';
 import {
   changeFreezerDoor,
   changeFreezerInner,
-} from 'src/lib/slice/freezerFoodsSlice';
-import {
   changeFridgeDoor,
   changeFridgeInner,
-} from 'src/lib/slice/fridgeFoodsSlice';
-import { showAddedFoodModal } from 'src/lib/slice/openCloseState/showAddedFoodModal';
+  showAddedFoodModal,
+} from 'src/lib/slice/index';
 import { getSpaceType } from 'src/utils/getSpaceType';
 
-const useHandleAddedFood = () => {
+export const useHandleAddedFood = () => {
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
@@ -60,5 +58,3 @@ const useHandleAddedFood = () => {
     moveToAnotherMode,
   };
 };
-
-export default useHandleAddedFood;

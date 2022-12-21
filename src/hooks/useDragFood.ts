@@ -3,14 +3,12 @@ import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
   changeFridgeDoor,
   changeFridgeInner,
-} from 'src/lib/slice/fridgeFoodsSlice';
-import {
   changeFreezerDoor,
   changeFreezerInner,
-} from 'src/lib/slice/freezerFoodsSlice';
+} from 'src/lib/slice/index';
 import { getSpaceType } from 'src/utils/getSpaceType';
 
-const useDragFood = () => {
+export const useDragFood = () => {
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
@@ -102,5 +100,3 @@ const useDragFood = () => {
     changeFoodsState,
   };
 };
-
-export default useDragFood;

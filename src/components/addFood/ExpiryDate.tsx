@@ -3,7 +3,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useAppSelector } from 'src/lib/hooks';
 import { Input } from './FoodIconName';
 import { dateType } from 'src/utils/dateType';
-import usePlusDate from 'src/hooks/usePlusDate';
+import { usePlusDate } from 'src/hooks/index';
 import tw from 'tailwind-styled-components';
 import React from 'react';
 

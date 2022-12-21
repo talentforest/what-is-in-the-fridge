@@ -1,27 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useAnimation } from 'framer-motion';
-import {
-  closeAddFoodArea,
-  openAddFoodArea,
-} from 'src/lib/slice/openCloseState/addFoodAreaSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
-import Modal from '../common/Modal';
 import {
   faCartPlus,
   faCircleArrowLeft,
   faCircleArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { screens } from 'src/utils/screen';
+import { screens } from 'src/utils/screens';
 import { useEffect } from 'react';
 import { getProductInfo } from 'src/pages/api/productInfo';
-import { searchFood } from 'src/lib/slice/searchFood';
-import tw from 'tailwind-styled-components';
-import AddFoodForm from '../addFood/AddFoodForm';
-import useWindowSize from 'src/hooks/useWindowSize';
+import { searchFood } from 'src/lib/slice/index';
+import { useWindowSize, useSubmitFood, useSlideAnimation } from 'src/hooks';
+import Modal from '../common/Modal';
 import SearchResult from '../addFood/SearchResult';
-
-const CLOSE_X = -290;
+import AddFoodForm from '../addFood/AddFoodForm';
+import tw from 'tailwind-styled-components';
 
 const AddFoodSection = () => {
   const { food } = useAppSelector((state) => state.food);
@@ -29,6 +22,9 @@ const AddFoodSection = () => {
   const { open, close } = useAppSelector((state) => state.addFoodArea);
   const { windowSize } = useWindowSize();
   const slideXAnimation = useAnimation();
+  const { onSubmit } = useSubmitFood();
+  const { onMobileClick, onDesktopClick, CLOSE_X } =
+    useSlideAnimation(slideXAnimation);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -41,33 +37,9 @@ const AddFoodSection = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [food.name]);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (food.name.length === 0) return alert('식료품 이름을 적어주세요.');
-    if (food.type.length === 0) return alert('식료품 카테고리를 적어주세요.');
-    if (food.expiryDate.length === 0)
-      return alert('식료품 유통기한을 적어주세요.');
-    if (food.quantity.length === 0) return alert('식료품 개수를 적어주세요.');
-    return dispatch(showFoodModal());
-  };
-
-  const onMobileClick = () => {
-    open
-      ? slideXAnimation.start({ x: CLOSE_X })
-      : slideXAnimation.start({ x: 0 });
-    dispatch(openAddFoodArea());
-  };
-
-  const onDesktopClick = () => {
-    close
-      ? slideXAnimation.start({ x: 0 })
-      : slideXAnimation.start({ x: CLOSE_X });
-    dispatch(closeAddFoodArea());
-  };
-
   return (
     <>
-      {screens.tablet >= windowSize.width ? ( // 태블릿보다 작은 기기
+      {screens.tablet >= windowSize.width ? (
         <>
           <CartBtn onClick={onMobileClick}>
             <CartIconBtn icon={faCartPlus} color='#66a8ea' size='3x' />
@@ -83,18 +55,16 @@ const AddFoodSection = () => {
           </AddFoodBox>
         </>
       ) : (
-        // 태블릿 이상 화면
         <AddFoodBox
           transition={{ type: 'linear', duration: 0.3, color: '#2d67d2' }}
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
           <OpenBarBtn onClick={onDesktopClick}>
-            {close ? (
-              <Icon icon={faCircleArrowRight} size='lg' />
-            ) : (
-              <Icon icon={faCircleArrowLeft} size='lg' />
-            )}
+            <Icon
+              icon={close ? faCircleArrowRight : faCircleArrowLeft}
+              size='lg'
+            />
           </OpenBarBtn>
           <Title>냉장실 식료품 추가하기</Title>
           {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}

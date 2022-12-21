@@ -9,6 +9,7 @@ const Fridge = () => {
 
   return (
     <>
+      <ChangeModeBtn btnName='냉동칸 보기' />
       <FridgeSection>
         <FridgeInner>
           {Object.keys(fridge.inner).map((spaceKey: string) => (

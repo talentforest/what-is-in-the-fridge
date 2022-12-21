@@ -1,14 +1,15 @@
 import { Emoji } from 'emoji-picker-react';
 import { useDrag } from 'react-dnd';
-import { removeShoppingBagFood } from 'src/lib/slice/shoppingBagSlice';
+import {
+  removeShoppingBagFood,
+  changeAddedFoodInfo,
+  showAddedFoodModal,
+} from 'src/lib/slice/index';
 import { useAppDispatch } from 'src/lib/hooks';
 import { IFood, ISearchedFood, spaceName } from 'src/lib/slice/foodSlice';
-import { showAddedFoodModal } from 'src/lib/slice/openCloseState/showAddedFoodModal';
-import { changeAddedFoodInfo } from 'src/lib/slice/addedFood';
-import useDragFood from 'src/hooks/useDragFood';
-import tw from 'tailwind-styled-components';
+import { useDragFood } from 'src/hooks/index';
 import Image from 'next/image';
-import { EventHandler } from 'react';
+import tw from 'tailwind-styled-components';
 
 interface IFoodProps {
   food: IFood | ISearchedFood;

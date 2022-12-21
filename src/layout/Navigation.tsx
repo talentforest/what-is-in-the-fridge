@@ -1,10 +1,10 @@
-import tw from 'tailwind-styled-components';
-import Link from 'next/link';
-import useWindowSize from 'src/hooks/useWindowSize';
+import { useWindowSize } from 'src/hooks/index';
 import { useRouter } from 'next/router';
-import { screens } from 'src/utils/screen';
+import { screens } from 'src/utils/screens';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
+import tw from 'tailwind-styled-components';
+import Link from 'next/link';
 
 export default function Navigation() {
   const { pathname } = useRouter();
