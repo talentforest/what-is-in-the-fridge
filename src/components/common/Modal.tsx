@@ -7,6 +7,8 @@ import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from '../addFood/FoodToAddBtns';
 import useAddFood from 'src/hooks/useAddFood';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 interface IModalProps {
   addedFoodModal?: boolean;
@@ -33,60 +35,63 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
     <>
       <Overlay onClick={closeModal} $addedFoodModal={addedFoodModal} />
       <ModalBox $addedFoodModal={addedFoodModal}>
-        <Title>
-          {addedFoodModal ? '내 식료품 정보' : '추가하는 식료품 정보'}
-        </Title>
-        {!foodInfo.imgUrl ? (
+        <Header>
+          <Title>
+            {addedFoodModal ? '내 식료품 정보' : '추가하는 식료품 정보'}
+          </Title>
+          <CloseBtn onClick={closeModal} $color='bg-red-light'>
+            <FontAwesomeIcon icon={faXmark} size='lg' color='#333' />
+          </CloseBtn>
+        </Header>
+        <Main>
           <EmojiBox>
-            <Emoji
-              unified={foodInfo.emoji}
-              size={60}
-              emojiStyle={EmojiStyle.APPLE}
-            />
-          </EmojiBox>
-        ) : (
-          <EmojiBox>
-            <Img
-              src={foodInfo.imgUrl}
-              alt='Picture of Food'
-              fill
-              sizes='(max-width: 768px) 300px,
+            {!foodInfo.imgUrl ? (
+              <Emoji
+                unified={foodInfo.emoji}
+                size={60}
+                emojiStyle={EmojiStyle.APPLE}
+              />
+            ) : (
+              <Img
+                src={foodInfo.imgUrl}
+                alt='Picture of Food'
+                fill
+                sizes='(max-width: 768px) 300px,
                 (max-width: 1200px) 100px,
                 30px'
-              priority
-            />
+                priority
+              />
+            )}
           </EmojiBox>
-        )}
-        {edit ? (
-          <Info>
-            <Item>
-              <Name>카테고리</Name>
-              {foodInfo.type}
-            </Item>
-            <Item>
-              <Name>이름</Name>
-              <Input type='text' defaultValue={foodInfo.name} ref={nameRef} />
-            </Item>
-            <Item>
-              <Name>수량</Name>
-              <Input
-                type='number'
-                defaultValue={foodInfo.quantity}
-                ref={quantityRef}
-              />
-            </Item>
-            <Item>
-              <Name>유통기한</Name>
-              <Input
-                type='date'
-                defaultValue={foodInfo.expiryDate}
-                ref={dateRef}
-              />
-            </Item>
-            <SubmitBtn onClick={onEditSubmitClick}>수정완료</SubmitBtn>
-          </Info>
-        ) : (
-          <>
+          {edit ? (
+            <Info>
+              <Item>
+                <Name>카테고리</Name>
+                {foodInfo.type}
+              </Item>
+              <Item>
+                <Name>이름</Name>
+                <Input type='text' defaultValue={foodInfo.name} ref={nameRef} />
+              </Item>
+              <Item>
+                <Name>수량</Name>
+                <Input
+                  type='number'
+                  defaultValue={foodInfo.quantity}
+                  ref={quantityRef}
+                />
+              </Item>
+              <Item>
+                <Name>유통기한</Name>
+                <Input
+                  type='date'
+                  defaultValue={foodInfo.expiryDate}
+                  ref={dateRef}
+                />
+              </Item>
+              <SubmitBtn onClick={onEditSubmitClick}>수정완료</SubmitBtn>
+            </Info>
+          ) : (
             <Info>
               {Object.keys(foodInfoNames).map((name) => (
                 <Item key={name}>
@@ -95,13 +100,14 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
                 </Item>
               ))}
             </Info>
-            {addedFoodModal ? (
-              <AddedFoodBtns setEdit={() => setEdit((prev) => !prev)} />
-            ) : (
-              <FoodToAddBtns />
-            )}
-          </>
-        )}
+          )}
+        </Main>
+        {!edit &&
+          (addedFoodModal ? (
+            <AddedFoodBtns setEdit={() => setEdit((prev) => !prev)} />
+          ) : (
+            <FoodToAddBtns />
+          ))}
       </ModalBox>
     </>
   );
@@ -112,7 +118,7 @@ const Overlay = tw.div`
   mobile:${(p: { $addedFoodModal: boolean }) =>
     p.$addedFoodModal ? '-top-12' : 'top-0'}
   right-0
-  w-full
+  left-0
   h-screen
   bg-gray-dark
   opacity-50
@@ -120,11 +126,11 @@ const Overlay = tw.div`
   z-10
 `;
 const ModalBox = tw.div`
+  border
   flex
   flex-col
   items-center
   justify-between
-  p-5
   absolute
   ${(p: { $addedFoodModal: boolean }) =>
     p.$addedFoodModal ? '-top-12' : 'top-0'}
@@ -132,17 +138,40 @@ const ModalBox = tw.div`
   right-0
   bottom-0
   m-auto
-  bg-orange-light
-  tablet:w-96
-  tablet:h-[450px]
-  mobile:w-4/5
-  mobile:h-2/3
+  bg-yellow-light
   rounded-3xl
-  shadow-red
   z-10
+
+  tablet:p-6
+  mobile:p-4
+  tablet:max-w-[450px]
+  tablet:h-80
+  mobile:w-3/4
+  mobile:h-96
 `;
-const Title = tw.h3`
+const Header = tw.header`
+  w-full
+  flex
+  justify-between
+  items-center
+  mb-2
+`;
+const Title = tw.h2`
   font-bold
+  mobile:text-[14px]
+  tablet:text-base
+`;
+const CloseBtn = tw.button`
+  cursor-pointer
+`;
+const Main = tw.div`
+  flex
+  mobile:flex-col
+  tablet:flex-row
+  items-center
+  justify-evenly
+  gap-4
+  w-full
 `;
 const EmojiBox = tw.div`
   relative
@@ -151,42 +180,45 @@ const EmojiBox = tw.div`
   items-center
   h-28
   w-28
-  my-4
   rounded-lg
-  shadow-md
+  shadow-lg
   bg-white
 `;
 const Img = tw(Image)`
-  rounded-lg
-  border
+  rounded-xl
   object-cover
   object-center
 `;
 const Info = tw.ul`
   flex
   flex-col
-  gap-2
-  px-3
-  w-56
+  mobile:gap-2
+  tablet:gap-3
+  mobile:w-52
+  tablet:w-fit
+  w-full
 `;
 const Item = tw.li`
   flex
-  gap-1
+  gap-3
   items-center
   justify-between
-  text-[14px]
+  mobile:text-[14px]
+  tablet:text-base
 `;
 const Name = tw.div`
-  w-16
+  tablet:w-16
+  mobile:w-1/4
   text-gray
 `;
 const ItemInfo = tw.span` 
-  text-end
+  tablet:text-start
+  mobile:text-end
   break-keep
-  w-36
+  w-2/3
 `;
 const Input = tw.input`
-  text-end
+  text-start
   w-36
   rounded-lg
   px-2

@@ -8,6 +8,7 @@ import { changeAddedFoodInfo } from 'src/lib/slice/addedFood';
 import useDragFood from 'src/hooks/useDragFood';
 import tw from 'tailwind-styled-components';
 import Image from 'next/image';
+import { EventHandler } from 'react';
 
 interface IFoodProps {
   food: IFood | ISearchedFood;
@@ -56,8 +57,6 @@ const DraggableFood = ({ food }: IFoodProps) => {
               (max-width: 1200px) 100px,
               30px'
             priority
-            oncontextmenu='return false'
-            style='-webkit-touch-callout:none'
           />
         </ImgBox>
       ) : (
@@ -67,24 +66,26 @@ const DraggableFood = ({ food }: IFoodProps) => {
   );
 };
 
-const ImgBox = tw.div`
-  relative
-  w-7
-  h-7
-  rounded-full
-  overflow-hidden
-`;
-const Img = tw(Image)`
-  rounded-lg
-  object-cover
-  object-center
-`;
 const DragBox = tw.button`
-  basis-7
   relative
   h-fit
   translate-x-0
   translate-y-0
+`;
+const ImgBox = tw.div`
+  relative
+  w-[30px]
+  h-[30px]
+  rounded-lg
+  overflow-hidden
+`;
+const Img = tw(Image)`
+  absolute
+  -top-1
+  left-0
+  w-10
+  h-10
+  object-cover
 `;
 
 export default DraggableFood;

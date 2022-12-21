@@ -9,8 +9,8 @@ import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
 import Modal from '../common/Modal';
 import {
   faCartPlus,
+  faCircleArrowLeft,
   faCircleArrowRight,
-  faCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screen';
 import { useEffect } from 'react';
@@ -21,7 +21,7 @@ import AddFoodForm from '../addFood/AddFoodForm';
 import useWindowSize from 'src/hooks/useWindowSize';
 import SearchResult from '../addFood/SearchResult';
 
-const CLOSE_X = -260;
+const CLOSE_X = -290;
 
 const AddFoodSection = () => {
   const { food } = useAppSelector((state) => state.food);
@@ -67,7 +67,7 @@ const AddFoodSection = () => {
 
   return (
     <>
-      {screens.desktop >= windowSize.width ? ( // 데스크탑보다 작은 기기
+      {screens.tablet >= windowSize.width ? ( // 태블릿보다 작은 기기
         <>
           <CartBtn onClick={onMobileClick}>
             <CartIconBtn icon={faCartPlus} color='#66a8ea' size='3x' />
@@ -83,19 +83,19 @@ const AddFoodSection = () => {
           </AddFoodBox>
         </>
       ) : (
-        // 데스크탑 이상 화면
+        // 태블릿 이상 화면
         <AddFoodBox
           transition={{ type: 'linear', duration: 0.3, color: '#2d67d2' }}
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
-          <OpenBtn onClick={onDesktopClick}>
+          <OpenBarBtn onClick={onDesktopClick}>
             {close ? (
-              <Icon icon={faCircleArrowRight} />
+              <Icon icon={faCircleArrowRight} size='lg' />
             ) : (
-              <Icon icon={faCircleXmark} />
+              <Icon icon={faCircleArrowLeft} size='lg' />
             )}
-          </OpenBtn>
+          </OpenBarBtn>
           <Title>냉장실 식료품 추가하기</Title>
           {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}
         </AddFoodBox>
@@ -105,10 +105,23 @@ const AddFoodSection = () => {
   );
 };
 
+const AddFoodBox = tw(motion.section)`
+  bg-yellow-light
+  shadow-3xl
+  absolute
+  top-0
+  bottom-0
+  tablet:w-72
+  mobile:w-64
+  p-4
+  tablet:rounded-none
+  mobile:rounded-r-3xl
+  z-5
+`;
 const Title = tw.h2`
 text-gray-dark
   font-bold
-  mb-2
+  mb-4
 `;
 const Icon = tw(FontAwesomeIcon)`
   cursor-pointer
@@ -124,7 +137,7 @@ const CartBtn = tw.button`
   absolute
   tablet:bottom-12
   tablet:right-12
-  mobile:bottom-2
+  mobile:bottom-4
   mobile:right-4
   flex
   justify-center
@@ -147,31 +160,16 @@ const Overlay = tw.div`
   cursor-pointer
   z-1
 `;
-const OpenBtn = tw(motion.button)`
+const OpenBarBtn = tw(motion.button)`
   tablet:block
   mobile:hidden
-  w-8
+  w-10
   h-full
   absolute
   top-0
-  -right-8
-  bg-yellow-light
+  -right-10
+  bg-green
   rounded-r-3xl
-  z-5
-`;
-const AddFoodBox = tw(motion.section)`
-  bg-orange-light
-  shadow-3xl
-  absolute
-  top-0
-  bottom-0
-  w-64
-  pt-5
-  tablet:px-2
-  mobile:px-4
-  pb-5
-  desktop:rounded-none
-  mobile:rounded-r-3xl
   z-5
 `;
 

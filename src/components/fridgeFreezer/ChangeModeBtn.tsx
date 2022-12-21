@@ -22,15 +22,16 @@ const ChangeModeBtn = ({ btnName }: IChangeModeBtnProps) => {
 };
 
 const ChangeBtn = tw.button`
+  tablet:h-10
+  mobile:h-8
+  w-full
+  my-1
+  mx-auto
   flex
   justify-center
   items-center
   bg-white-dark
   gap-2
-  tablet:h-12
-  mobile:h-10
-  tablet:w-[calc(2*theme(spacing.64))]
-  mobile:w-11/12
   rounded-xl
   shadow-inner
   text-gray
