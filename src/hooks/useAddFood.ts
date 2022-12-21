@@ -1,11 +1,13 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
-import { addToShoppingBag } from 'src/lib/slice/shoppingBagSlice';
-import { showFoodModal } from 'src/lib/slice/openCloseState/showFoodModalSlice';
+import {
+  changeFoodInfo,
+  searchFood,
+  showFoodModal,
+  addToShoppingBag,
+} from 'src/lib/slice/index';
 import { changeStrDate } from 'src/utils/changeStrDate';
-import { searchFood } from 'src/lib/slice/searchFood';
 
-const useAddFood = () => {
+export const useAddFood = () => {
   const { food } = useAppSelector((state) => state.food);
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
@@ -43,5 +45,3 @@ const useAddFood = () => {
     onAddFoodClick,
   };
 };
-
-export default useAddFood;

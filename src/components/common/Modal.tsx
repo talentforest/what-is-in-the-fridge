@@ -1,14 +1,13 @@
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { useAppSelector } from 'src/lib/hooks';
 import { foodInfoNames } from 'src/utils/foodCategory';
-import tw from 'tailwind-styled-components';
-import useEditFoodInfo from 'src/hooks/useEditFoodInfo';
+import { useEditFoodInfo, useAddFood } from 'src/hooks/index';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from '../addFood/FoodToAddBtns';
-import useAddFood from 'src/hooks/useAddFood';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import tw from 'tailwind-styled-components';
 
 interface IModalProps {
   addedFoodModal?: boolean;

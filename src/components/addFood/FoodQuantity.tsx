@@ -1,21 +1,11 @@
-import { ChangeEvent } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
-import styled from 'styled-components';
-import tw from 'tailwind-styled-components';
+import { useAppSelector } from 'src/lib/hooks';
 import { Input } from './FoodIconName';
+import { useSubmitFood } from 'src/hooks';
+import tw from 'tailwind-styled-components';
 
 const FoodQuantity = () => {
   const { food } = useAppSelector((state) => state.food);
-  const dispatch = useAppDispatch();
-
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const result = {
-      ...food,
-      quantity: e.target?.value,
-    };
-    dispatch(changeFoodInfo(result));
-  };
+  const { onQuantityChange } = useSubmitFood();
 
   return (
     <>
@@ -25,7 +15,7 @@ const FoodQuantity = () => {
           type='number'
           placeholder='수량을 적어주세요.'
           value={food.quantity}
-          onChange={onChange}
+          onChange={onQuantityChange}
         />
         개
       </Box>

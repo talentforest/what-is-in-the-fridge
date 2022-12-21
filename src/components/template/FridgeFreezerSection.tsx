@@ -3,7 +3,6 @@ import Freezer from '../fridgeFreezer/Freezer';
 import Fridge from '../fridgeFreezer/Fridge';
 import Modal from '../common/Modal';
 import { useAppSelector } from 'src/lib/hooks';
-import ChangeModeBtn from '../fridgeFreezer/ChangeModeBtn';
 
 const FridgeFreezerSection = () => {
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
@@ -11,19 +10,7 @@ const FridgeFreezerSection = () => {
 
   return (
     <FridgeFreezer>
-      <Section>
-        {!freezerMode ? (
-          <>
-            <ChangeModeBtn btnName='냉동칸 보기' />
-            <Fridge />
-          </>
-        ) : (
-          <>
-            <Freezer />
-            <ChangeModeBtn btnName='냉장칸 보기' />
-          </>
-        )}
-      </Section>
+      <Section>{!freezerMode ? <Fridge /> : <Freezer />}</Section>
       {modal && <Modal addedFoodModal />}
     </FridgeFreezer>
   );

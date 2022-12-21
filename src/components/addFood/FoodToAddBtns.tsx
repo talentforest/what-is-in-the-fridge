@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useAddFood } from 'src/hooks/index';
 import tw from 'tailwind-styled-components';
-import useAddFood from 'src/hooks/useAddFood';
 
 const FoodToAddBtns = () => {
   const { onAddFoodClick } = useAddFood();

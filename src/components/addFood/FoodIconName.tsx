@@ -1,33 +1,16 @@
-import { ChangeEvent } from 'react';
-import { Emoji, EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { categoryConfig, Picker, previewConfig } from '../../utils/emojiConfig';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { showEmoji } from 'src/lib/slice/openCloseState/showEmojiSlice';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
+import { showEmoji } from 'src/lib/slice/index';
+import { useSubmitFood } from 'src/hooks';
 import styles from 'styles/EmojiBox.module.css';
 import tw from 'tailwind-styled-components';
 
 const FoodIconName = () => {
   const { emoji } = useAppSelector((state) => state.emoji);
   const { food } = useAppSelector((state) => state.food);
+  const { onEmojiClick, onNameChange } = useSubmitFood();
   const dispatch = useAppDispatch();
-
-  const onEmojiClick = (emojiData: EmojiClickData) => {
-    const result = {
-      ...food,
-      emoji: emojiData.unified,
-    };
-    dispatch(changeFoodInfo(result));
-    dispatch(showEmoji());
-  };
-
-  const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const result = {
-      ...food,
-      name: e.currentTarget.value,
-    };
-    dispatch(changeFoodInfo(result));
-  };
 
   return (
     <>

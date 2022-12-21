@@ -32,6 +32,7 @@ const Freezer = () => {
           ))}
         </FreezerDoor>
       </FreezerSection>
+      <ChangeModeBtn btnName='냉장칸 보기' />
       <ShoppingBagFood />
     </>
   );

@@ -5,8 +5,7 @@ import {
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
 import tw from 'tailwind-styled-components';
-import useHandleAddedFood from 'src/hooks/useHandleAddedFood';
-import { useAppSelector } from 'src/lib/hooks';
+import { useHandleAddedFood } from 'src/hooks/index';
 
 interface IAddedFoodBtnsProps {
   setEdit: (edit: boolean) => void;

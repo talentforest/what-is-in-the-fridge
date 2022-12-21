@@ -1,29 +1,18 @@
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
-import { foodCategories, IfoodCategory } from 'src/utils/foodCategory';
-import { v4 as uuidv4 } from 'uuid';
+import { useSubmitFood } from 'src/hooks';
+import { useAppSelector } from 'src/lib/hooks';
+import { foodCategories } from 'src/utils/foodCategory';
 import tw from 'tailwind-styled-components';
 
 const FoodType = () => {
   const { food } = useAppSelector((state) => state.food);
-  const dispatch = useAppDispatch();
-
-  const onClick = (foodTypes: IfoodCategory) => {
-    const result = {
-      ...food,
-      type: foodTypes.type,
-      emoji: foodTypes.emoji,
-      id: uuidv4(),
-    };
-    dispatch(changeFoodInfo(result));
-  };
+  const { onFoodTypeClick } = useSubmitFood();
 
   return (
     <FoodTypeList>
       {foodCategories.map((foodType) => (
         <Type
           key={foodType.id}
-          onClick={() => onClick(foodType)}
+          onClick={() => onFoodTypeClick(foodType)}
           $color={food.type === foodType.type}
         >
           <span>{foodType.type}</span>

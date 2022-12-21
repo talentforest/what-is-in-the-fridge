@@ -3,8 +3,8 @@ import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
 import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
-import { useAppSelector } from 'src/lib/hooks';
 import Image from 'next/image';
+import { useAppSelector } from 'src/lib/hooks';
 
 interface IAddFoodFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -24,8 +24,8 @@ const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
               alt='Picture of Food'
               fill
               sizes='(max-width: 768px) 300px,
-            (max-width: 1200px) 100px,
-            30px'
+                (max-width: 1200px) 100px,
+                30px'
               priority
             />
           </ImgBox>

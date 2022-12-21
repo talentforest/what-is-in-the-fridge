@@ -1,54 +1,21 @@
-import tw from 'tailwind-styled-components';
-import Image from 'next/image';
-import { changeFoodInfo } from 'src/lib/slice/foodSlice';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { useAppSelector } from 'src/lib/hooks';
 import { faCartPlus, faPen, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { v4 as uuidv4 } from 'uuid';
 import { Input } from './FoodIconName';
-import { ChangeEvent, useState } from 'react';
 import { cutLetter } from 'src/utils/cutLetter';
-import { searchFood } from 'src/lib/slice/searchFood';
+import { useSearchFood } from 'src/hooks/useSearchFood';
+import Image from 'next/image';
+import tw from 'tailwind-styled-components';
 
 const SearchResult = () => {
-  const [keyword, setKeyword] = useState('');
-  const { food } = useAppSelector((state) => state.food);
   const { body } = useAppSelector((state) => state.searchFood);
-  const dispatch = useAppDispatch();
-
-  const onKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setKeyword(value);
-  };
-
-  const onProductNameSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const result = {
-      ...food,
-      name: keyword,
-    };
-    dispatch(changeFoodInfo(result));
-  };
-
-  const onCartIconClick = (name: string, imgUrl: string) => {
-    const result = {
-      ...food,
-      name,
-      id: uuidv4(),
-      imgUrl,
-    };
-    dispatch(changeFoodInfo(result));
-  };
-
-  const onSelfWriteClick = () => {
-    const result = {
-      ...food,
-      id: uuidv4(),
-    };
-    dispatch(changeFoodInfo(result));
-    dispatch(searchFood({}));
-    setKeyword('');
-  };
+  const {
+    keyword,
+    onKeywordChange,
+    onProductNameSubmit,
+    onCartIconClick,
+    onSelfWriteClick,
+  } = useSearchFood();
 
   return (
     <>
