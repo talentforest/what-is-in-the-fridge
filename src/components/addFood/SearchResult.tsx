@@ -72,11 +72,11 @@ const SearchResult = () => {
         <>
           <CountBox>
             <span>검색결과</span>
-            {!!+body.totalCount && <span>{`${body.totalCount}개`}</span>}
+            <span>{`${body.totalCount}건`}</span>
           </CountBox>
-          {body?.items?.length !== 0 ? (
-            <Results>
-              {body?.items?.map((result) => (
+          <Results>
+            {body?.items?.length !== 0 ? (
+              body?.items?.map((result) => (
                 <ResultItem key={result.item.imgurl1}>
                   <ImgBox>
                     <Img
@@ -84,8 +84,8 @@ const SearchResult = () => {
                       alt='Picture of Food'
                       fill
                       sizes='(max-width: 768px) 300px,
-                  (max-width: 1200px) 100px,
-                  100px'
+                        (max-width: 1200px) 100px,
+                        100px'
                       priority
                     />
                   </ImgBox>
@@ -106,53 +106,35 @@ const SearchResult = () => {
                       result.item.capacity?.slice(0, 4)}
                   </Info>
                 </ResultItem>
-              ))}
+              ))
+            ) : (
+              <Empty>검색 결과가 없습니다.</Empty>
+            )}
+            <AddBox>
               <Guide>찾으시는 결과가 없으세요?</Guide>
-              <AddBox onClick={onSelfWriteClick}>
-                <span>직접 식품 정보 작성하기</span>{' '}
+              <AddBtn onClick={onSelfWriteClick}>
+                직접 식품 정보 작성하기
                 <FontAwesomeIcon icon={faPen} />
-              </AddBox>
-            </Results>
-          ) : (
-            <Results>
-              {[1, 2, 3, 4, 5, 6].map((item) => (
-                <ResultItem key={item}>
-                  <ImgBox />
-                  <Info />
-                </ResultItem>
-              ))}
-            </Results>
-          )}
+              </AddBtn>
+            </AddBox>
+          </Results>
         </>
       )}
     </>
   );
 };
-const Guide = tw.span`
-  w-full
-  col-span-2
-  text-[12px]
-  pt-4
-  px-2
-`;
-const AddBox = tw.div<{ $color: boolean }>`
-  col-span-2
-  shadow-lg
-  ${(p: { $color: boolean }) => (p.$color ? 'bg-blue-dark' : 'bg-red-light')}
-  cursor-pointer
-  flex
-  items-center
-  justify-center
-  gap-2
-  p-2
-  text-[13px]
-  text-white
-  border
-  w-full
-  h-12
-  rounded-lg
-  mb-2
-`;
+
+{
+  /* <Results>
+{[1, 2, 3, 4, 5, 6].map((item) => (
+  <ResultItem key={item}>
+    <ImgBox />
+    <Info />
+  </ResultItem>
+))}
+</Results> */
+}
+
 const Form = tw.form`
   flex
   gap-1
@@ -172,7 +154,7 @@ const SearchBtn = tw.button`
   w-3/12
   h-10
   text-[14px]
-  rounded-md
+  rounded-lg
   shadow-lg
 `;
 const Desc = tw.p` 
@@ -197,7 +179,7 @@ const Results = tw.div`
   grid
   grid-cols-2
   gap-2
-  mobile:h-[calc(100vh-theme(spacing.60))]
+  mobile:max-h-[calc(100vh-theme(spacing.60))]
   rounded-3xl
   overflow-scroll
 `;
@@ -255,6 +237,42 @@ const Info = tw.div`
   bg-gray-light
   w-full
   rounded-lg
+`;
+const Empty = tw.div`
+  text-[14px]
+  col-span-2
+  rounded-lg
+  bg-white
+  flex
+  justify-center
+  items-center
+  shadow-lg
+  py-5
+`;
+const AddBox = tw.div` 
+  col-span-2
+  h-fit
+  mt-4
+`;
+const Guide = tw.span`
+  text-[14px]
+  
+`;
+const AddBtn = tw.div<{ $color: boolean }>`
+  shadow-lg
+  bg-red-light
+  cursor-pointer
+  flex
+  items-center
+  justify-center
+  gap-2
+  p-2
+  text-[13px]
+  text-white
+  w-full
+  h-12
+  rounded-lg
+  mb-2
 `;
 
 export default SearchResult;

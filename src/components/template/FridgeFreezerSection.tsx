@@ -3,6 +3,7 @@ import Freezer from '../fridgeFreezer/Freezer';
 import Fridge from '../fridgeFreezer/Fridge';
 import Modal from '../common/Modal';
 import { useAppSelector } from 'src/lib/hooks';
+import ChangeModeBtn from '../fridgeFreezer/ChangeModeBtn';
 
 const FridgeFreezerSection = () => {
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
@@ -10,26 +11,41 @@ const FridgeFreezerSection = () => {
 
   return (
     <FridgeFreezer>
-      {freezerMode ? <Freezer /> : <Fridge />}
+      <Section>
+        {!freezerMode ? (
+          <>
+            <ChangeModeBtn btnName='냉동칸 보기' />
+            <Fridge />
+          </>
+        ) : (
+          <>
+            <Freezer />
+            <ChangeModeBtn btnName='냉장칸 보기' />
+          </>
+        )}
+      </Section>
       {modal && <Modal addedFoodModal />}
     </FridgeFreezer>
   );
 };
 
 const FridgeFreezer = tw.section`
-  desktop:h-[calc(100vh-theme(spacing.12))]
-  tablet:h-[calc(100vh-theme(spacing.12))]
-  mobile:h-[calc(100vh-theme(spacing.12))]
-  flex
-  flex-col
-  items-center
+  h-[calc(100vh-theme(spacing.12))]
   gap-1
   relative
+`;
+const Section = tw.div`
+  flex 
+  flex-col
   tablet:justify-center
-  desktop:pb-0
-  tablet:pt-0
-  tablet:pb-32
-  mobile:pt-5
+  mx-auto
+  desktop:w-1/2
+  tablet:w-2/3
+  mobile:w-11/12
+  desktop:pt-4
+  tablet:pb-20
+  mobile:pt-2
+  h-full
 `;
 
 export default FridgeFreezerSection;

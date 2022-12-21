@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const ShoppingBagFood = () => {
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
 
-  return (
+  return shoppingBagFoods.length !== 0 ? (
     <ShoppingBagBox>
       <CartIcon icon={faBagShopping} color='#72b8ff' />
       <EmojiBox>
@@ -16,46 +16,48 @@ const ShoppingBagFood = () => {
         ))}
       </EmojiBox>
     </ShoppingBagBox>
+  ) : (
+    <></>
   );
 };
 
 const ShoppingBagBox = tw.div`
   absolute
-  desktop:right-2
   desktop:bottom-4
-  desktop:left-auto
-  tablet:left-12
+  tablet:right-2
   tablet:bottom-12
+  tablet:left-auto
   tablet:w-56
   tablet:h-56
-  mobile:left-4
-  mobile:bottom-2
   mobile:w-40
   mobile:h-40
+  mobile:bottom-2
 `;
 const CartIcon = tw(FontAwesomeIcon)`
+  absolute
   tablet:w-56
   tablet:h-56
   mobile:w-40
   mobile:h-40
-  absolute
+  bottom-0
   scale-x-[-1]
   drop-shadow-lg
 `;
 const EmojiBox = tw.div`
   absolute
   tablet:gap-1
-  mobile:gap-1
-  bottom-3
+  mobile:gap-0.5
   tablet:left-4
+  mobile:bottom-2
   mobile:left-4
   tablet:w-48
-  tablet:h-24
+  tablet:h-20
   mobile:w-32
   mobile:h-16
   flex
   flex-wrap
   justify-center
+  p-1
 `;
 
 export default ShoppingBagFood;

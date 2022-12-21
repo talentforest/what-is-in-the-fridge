@@ -44,24 +44,16 @@ const Title = tw.h1`
   mb-3
 `;
 const ListBox = tw.ul`
+  flex
+  flex-col
   text-[12px]
   gap-y-1
   gap-x-10
   tablet:w-fit
-  tablet:grid
-  tablet:grid-cols-2
-  tablet:grid-rows-2
-  mobile:flex 
-  mobile:flex-col
-  
 `;
 const List = tw.li`
   flex
   gap-1.5
-  items-end
-  tablet:even:col-start-1
-  talbet:last:col-start-2
-  talbet:last:row-span-full
 `;
 const Label = tw.span` 
   text-gray-light
@@ -69,6 +61,7 @@ const Label = tw.span`
   inline-block
 `;
 const LinkBtn = tw(Link)<{ $color: boolean }>` 
+  w-fit
   ${(p: { $color: boolean }) => (p.$color ? 'bg-blue-dark' : 'bg-red-light')}
   flex
   items-center
@@ -77,8 +70,8 @@ const LinkBtn = tw(Link)<{ $color: boolean }>`
   rounded-3xl
   shadow-2xl
   shadow-white
-  tablet:mt-0
-  mobile:mt-3
+  mt-3
+  text-[13px]
 `;
 
 export default Footer;

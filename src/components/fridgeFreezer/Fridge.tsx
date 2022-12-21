@@ -9,7 +9,6 @@ const Fridge = () => {
 
   return (
     <>
-      <ChangeModeBtn btnName='냉동칸 보기' />
       <FridgeSection>
         <FridgeInner>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
@@ -38,22 +37,24 @@ const Fridge = () => {
 };
 
 const FridgeSection = tw.section`
+  mx-auto
   flex
   gap-0.5
-  desktop:h-4/5
+  w-full
+  tablet:min-h-[400px]
+  tablet:max-h-[600px]
   tablet:h-4/5
-  tablet:max-h-[500px]
-  tablet:w-fit
   mobile:h-2/3
-  mobile:w-11/12
+  tablet:mb-0
+
+  mobile:mb-1
 `;
 const FridgeInner = tw.div`
   flex
   flex-col
   justify-between
   gap-2
-  tablet:w-64
-  mobile:w-1/2
+  w-1/2
   tablet:p-3
   mobile:p-2
   rounded-2xl
@@ -66,7 +67,8 @@ const FridgeDoor = tw(FridgeInner)`
 `;
 export const Shelf = tw.div`
   w-full
-  border
+  border 
+  border-gray
   absolute
   right-0
   -bottom-1
