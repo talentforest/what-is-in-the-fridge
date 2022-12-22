@@ -16,13 +16,14 @@ const FoodIconName = () => {
     <>
       {!food.imgUrl && (
         <div className={styles.emojiBox}>
-          <Icon onClick={() => dispatch(showEmoji())}>
+          <IconBox onClick={() => dispatch(showEmoji())}>
             <Emoji
               unified={food.emoji}
               size={30}
               emojiStyle={EmojiStyle.APPLE}
             />
-          </Icon>
+          </IconBox>
+          <Desc>아이콘을 선택해주세요.</Desc>
           {emoji && (
             <Picker
               onEmojiClick={onEmojiClick}
@@ -33,7 +34,6 @@ const FoodIconName = () => {
               skinTonesDisabled={true}
             />
           )}
-          <Desc>아이콘을 선택해주세요.</Desc>
         </div>
       )}
       <Input
@@ -55,7 +55,7 @@ export const Input = tw.input`
   text-base
   focus:outline-yellow
 `;
-const Icon = tw.div`
+const IconBox = tw.div`
   flex
   justify-center
   items-center
@@ -63,11 +63,12 @@ const Icon = tw.div`
   rounded-lg
   w-12
   h-12
-  bg-yellow-light
-  shadow-lg
+  bg-white
+  shadow-md
 `;
 const Desc = tw.span`
-  text-xs
+  text-[14px]
   text-orange
 `;
+
 export default FoodIconName;

@@ -48,7 +48,6 @@ export const useSubmitFood = () => {
     const result = {
       ...food,
       type: foodTypes.type,
-      emoji: foodTypes.emoji,
       id: uuidv4(),
     };
     dispatch(changeFoodInfo(result));

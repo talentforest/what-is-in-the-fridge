@@ -9,11 +9,9 @@ import freezerFoodsReducer from './slice/freezerFoodsSlice';
 import changeAddedFoodReducer from './slice/addedFood';
 import showAddedFoodModalReducer from './slice/openCloseState/showAddedFoodModal';
 import addFoodAreaReducer from './slice/openCloseState/addFoodAreaSlice';
-import searchFoodReducer from './slice/searchFood';
 
 export const store = configureStore({
   reducer: {
-    searchFood: searchFoodReducer,
     addFoodArea: addFoodAreaReducer,
     freezerMode: changeModeReducer,
     emoji: showEmojiReducer,

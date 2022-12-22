@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo, searchFood } from 'src/lib/slice';
+import { changeFoodInfo } from 'src/lib/slice';
 import { v4 as uuidv4 } from 'uuid';
 
 export const useSearchFood = () => {
@@ -38,7 +38,6 @@ export const useSearchFood = () => {
       id: uuidv4(),
     };
     dispatch(changeFoodInfo(result));
-    dispatch(searchFood({}));
     setKeyword('');
   };
 

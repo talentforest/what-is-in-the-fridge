@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
   changeFoodInfo,
-  searchFood,
   showFoodModal,
   addToShoppingBag,
 } from 'src/lib/slice/index';
@@ -31,13 +30,11 @@ export const useAddFood = () => {
     dispatch(showFoodModal());
     dispatch(changeFoodInfo(initialState));
     dispatch(addToShoppingBag([...shoppingBagFoods, food]));
-    dispatch(searchFood({}));
   };
 
   const closeFoodModal = () => {
     dispatch(showFoodModal());
     dispatch(changeFoodInfo(initialState));
-    dispatch(searchFood({}));
   };
 
   return {
