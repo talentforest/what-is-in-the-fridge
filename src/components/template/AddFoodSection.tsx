@@ -1,15 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useAnimation } from 'framer-motion';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { useAppSelector } from 'src/lib/hooks';
 import {
   faCartPlus,
   faCircleArrowLeft,
   faCircleArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screens';
-import { useEffect } from 'react';
-import { getProductInfo } from 'src/pages/api/productInfo';
-import { searchFood } from 'src/lib/slice/index';
 import { useWindowSize, useSubmitFood, useSlideAnimation } from 'src/hooks';
 import Modal from '../common/Modal';
 import SearchResult from '../addFood/SearchResult';
@@ -25,17 +22,6 @@ const AddFoodSection = () => {
   const { onSubmit } = useSubmitFood();
   const { onMobileClick, onDesktopClick, CLOSE_X } =
     useSlideAnimation(slideXAnimation);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const productName = food.name;
-    if (productName) {
-      getProductInfo(productName).then((data) => {
-        dispatch(searchFood(data.body));
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [food.name]);
 
   return (
     <>

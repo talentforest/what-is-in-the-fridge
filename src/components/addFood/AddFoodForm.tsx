@@ -51,7 +51,6 @@ const Form = tw.form`
   mobile:h-[calc(100vh-theme(spacing.24))]
   overflow-auto
   rounded-lg
-  mt-1
 `;
 const ImgBox = tw.div`
   relative
@@ -62,7 +61,6 @@ const ImgBox = tw.div`
 `;
 const Img = tw(Image)`
   rounded-lg
-  border
   object-cover
   object-center
 `;
@@ -71,6 +69,7 @@ const ItemTitle = tw.h4`
   text-[14px]
   mb-2
   mt-5
+  first:mt-2
 `;
 const SubmitBtn = tw.button`
   w-full

@@ -25,13 +25,13 @@ const FoodType = () => {
 const FoodTypeList = tw.ul`
   grid
   grid-cols-2
-  gap-1.5
+  gap-1.5  
 `;
 const Type = tw.li`
   cursor-pointer
-  ${(p: { $color: boolean }) => (p.$color ? 'bg-green' : 'bg-yellow-light')}
+  ${(p: { $color: boolean }) => (p.$color ? 'bg-green' : 'bg-white')}
   hover:bg-green
-  py-1.5
+  py-1
   rounded-lg
   flex
   flex-col
@@ -39,7 +39,8 @@ const Type = tw.li`
   items-center
   justify-center
   text-[14px]
-  shadow-lg
+  shadow-md
+  mx-1
 `;
 
 export default FoodType;
