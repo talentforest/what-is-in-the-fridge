@@ -6,21 +6,20 @@ import {
 } from 'src/lib/slice/index';
 import { changeKeyword } from 'src/lib/slice/keywordSlice';
 
+export const initialState = {
+  id: '',
+  type: '',
+  name: '',
+  space: 'shoppingBag',
+  emoji: '1f34b',
+  expiryDate: new Date().toLocaleDateString(),
+  quantity: '',
+};
+
 export const useAddFood = () => {
   const { food } = useAppSelector((state) => state.food);
-  const { keyword } = useAppSelector((state) => state.keyword);
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
-
-  const initialState = {
-    id: '',
-    type: '',
-    name: '',
-    space: 'shoppingBag',
-    emoji: '1f34b',
-    expiryDate: new Date().toLocaleDateString(),
-    quantity: '',
-  };
 
   const onAddFoodClick = () => {
     if (shoppingBagFoods.length >= 8) {

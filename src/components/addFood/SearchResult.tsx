@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Input } from './FoodIconName';
 import { useSearchFood } from 'src/hooks/useSearchFood';
-import { useAppSelector } from 'src/lib/hooks';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetcher, url } from 'src/pages/api/productInfo';
 import { useSubmitFood } from 'src/hooks';
 import SearchItem from './SearchItem';
@@ -14,6 +14,8 @@ import AddFoodForm from './AddFoodForm';
 import useSWR, { SWRConfig } from 'swr';
 import tw from 'tailwind-styled-components';
 import Loading from '../common/Loading';
+import { useEffect } from 'react';
+import { changeKeyword } from 'src/lib/slice/keywordSlice';
 
 export interface IFoodData {
   item: {
@@ -35,7 +37,7 @@ export interface IFoodData {
   };
 }
 
-const SearchResult = () => {
+const SearchResult = ({ tab }: { tab: string }) => {
   const { onKeywordChange, onKeywordSubmit, removeKeyword } = useSearchFood();
   const { keyword } = useAppSelector((state) => state.keyword);
   const { onSubmit } = useSubmitFood();
@@ -44,6 +46,14 @@ const SearchResult = () => {
     keyword.length !== 0 && food.name ? url(food.name) : null,
     fetcher
   );
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (tab === 'search') {
+      dispatch(changeKeyword(''));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SWRConfig
@@ -53,7 +63,7 @@ const SearchResult = () => {
           fetch(resource, init).then((res) => res.json()),
       }}
     >
-      {!food.id ? (
+      {!food?.id ? (
         <>
           <Title>상품검색</Title>
           <Form onSubmit={onKeywordSubmit}>
