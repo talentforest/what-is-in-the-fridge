@@ -8,14 +8,24 @@ import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { changeFoodInfo } from 'src/lib/slice';
+import { useEffect } from 'react';
+import { initialState } from 'src/hooks/useAddFood';
 
 interface IAddFoodFormProps {
+  tab?: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
+const AddFoodForm = ({ tab, onSubmit }: IAddFoodFormProps) => {
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (tab === 'input') {
+      dispatch(changeFoodInfo(initialState));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onBackClick = () => {
     const result = { ...food, id: '' };
@@ -24,14 +34,14 @@ const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
 
   return (
     <>
-      {food.imgUrl && (
+      {food?.imgUrl && (
         <BackBtn onClick={onBackClick}>
           <FontAwesomeIcon icon={faChevronLeft} />
           <span>뒤로가기</span>
         </BackBtn>
       )}
       <Form onSubmit={onSubmit}>
-        {food.imgUrl && (
+        {food?.imgUrl && (
           <ImgBox>
             <Img
               src={food.imgUrl}

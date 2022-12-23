@@ -1,25 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useAnimation } from 'framer-motion';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import {
-  faArrowLeft,
-  faCartPlus,
-  faChevronLeft,
-  faPen,
-  faRightLeft,
-  faSearch,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
+import { useAppSelector } from 'src/lib/hooks';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screens';
 import { useWindowSize, useSubmitFood, useSlideAnimation } from 'src/hooks';
+import { useState } from 'react';
 import Modal from '../common/Modal';
 import SearchResult from '../addFood/SearchResult';
 import AddFoodForm from '../addFood/AddFoodForm';
 import tw from 'tailwind-styled-components';
 import BookmarkBtn from './BookmarkBtn';
-import { FormEvent, useState } from 'react';
 import TabBtns from '../addFood/TabBtns';
-import { changeFoodInfo } from 'src/lib/slice';
 
 const AddFoodSection = () => {
   const [tab, setTab] = useState('search');
@@ -46,7 +37,7 @@ const AddFoodSection = () => {
             animate={slideXAnimation}
           >
             <Title>냉장실 식료품 추가하기</Title>
-            {tab === 'search' && <SearchResult />}
+            {tab === 'search' && <SearchResult tab={tab} />}
             {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
             {tab === 'bookmark' && <div>hi</div>}
           </AddFoodBox>
@@ -58,8 +49,8 @@ const AddFoodSection = () => {
           animate={slideXAnimation}
         >
           <TabBtns tab={tab} setTab={setTab} onDesktopClick={onDesktopClick} />
-          {tab === 'search' && <SearchResult />}
-          {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+          {tab === 'search' && <SearchResult tab={tab} />}
+          {tab === 'input' && <AddFoodForm tab={tab} onSubmit={onSubmit} />}
           {tab === 'bookmark' && <div>hi</div>}
         </AddFoodBox>
       )}
