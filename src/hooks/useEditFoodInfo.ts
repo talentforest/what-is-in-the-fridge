@@ -11,7 +11,7 @@ import {
 } from 'src/lib/slice/index';
 import { getSpaceType } from 'src/utils/getSpaceType';
 
-export const useEditFoodInfo = () => {
+export const useEditFoodInfo = (addedFoodModal: boolean | undefined) => {
   const [edit, setEdit] = useState(false);
   const { freezerMode } = useAppSelector((state) => state.freezerMode);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
@@ -62,9 +62,38 @@ export const useEditFoodInfo = () => {
     dispatch(showAddedFoodModal());
   };
 
+  const onBookMarkClick = () => {
+    const editedFood = {
+      ...addedFood,
+      bookmark: !addedFood.bookmark,
+    } as IFood;
+
+    const spaceType = getSpaceType(addedFood.space, freezerMode);
+    const spaceArr = [...currentMode[spaceType][addedFood.space]];
+    const targetIndex = spaceArr.findIndex((food) => food.id === addedFood.id);
+    const editedSpaceArr = [
+      ...spaceArr.slice(0, targetIndex),
+      editedFood,
+      ...spaceArr.slice(targetIndex + 1),
+    ];
+    const newState = {
+      ...currentMode[spaceType],
+      [addedFood.space]: editedSpaceArr,
+    };
+
+    if (spaceType === 'door') {
+      dispatch(changeDoorState(newState));
+      dispatch(changeAddedFoodInfo(editedFood));
+    } else {
+      dispatch(changeInnerState(newState));
+      dispatch(changeAddedFoodInfo(editedFood));
+    }
+  };
+
   return {
     closeAddedFoodModal,
     onEditSubmitClick,
+    onBookMarkClick,
     nameRef,
     quantityRef,
     dateRef,

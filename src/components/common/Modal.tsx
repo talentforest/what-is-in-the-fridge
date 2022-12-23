@@ -1,19 +1,21 @@
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
-import { useAppSelector } from 'src/lib/hooks';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { foodInfoNames } from 'src/utils/foodCategory';
 import { useEditFoodInfo, useAddFood } from 'src/hooks/index';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from '../addFood/FoodToAddBtns';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
+import { changeFoodInfo } from 'src/lib/slice';
 
 interface IModalProps {
   addedFoodModal?: boolean;
 }
 
 const Modal = ({ addedFoodModal }: IModalProps) => {
+  const dispatch = useAppDispatch();
   const { food } = useAppSelector((state) => state.food);
   const { addedFood } = useAppSelector((state) => state.addedFood);
   const {
@@ -21,14 +23,21 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
     setEdit,
     closeAddedFoodModal,
     onEditSubmitClick,
+    onBookMarkClick,
     nameRef,
     quantityRef,
     dateRef,
-  } = useEditFoodInfo();
+  } = useEditFoodInfo(addedFoodModal);
   const { closeFoodModal } = useAddFood();
+
+  const bookmarkClick = () => {
+    const result = { ...food, bookmark: !food.bookmark };
+    dispatch(changeFoodInfo(result));
+  };
 
   const foodInfo = addedFoodModal ? addedFood : food;
   const closeModal = addedFoodModal ? closeAddedFoodModal : closeFoodModal;
+  const changeBookmark = addedFoodModal ? onBookMarkClick : bookmarkClick;
 
   return (
     <>
@@ -61,6 +70,12 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
                 priority
               />
             )}
+            <BookMark onClick={changeBookmark} $isBookMark={foodInfo.bookmark}>
+              <FontAwesomeIcon
+                icon={faStar}
+                color={foodInfo.bookmark ? 'gold' : 'white'}
+              />
+            </BookMark>
           </EmojiBox>
           {edit ? (
             <Info>
@@ -112,6 +127,21 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
   );
 };
 
+const BookMark = tw.button<{ $isBookMark: boolean }>`
+  w-10
+  h-10
+  absolute
+  -top-3
+  -right-3
+  rounded-full
+  flex
+  justify-center
+  items-center
+  bg-yello
+  shadow-md
+  ${(p: { $isBookMark: boolean }) =>
+    p.$isBookMark ? 'bg-blue-dark' : 'bg-gray-light'} 
+`;
 const Overlay = tw.div`
   absolute
   mobile:${(p: { $addedFoodModal: boolean }) =>
@@ -125,7 +155,6 @@ const Overlay = tw.div`
   z-10
 `;
 const ModalBox = tw.div`
-  border
   flex
   flex-col
   items-center
@@ -146,7 +175,7 @@ const ModalBox = tw.div`
   tablet:max-w-[450px]
   tablet:h-80
   mobile:w-3/4
-  mobile:h-96
+  mobile:h-[400px]
 `;
 const Header = tw.header`
   w-full

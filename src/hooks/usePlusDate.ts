@@ -9,17 +9,17 @@ export const usePlusDate = () => {
   function addDay(date: string, days: number) {
     const result = new Date(date);
     result.setDate(result.getDate() + days);
-    return changeStrDate(result);
+    return result.toLocaleDateString();
   }
   function addMonth(date: string) {
     const result = new Date(date);
     result.setMonth(result.getMonth() + 1);
-    return changeStrDate(result);
+    return result.toLocaleDateString();
   }
   function addYear(date: string) {
     const result = new Date(date);
     result.setFullYear(result.getFullYear() + 1);
-    return changeStrDate(result);
+    return result.toLocaleDateString();
   }
 
   const onDatePlusClick = (
