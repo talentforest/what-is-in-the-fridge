@@ -15,7 +15,6 @@ const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
 
   return (
     <>
-      <SubTitle>식료품 정보 추가하기</SubTitle>
       <Form onSubmit={onSubmit}>
         {food.imgUrl && (
           <ImgBox>
@@ -44,9 +43,6 @@ const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
   );
 };
 
-const SubTitle = tw.h4`
-  text-[14px]
-`;
 const Form = tw.form`
   mobile:h-[calc(100vh-theme(spacing.24))]
   overflow-auto
@@ -69,7 +65,7 @@ const ItemTitle = tw.h4`
   text-[14px]
   mb-2
   mt-5
-  first:mt-2
+  first:mt-0
 `;
 const SubmitBtn = tw.button`
   w-full

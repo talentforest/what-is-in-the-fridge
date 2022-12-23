@@ -3,8 +3,10 @@ import { motion, useAnimation } from 'framer-motion';
 import { useAppSelector } from 'src/lib/hooks';
 import {
   faCartPlus,
-  faCircleArrowLeft,
-  faCircleArrowRight,
+  faPen,
+  faRightLeft,
+  faSearch,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screens';
 import { useWindowSize, useSubmitFood, useSlideAnimation } from 'src/hooks';
@@ -12,14 +14,17 @@ import Modal from '../common/Modal';
 import SearchResult from '../addFood/SearchResult';
 import AddFoodForm from '../addFood/AddFoodForm';
 import tw from 'tailwind-styled-components';
+import BookmarkBtn from './BookmarkBtn';
+import { FormEvent, useState } from 'react';
+import TabBtns from '../addFood/TabBtns';
 
 const AddFoodSection = () => {
-  const { food } = useAppSelector((state) => state.food);
+  const [tab, setTab] = useState('search');
   const { modal } = useAppSelector((state) => state.foodModal);
   const { open, close } = useAppSelector((state) => state.addFoodArea);
   const { windowSize } = useWindowSize();
-  const slideXAnimation = useAnimation();
   const { onSubmit } = useSubmitFood();
+  const slideXAnimation = useAnimation();
   const { onMobileClick, onDesktopClick, CLOSE_X } =
     useSlideAnimation(slideXAnimation);
 
@@ -30,6 +35,7 @@ const AddFoodSection = () => {
           <CartBtn onClick={onMobileClick}>
             <CartIconBtn icon={faCartPlus} color='#66a8ea' size='3x' />
           </CartBtn>
+          <BookmarkBtn />
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
             transition={{ type: 'linear', duration: 0.3 }}
@@ -37,7 +43,9 @@ const AddFoodSection = () => {
             animate={slideXAnimation}
           >
             <Title>냉장실 식료품 추가하기</Title>
-            {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}
+            {tab === 'search' && <SearchResult />}
+            {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+            {tab === 'bookmark' && <div>hi</div>}
           </AddFoodBox>
         </>
       ) : (
@@ -46,14 +54,11 @@ const AddFoodSection = () => {
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
-          <OpenBarBtn onClick={onDesktopClick}>
-            <Icon
-              icon={close ? faCircleArrowRight : faCircleArrowLeft}
-              size='lg'
-            />
-          </OpenBarBtn>
-          <Title>냉장실 식료품 추가하기</Title>
-          {!food.id ? <SearchResult /> : <AddFoodForm onSubmit={onSubmit} />}
+          <Title>냉장고에 식료품 추가하기</Title>
+          <TabBtns tab={tab} setTab={setTab} onDesktopClick={onDesktopClick} />
+          {tab === 'search' && <SearchResult />}
+          {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+          {tab === 'bookmark' && <div>hi</div>}
         </AddFoodBox>
       )}
       {modal && <Modal />}
@@ -70,7 +75,7 @@ const AddFoodBox = tw(motion.section)`
   tablet:w-72
   mobile:w-64
   p-4
-  tablet:rounded-none
+  tablet:rounded-r-2xl
   mobile:rounded-r-3xl
   z-5
 `;
@@ -79,22 +84,16 @@ text-gray-dark
   font-bold
   mb-4
 `;
-const Icon = tw(FontAwesomeIcon)`
-  cursor-pointer
-`;
+
 const CartBtn = tw.button`
   bg-yellow
   shadow-xl
   rounded-full
-  tablet:h-40
-  tablet:w-40
-  mobile:w-24
-  mobile:h-24
+  w-24
+  h-24
   absolute
-  tablet:bottom-12
-  tablet:right-12
-  mobile:bottom-4
-  mobile:right-4
+  bottom-4
+  right-32
   flex
   justify-center
   items-center
@@ -115,18 +114,6 @@ const Overlay = tw.div`
   opacity-50
   cursor-pointer
   z-1
-`;
-const OpenBarBtn = tw(motion.button)`
-  tablet:block
-  mobile:hidden
-  w-10
-  h-full
-  absolute
-  top-0
-  -right-10
-  bg-green
-  rounded-r-3xl
-  z-5
 `;
 
 export default AddFoodSection;

@@ -11,7 +11,7 @@ export type spaceName =
   | 'space_7'
   | 'shoppingBag';
 
-type spaceType = { [key: string]: string | spaceName };
+type spaceType = { [key: string]: string | spaceName | boolean };
 
 export interface IFood extends spaceType {
   id: string;
@@ -21,6 +21,7 @@ export interface IFood extends spaceType {
   emoji: string;
   expiryDate: string;
   quantity: string;
+  bookmark: boolean;
 }
 
 export interface ISearchedFood extends IFood {
@@ -34,8 +35,9 @@ const initialState: { food: IFood | ISearchedFood } = {
     type: '🥩 정육,수산',
     name: '',
     emoji: '1f34b',
-    expiryDate: changeStrDate(new Date()),
+    expiryDate: new Date().toLocaleDateString(),
     quantity: '',
+    bookmark: false,
   },
 };
 

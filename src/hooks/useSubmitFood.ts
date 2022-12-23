@@ -16,7 +16,10 @@ export const useSubmitFood = () => {
     if (type.length === 0) return alert('식료품 카테고리를 적어주세요.');
     if (expiryDate.length === 0) return alert('식료품 유통기한을 적어주세요.');
     if (quantity.length === 0) return alert('식료품 개수를 적어주세요.');
-    return dispatch(showFoodModal());
+
+    const result = { ...food, bookmark: false };
+    dispatch(changeFoodInfo(result));
+    dispatch(showFoodModal());
   };
 
   const onEmojiClick = (emojiData: EmojiClickData) => {

@@ -35,7 +35,7 @@ const SearchItem = ({ result }: SearchItemProps) => {
         size='lg'
       />
       <Info>
-        {cutLetter(prdlstNm, 14)}{' '}
+        {cutLetter(prdlstNm, 15)}{' '}
         {!(capacity === '알수없음') && capacity?.slice(0, 4)}
       </Info>
     </ResultItem>
@@ -65,15 +65,14 @@ const PlusCartBtn = tw(FontAwesomeIcon)`
   hover:transition 
   hover:duration-300
   absolute
-  top-[64px]
-  left-[67px]
+  top-16
+  right-4
   self-end
   text-[14px]
   rounded-full
   p-2
 `;
 const ImgBox = tw.div`
-  border
   border-gray-light
   relative
   w-24
@@ -93,9 +92,7 @@ const Info = tw.div`
   text-center
   text-[11px]
   break-words
-  bg-gray-light
   w-full
-  rounded-lg
 `;
 
 export default SearchItem;

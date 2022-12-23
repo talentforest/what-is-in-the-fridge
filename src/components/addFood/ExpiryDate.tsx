@@ -6,6 +6,7 @@ import { dateType } from 'src/utils/dateType';
 import { usePlusDate } from 'src/hooks/index';
 import tw from 'tailwind-styled-components';
 import React from 'react';
+import { changeStrDate } from 'src/utils/changeStrDate';
 
 const ExpiryDate = () => {
   const { onDatePlusClick, onDateChange } = usePlusDate();
@@ -13,7 +14,11 @@ const ExpiryDate = () => {
 
   return (
     <>
-      <Input type='date' value={food.expiryDate} onChange={onDateChange} />
+      <Input
+        type='date'
+        value={changeStrDate(new Date(food.expiryDate))}
+        onChange={onDateChange}
+      />
       <PlusDate>
         {dateType.map((item) => (
           <DateBtn

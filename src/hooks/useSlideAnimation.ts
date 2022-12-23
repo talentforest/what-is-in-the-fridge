@@ -2,7 +2,7 @@ import { AnimationControls } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { closeAddFoodArea, openAddFoodArea } from 'src/lib/slice';
 
-const CLOSE_X = -290;
+const CLOSE_X = -275;
 
 export const useSlideAnimation = (slideXAnimation: AnimationControls) => {
   const { open, close } = useAppSelector((state) => state.addFoodArea);
