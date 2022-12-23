@@ -4,9 +4,9 @@ import { useAppSelector } from 'src/lib/hooks';
 import { Input } from './FoodIconName';
 import { dateType } from 'src/utils/dateType';
 import { usePlusDate } from 'src/hooks/index';
+import { changeStrDate } from 'src/utils/changeStrDate';
 import tw from 'tailwind-styled-components';
 import React from 'react';
-import { changeStrDate } from 'src/utils/changeStrDate';
 
 const ExpiryDate = () => {
   const { onDatePlusClick, onDateChange } = usePlusDate();

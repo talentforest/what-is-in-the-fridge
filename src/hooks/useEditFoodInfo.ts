@@ -24,14 +24,16 @@ export const useEditFoodInfo = (addedFoodModal: boolean | undefined) => {
 
   const nameRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
-  const dateRef = useRef<HTMLInputElement>(null);
+  const dateRef = useRef<HTMLInputElement>();
 
   const onEditSubmitClick = () => {
     const editedFood = {
       ...addedFood,
       name: nameRef.current?.value,
       quantity: quantityRef.current?.value,
-      expiryDate: dateRef.current?.value,
+      expiryDate: new Date(
+        dateRef.current?.value as string
+      ).toLocaleDateString(),
     } as IFood;
 
     const spaceType = getSpaceType(addedFood.space, freezerMode);

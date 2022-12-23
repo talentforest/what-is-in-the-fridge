@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { changeStrDate } from 'src/utils/changeStrDate';
 import { IFood } from './foodSlice';
 
 const initialState: { addedFood: IFood } = {
@@ -9,8 +8,9 @@ const initialState: { addedFood: IFood } = {
     type: '',
     name: '',
     emoji: '1f34b',
-    expiryDate: changeStrDate(new Date()),
+    expiryDate: new Date().toLocaleDateString(),
     quantity: '',
+    bookmark: false,
   },
 };
 

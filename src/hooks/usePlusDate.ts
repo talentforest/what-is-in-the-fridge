@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/index';
-import { changeStrDate } from '../utils/changeStrDate';
 
 export const usePlusDate = () => {
   const { food } = useAppSelector((state) => state.food);
@@ -50,7 +49,11 @@ export const usePlusDate = () => {
   };
 
   const onDateChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const result = { ...food, expiryDate: e.currentTarget.value };
+    const result = {
+      ...food,
+      expiryDate: new Date(e.currentTarget.value).toLocaleDateString(),
+    };
+
     dispatch(changeFoodInfo(result));
   };
 

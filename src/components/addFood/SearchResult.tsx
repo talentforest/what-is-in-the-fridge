@@ -36,11 +36,12 @@ export interface IFoodData {
 }
 
 const SearchResult = () => {
-  const { keyword, onKeywordChange, onProductNameSubmit } = useSearchFood();
+  const { onKeywordChange, onKeywordSubmit, removeKeyword } = useSearchFood();
+  const { keyword } = useAppSelector((state) => state.keyword);
   const { onSubmit } = useSubmitFood();
   const { food } = useAppSelector((state) => state.food);
   const { data, isLoading } = useSWR(
-    food.name ? url(food.name) : null,
+    keyword.length !== 0 && food.name ? url(food.name) : null,
     fetcher
   );
 
@@ -55,16 +56,22 @@ const SearchResult = () => {
       {!food.id ? (
         <>
           <Title>상품검색</Title>
-          <Form onSubmit={onProductNameSubmit}>
+          <Form onSubmit={onKeywordSubmit}>
             <Input
               type='text'
               value={keyword}
               onChange={onKeywordChange}
-              placeholder='찾으시는 식품을 검색해보세요'
+              placeholder='냉장고 넣을 식품을 검색해보세요.'
             />
-            <SearchBtn type='submit'>
-              <FontAwesomeIcon icon={faSearch} size='lg' />
-            </SearchBtn>
+            {data && keyword.length !== 0 ? (
+              <SearchBtn type='submit' onClick={removeKeyword}>
+                <FontAwesomeIcon icon={faDeleteLeft} size='lg' />
+              </SearchBtn>
+            ) : (
+              <SearchBtn type='submit'>
+                <FontAwesomeIcon icon={faSearch} size='lg' />
+              </SearchBtn>
+            )}
           </Form>
           <ResultDesc>
             검색 결과는 한국식품안전관리인증원 HACCP에서 제공하는 정보만
@@ -72,11 +79,12 @@ const SearchResult = () => {
           </ResultDesc>
           {!isLoading ? (
             <>
-              <CountBox>
-                <span>검색결과</span>
-                <span>{`${data?.body.items.length || 0}건`}</span>
-              </CountBox>
-
+              {data?.body && (
+                <CountBox>
+                  <span>검색결과</span>
+                  <span>{`${data?.body.items.length || 0}건`}</span>
+                </CountBox>
+              )}
               <ResultBox>
                 {data?.body.items.length !== 0 ? (
                   data?.body.items?.map((result: IFoodData) => (
@@ -110,7 +118,7 @@ const Form = tw.form`
 `;
 const SearchBtn = tw.button`
   absolute
-  right-4
+  right-3
   px-3
   text-gray
   w-fit

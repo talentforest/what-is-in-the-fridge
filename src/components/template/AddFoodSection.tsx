@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useAnimation } from 'framer-motion';
-import { useAppSelector } from 'src/lib/hooks';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
+  faArrowLeft,
   faCartPlus,
+  faChevronLeft,
   faPen,
   faRightLeft,
   faSearch,
@@ -17,6 +19,7 @@ import tw from 'tailwind-styled-components';
 import BookmarkBtn from './BookmarkBtn';
 import { FormEvent, useState } from 'react';
 import TabBtns from '../addFood/TabBtns';
+import { changeFoodInfo } from 'src/lib/slice';
 
 const AddFoodSection = () => {
   const [tab, setTab] = useState('search');
@@ -54,7 +57,6 @@ const AddFoodSection = () => {
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
-          <Title>냉장고에 식료품 추가하기</Title>
           <TabBtns tab={tab} setTab={setTab} onDesktopClick={onDesktopClick} />
           {tab === 'search' && <SearchResult />}
           {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
@@ -82,7 +84,7 @@ const AddFoodBox = tw(motion.section)`
 const Title = tw.h2`
 text-gray-dark
   font-bold
-  mb-4
+  mb-2
 `;
 
 const CartBtn = tw.button`

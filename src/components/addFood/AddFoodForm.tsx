@@ -4,7 +4,10 @@ import ExpiryDate from '../addFood/ExpiryDate';
 import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
 import Image from 'next/image';
-import { useAppSelector } from 'src/lib/hooks';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { changeFoodInfo } from 'src/lib/slice';
 
 interface IAddFoodFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -12,9 +15,21 @@ interface IAddFoodFormProps {
 
 const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
   const { food } = useAppSelector((state) => state.food);
+  const dispatch = useAppDispatch();
+
+  const onBackClick = () => {
+    const result = { ...food, id: '' };
+    dispatch(changeFoodInfo(result));
+  };
 
   return (
     <>
+      {food.imgUrl && (
+        <BackBtn onClick={onBackClick}>
+          <FontAwesomeIcon icon={faChevronLeft} />
+          <span>뒤로가기</span>
+        </BackBtn>
+      )}
       <Form onSubmit={onSubmit}>
         {food.imgUrl && (
           <ImgBox>
@@ -43,6 +58,14 @@ const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
   );
 };
 
+const BackBtn = tw.button`
+  w-fit
+  text-[14px]
+  flex
+  gap-1
+  items-center
+  mb-3
+`;
 const Form = tw.form`
   mobile:h-[calc(100vh-theme(spacing.24))]
   overflow-auto
@@ -50,10 +73,11 @@ const Form = tw.form`
 `;
 const ImgBox = tw.div`
   relative
-  w-28
-  h-28
+  w-24
+  h-24
   rounded-lg
-  mt-1
+  shadow-md
+  bg-white
 `;
 const Img = tw(Image)`
   rounded-lg
