@@ -4,10 +4,11 @@ import {
   showFoodModal,
   addToShoppingBag,
 } from 'src/lib/slice/index';
-import { changeStrDate } from 'src/utils/changeStrDate';
+import { changeKeyword } from 'src/lib/slice/keywordSlice';
 
 export const useAddFood = () => {
   const { food } = useAppSelector((state) => state.food);
+  const { keyword } = useAppSelector((state) => state.keyword);
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
 
@@ -17,7 +18,7 @@ export const useAddFood = () => {
     name: '',
     space: 'shoppingBag',
     emoji: '1f34b',
-    expiryDate: changeStrDate(new Date()),
+    expiryDate: new Date().toLocaleDateString(),
     quantity: '',
   };
 
@@ -27,6 +28,7 @@ export const useAddFood = () => {
       dispatch(showFoodModal());
       return;
     }
+    dispatch(changeKeyword(''));
     dispatch(showFoodModal());
     dispatch(changeFoodInfo(initialState));
     dispatch(addToShoppingBag([...shoppingBagFoods, food]));
@@ -34,7 +36,6 @@ export const useAddFood = () => {
 
   const closeFoodModal = () => {
     dispatch(showFoodModal());
-    dispatch(changeFoodInfo(initialState));
   };
 
   return {

@@ -1,3 +1,5 @@
 export const changeStrDate = (date: Date) => {
-  return date.toISOString().substring(0, 10);
+  let offset = date.getTimezoneOffset() * 60000;
+  let dateOffset = new Date(date.getTime() - offset);
+  return dateOffset.toISOString().substring(0, 10);
 };

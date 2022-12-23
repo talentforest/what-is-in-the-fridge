@@ -4,11 +4,12 @@ import { foodInfoNames } from 'src/utils/foodCategory';
 import { useEditFoodInfo, useAddFood } from 'src/hooks/index';
 import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { changeFoodInfo } from 'src/lib/slice';
+import { changeStrDate } from 'src/utils/changeStrDate';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from '../addFood/FoodToAddBtns';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
-import { changeFoodInfo } from 'src/lib/slice';
 
 interface IModalProps {
   addedFoodModal?: boolean;
@@ -99,7 +100,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
                 <Name>유통기한</Name>
                 <Input
                   type='date'
-                  defaultValue={foodInfo.expiryDate}
+                  defaultValue={changeStrDate(new Date(foodInfo.expiryDate))}
                   ref={dateRef}
                 />
               </Item>
