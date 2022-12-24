@@ -13,14 +13,14 @@ import { getSpaceType } from 'src/utils/getSpaceType';
 
 export const useEditFoodInfo = (addedFoodModal: boolean | undefined) => {
   const [edit, setEdit] = useState(false);
-  const { freezerMode } = useAppSelector((state) => state.freezerMode);
+  const { freezerOpen } = useAppSelector((state) => state.doorOpen);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
   const { addedFood } = useAppSelector((state) => state.addedFood);
   const dispatch = useAppDispatch();
-  const currentMode = freezerMode ? freezer : fridge;
-  const changeDoorState = freezerMode ? changeFreezerDoor : changeFridgeDoor;
-  const changeInnerState = freezerMode ? changeFreezerInner : changeFridgeInner;
+  const currentMode = freezerOpen ? freezer : fridge;
+  const changeDoorState = freezerOpen ? changeFreezerDoor : changeFridgeDoor;
+  const changeInnerState = freezerOpen ? changeFreezerInner : changeFridgeInner;
 
   const nameRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
@@ -36,7 +36,7 @@ export const useEditFoodInfo = (addedFoodModal: boolean | undefined) => {
       ).toLocaleDateString(),
     } as IFood;
 
-    const spaceType = getSpaceType(addedFood.space, freezerMode);
+    const spaceType = getSpaceType(addedFood.space, freezerOpen);
     const spaceArr = [...currentMode[spaceType][addedFood.space]];
     const targetIndex = spaceArr.findIndex((food) => food.id === addedFood.id);
     const editedSpaceArr = [
@@ -70,7 +70,7 @@ export const useEditFoodInfo = (addedFoodModal: boolean | undefined) => {
       bookmark: !addedFood.bookmark,
     } as IFood;
 
-    const spaceType = getSpaceType(addedFood.space, freezerMode);
+    const spaceType = getSpaceType(addedFood.space, freezerOpen);
     const spaceArr = [...currentMode[spaceType][addedFood.space]];
     const targetIndex = spaceArr.findIndex((food) => food.id === addedFood.id);
     const editedSpaceArr = [

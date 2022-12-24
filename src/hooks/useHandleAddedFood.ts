@@ -10,16 +10,16 @@ import {
 import { getSpaceType } from 'src/utils/getSpaceType';
 
 export const useHandleAddedFood = () => {
-  const { freezerMode } = useAppSelector((state) => state.freezerMode);
+  const { freezerOpen } = useAppSelector((state) => state.doorOpen);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
   const { addedFood } = useAppSelector((state) => state.addedFood);
   const dispatch = useAppDispatch();
 
-  const currentMode = freezerMode ? freezer : fridge;
-  const changeMode = freezerMode ? fridge : freezer;
-  const changeDoorState = freezerMode ? changeFreezerDoor : changeFridgeDoor;
-  const changeInnerState = freezerMode ? changeFreezerInner : changeFridgeInner;
+  const currentMode = freezerOpen ? freezer : fridge;
+  const changeMode = freezerOpen ? fridge : freezer;
+  const changeDoorState = freezerOpen ? changeFreezerDoor : changeFridgeDoor;
+  const changeInnerState = freezerOpen ? changeFreezerInner : changeFridgeInner;
 
   const moveToAnotherMode = () => {
     removeAddedFood();
@@ -31,14 +31,14 @@ export const useHandleAddedFood = () => {
       ...changeMode.inner,
       ['space_1']: [...changeMode.inner.space_1, movedItem],
     };
-    freezerMode
+    freezerOpen
       ? dispatch(changeFridgeInner(newState))
       : dispatch(changeFreezerInner(newState));
   };
 
   const removeAddedFood = () => {
     const { space } = addedFood;
-    const spaceType = getSpaceType(space, freezerMode);
+    const spaceType = getSpaceType(space, freezerOpen);
     const removedSpaceArr = currentMode[spaceType][addedFood.space].filter(
       (food) => food.id !== addedFood.id
     );
@@ -46,7 +46,7 @@ export const useHandleAddedFood = () => {
       ...currentMode[spaceType],
       [space]: removedSpaceArr,
     };
-    getSpaceType(space, freezerMode) === 'door'
+    getSpaceType(space, freezerOpen) === 'door'
       ? dispatch(changeDoorState(newState))
       : dispatch(changeInnerState(newState));
 

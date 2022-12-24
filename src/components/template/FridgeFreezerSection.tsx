@@ -5,12 +5,15 @@ import Modal from '../common/Modal';
 import { useAppSelector } from 'src/lib/hooks';
 
 const FridgeFreezerSection = () => {
-  const { freezerMode } = useAppSelector((state) => state.freezerMode);
   const { modal } = useAppSelector((state) => state.addedFoodModal);
+  const { freezerOpen, fridgeOpen } = useAppSelector((state) => state.doorOpen);
 
   return (
     <FridgeFreezer>
-      <Section>{!freezerMode ? <Fridge /> : <Freezer />}</Section>
+      <Section>
+        {!fridgeOpen && <Freezer />}
+        {!freezerOpen && <Fridge />}
+      </Section>
       {modal && <Modal addedFoodModal />}
     </FridgeFreezer>
   );
@@ -21,6 +24,7 @@ const FridgeFreezer = tw.section`
   relative
 `;
 const Section = tw.div`
+ relative
   mx-auto
   flex 
   flex-col
