@@ -1,17 +1,24 @@
 import tw from 'tailwind-styled-components';
+import styles from 'styles/DoorOpen.module.css';
 import Compartment from './Compartment';
 import ChangeModeBtn from './ChangeModeBtn';
 import ShoppingBagFood from './ShoppingBagFood';
 import { useAppSelector } from 'src/lib/hooks';
-import { Shelf } from './Fridge';
+import { Knob, Shelf } from './Fridge';
+import { useState } from 'react';
 
 const Freezer = () => {
   const { freezer } = useAppSelector((state) => state.freezerFoods);
+  const [open, setOpen] = useState(false);
+
+  const onFreezerOpenClick = () => {
+    setOpen((prev) => !prev);
+  };
 
   return (
     <>
-      <FreezerSection>
-        <FreezerBox>
+      <FreezerSection className={`${styles.fridge} ${open ? styles.open : ''}`}>
+        <FreezerInner className={styles.leftDoor}>
           {Object.keys(freezer.inner).map((spaceKey: string) => (
             <Compartment
               key={spaceKey}
@@ -19,8 +26,11 @@ const Freezer = () => {
               spaceKey={spaceKey}
             />
           ))}
-        </FreezerBox>
-        <FreezerDoor>
+        </FreezerInner>
+        <FreezerDoor className={styles.rightDoor} onClick={onFreezerOpenClick}>
+          <div className={styles.fridgeFront}>
+            <Knob />
+          </div>
           {Object.keys(freezer.door).map((spaceKey: string) => (
             <Compartment
               key={spaceKey}
@@ -32,25 +42,20 @@ const Freezer = () => {
           ))}
         </FreezerDoor>
       </FreezerSection>
-      <ChangeModeBtn btnName='냉장칸 보기' />
+      <ChangeModeBtn />
       <ShoppingBagFood />
     </>
   );
 };
 
 const FreezerSection = tw.section`
-  mx-auto
-  desktop:mt-10
-  tablet:mt-0
-  mobile:mt-10
-
-  flex
-  gap-1
   w-full
   tablet:h-80
   mobile:h-2/5
 `;
-const FreezerBox = tw.div`
+const FreezerInner = tw.div`
+  absolute
+  h-full
   flex
   flex-col
   justify-between
@@ -59,13 +64,12 @@ const FreezerBox = tw.div`
   tablet:w-1/2
   mobile:w-1/2
   p-2
-  rounded-2xl
   shadow-2xl
   bg-gray-light
   border
   border-gray
 `;
-const FreezerDoor = tw(FreezerBox)`
+const FreezerDoor = tw(FreezerInner)`
 `;
 
 export default Freezer;

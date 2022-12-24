@@ -1,0 +1,52 @@
+.fridge {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  /* 원근 */
+  perspective: 2000px;
+  /* transition */
+  scale: 0.8;
+  transition: scale 0.6s;
+}
+.rightDoor {
+  border-radius: 10px;
+  /* transition */
+  transform-origin: top right;
+  transition: transform 0.5s;
+  opacity: 1;
+}
+.leftDoor {
+  border-radius: 10px;
+}
+.fridgeFront {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d3d3d3;
+  z-index: 1;
+  border-radius: 10px;
+  /* transition */
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+/* Door open swing effect */
+.fridge.open {
+  display: flex;
+  justify-content: flex-start;
+  scale: 1;
+  transition: scale 0.6s;
+}
+.fridge.open .rightDoor {
+  transform: rotateY(180deg);
+  opacity: 1;
+}
+.fridge.open .leftDoor {
+  transition: translate 0.3s;
+}
+.fridge.open .fridgeFront {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
