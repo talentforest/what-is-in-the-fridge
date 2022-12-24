@@ -36,7 +36,7 @@ const Name = tw.span`
   rounded-sm
   w-1/5
 `;
-const Desc = tw.span`
+export const Desc = tw.span`
   text-[13px]
   text-orange
 `;

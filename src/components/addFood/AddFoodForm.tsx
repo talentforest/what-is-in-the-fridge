@@ -10,6 +10,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { changeFoodInfo } from 'src/lib/slice';
 import { useEffect } from 'react';
 import { initialState } from 'src/hooks/useAddFood';
+import { Title } from './SearchResult';
 
 interface IAddFoodFormProps {
   tab?: string;
@@ -34,12 +35,13 @@ const AddFoodForm = ({ tab, onSubmit }: IAddFoodFormProps) => {
 
   return (
     <>
-      {food?.imgUrl && (
+      {tab === 'search' && (
         <BackBtn onClick={onBackClick}>
           <FontAwesomeIcon icon={faChevronLeft} />
           <span>뒤로가기</span>
         </BackBtn>
       )}
+      {tab === 'input' && <Title>직접 식품 정보 입력하기</Title>}
       <Form onSubmit={onSubmit}>
         {food?.imgUrl && (
           <ImgBox>

@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   important: true,
   content: [
@@ -31,13 +32,18 @@ module.exports = {
       'white-dark': '#FCFCFC',
     },
     fontSize: {
-      sm: ['10px', '12px'],
-      base: ['16px', '18px'],
+      xs: ['10px'],
+      sm: ['12px'],
+      md: ['14px'],
+      base: ['16px'],
       lg: ['20px', '28px'],
       xl: ['24px', '32px'],
     },
     scaleX: {
       '-1': '-1',
+    },
+    rotateY: {
+      140: '140deg',
     },
     extend: {},
   },
