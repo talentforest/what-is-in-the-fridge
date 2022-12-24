@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import styles from 'styles/FridgeDoor.module.css';
+import styles from 'styles/DoorOpen.module.css';
 import Compartment from './Compartment';
 import ChangeModeBtn from './ChangeModeBtn';
 import ShoppingBagFood from './ShoppingBagFood';
@@ -16,7 +16,7 @@ const Fridge = () => {
 
   return (
     <>
-      <ChangeModeBtn btnName='냉동칸 보기' />
+      <ChangeModeBtn />
       <FridgeSection className={`${styles.fridge} ${open ? styles.open : ''}`}>
         <FridgeInner className={styles.leftDoor}>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
@@ -29,7 +29,7 @@ const Fridge = () => {
         </FridgeInner>
         <FridgeDoor className={styles.rightDoor} onClick={onFridgeOpenClick}>
           <div className={styles.fridgeFront}>
-            <div className={styles.knob} />
+            <Knob />
           </div>
           {Object.keys(fridge.door).map((spaceKey: string) => (
             <Compartment
@@ -48,17 +48,11 @@ const Fridge = () => {
 };
 
 const FridgeSection = tw.section`
-  relative
-  flex
-  gap-0.5
+  w-full
   tablet:min-h-[400px]
   tablet:max-h-[600px]
   tablet:h-4/5
   mobile:h-2/3
-  tablet:mb-0
-  mobile:mb-1
-  mx-auto
-  w-full
 `;
 const FridgeInner = tw.div`
   absolute
@@ -72,10 +66,20 @@ const FridgeInner = tw.div`
   mobile:p-2
   shadow-2xl
   bg-gray-light
-  border-gray
   border
+  border-gray
 `;
 const FridgeDoor = tw(FridgeInner)`
+`;
+export const Knob = tw.div`
+  shadow-lg
+  cursor-pointer
+  bg-gray-dark
+  rounded-md
+  w-3
+  h-12
+  ml-5
+  mt-3
 `;
 export const Shelf = tw.div`
   w-full

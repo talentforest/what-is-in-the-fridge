@@ -11,11 +11,18 @@ const freezerModeSlice = createSlice({
     changeMode: (state) => {
       state.freezerMode = !state.freezerMode;
     },
+    changeFreezerMode: (state) => {
+      state.freezerMode = true;
+    },
+    changeFridgeMode: (state) => {
+      state.freezerMode = false;
+    },
   },
 });
 
 const { reducer: changeModeReducer } = freezerModeSlice;
 
-export const { changeMode } = freezerModeSlice.actions;
+export const { changeMode, changeFreezerMode, changeFridgeMode } =
+  freezerModeSlice.actions;
 
 export default changeModeReducer;

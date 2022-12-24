@@ -1,3 +1,4 @@
+export { changeFreezerMode, changeFridgeMode } from './freezerModeReducer';
 export { changeKeyword } from './keywordSlice';
 export { changeBookmark } from './bookmarkSlice';
 export { showEmoji } from './openCloseState/showEmojiSlice';
