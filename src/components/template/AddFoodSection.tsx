@@ -9,8 +9,8 @@ import Modal from '../common/Modal';
 import SearchResult from '../addFood/SearchResult';
 import AddFoodForm from '../addFood/AddFoodForm';
 import tw from 'tailwind-styled-components';
-import BookmarkBtn from './BookmarkBtn';
 import TabBtns from '../addFood/TabBtns';
+import Bookmark from '../addFood/Bookmark';
 
 const AddFoodSection = () => {
   const [tab, setTab] = useState('search');
@@ -29,7 +29,6 @@ const AddFoodSection = () => {
           <CartBtn onClick={onMobileClick}>
             <CartIconBtn icon={faCartPlus} color='#66a8ea' size='3x' />
           </CartBtn>
-          <BookmarkBtn />
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
             transition={{ type: 'linear', duration: 0.3 }}
@@ -39,7 +38,7 @@ const AddFoodSection = () => {
             <Title>냉장실 식료품 추가하기</Title>
             {tab === 'search' && <SearchResult tab={tab} />}
             {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
-            {tab === 'bookmark' && <div>hi</div>}
+            {tab === 'bookmark' && <Bookmark />}
           </AddFoodBox>
         </>
       ) : (
@@ -51,7 +50,7 @@ const AddFoodSection = () => {
           <TabBtns tab={tab} setTab={setTab} onDesktopClick={onDesktopClick} />
           {tab === 'search' && <SearchResult tab={tab} />}
           {tab === 'input' && <AddFoodForm tab={tab} onSubmit={onSubmit} />}
-          {tab === 'bookmark' && <div>hi</div>}
+          {tab === 'bookmark' && <Bookmark />}
         </AddFoodBox>
       )}
       {modal && <Modal />}

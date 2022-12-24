@@ -10,9 +10,11 @@ import changeAddedFoodReducer from './slice/addedFood';
 import showAddedFoodModalReducer from './slice/openCloseState/showAddedFoodModal';
 import addFoodAreaReducer from './slice/openCloseState/addFoodAreaSlice';
 import changeKeywordReducer from './slice/keywordSlice';
+import changeBookmarkReducer from './slice/bookmarkSlice';
 
 export const store = configureStore({
   reducer: {
+    bookmark: changeBookmarkReducer,
     keyword: changeKeywordReducer,
     addFoodArea: addFoodAreaReducer,
     freezerMode: changeModeReducer,

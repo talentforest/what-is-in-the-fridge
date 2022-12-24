@@ -4,7 +4,7 @@ import {
   showFoodModal,
   addToShoppingBag,
 } from 'src/lib/slice/index';
-import { changeKeyword } from 'src/lib/slice/keywordSlice';
+import { changeKeyword } from 'src/lib/slice';
 
 export const initialState = {
   id: '',

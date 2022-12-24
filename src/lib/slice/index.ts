@@ -1,3 +1,5 @@
+export { changeKeyword } from './keywordSlice';
+export { changeBookmark } from './bookmarkSlice';
 export { showEmoji } from './openCloseState/showEmojiSlice';
 export { changeAddedFoodInfo } from './addedFood';
 export { changeFoodInfo } from './foodSlice';

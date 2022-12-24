@@ -1,7 +1,7 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice';
-import { changeKeyword } from 'src/lib/slice/keywordSlice';
+import { changeKeyword } from 'src/lib/slice';
 import { v4 as uuidv4 } from 'uuid';
 
 export const useSearchFood = () => {

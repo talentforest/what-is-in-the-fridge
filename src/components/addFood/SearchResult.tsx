@@ -15,7 +15,7 @@ import useSWR, { SWRConfig } from 'swr';
 import tw from 'tailwind-styled-components';
 import Loading from '../common/Loading';
 import { useEffect } from 'react';
-import { changeKeyword } from 'src/lib/slice/keywordSlice';
+import { changeKeyword } from 'src/lib/slice';
 
 export interface IFoodData {
   item: {
@@ -65,7 +65,7 @@ const SearchResult = ({ tab }: { tab: string }) => {
     >
       {!food?.id ? (
         <>
-          <Title>상품검색</Title>
+          <Title>상품 검색하기</Title>
           <Form onSubmit={onKeywordSubmit}>
             <Input
               type='text'
@@ -110,16 +110,15 @@ const SearchResult = ({ tab }: { tab: string }) => {
           )}
         </>
       ) : (
-        <AddFoodForm onSubmit={onSubmit} />
+        <AddFoodForm onSubmit={onSubmit} tab={tab} />
       )}
     </SWRConfig>
   );
 };
 
-const Title = tw.h1`
+export const Title = tw.h2`
   text-[14px]
-  text-gray
-  mb-2
+  mb-3
 `;
 const Form = tw.form`
   flex

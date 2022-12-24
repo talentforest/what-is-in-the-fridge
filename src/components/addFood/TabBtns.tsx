@@ -36,14 +36,14 @@ const TabBtns = ({ tab, setTab, onDesktopClick }: ITabBtnProps) => {
         <FontAwesomeIcon
           icon={faSearch}
           size='xl'
-          color={tab === 'search' ? 'gold' : '#aaa'}
+          color={tab === 'search' ? 'gold' : '#666'}
         />
       </TabBtn>
       <TabBtn name='input' onClick={onTabBtnClick} $color={tab === 'input'}>
         <FontAwesomeIcon
           icon={faPen}
           size='xl'
-          color={tab === 'input' ? 'gold' : '#aaa'}
+          color={tab === 'input' ? 'gold' : '#666'}
         />
       </TabBtn>
       <TabBtn
@@ -54,7 +54,7 @@ const TabBtns = ({ tab, setTab, onDesktopClick }: ITabBtnProps) => {
         <FontAwesomeIcon
           icon={faStar}
           size='xl'
-          color={tab === 'bookmark' ? 'gold' : '#aaa'}
+          color={tab === 'bookmark' ? 'gold' : '#666'}
         />
       </TabBtn>
     </TabBox>
@@ -67,9 +67,10 @@ const TabBox = tw.div`
   -right-12
   flex
   flex-col
-  gap-2
+  gap-1
 `;
 const TabBtn = tw(motion.button)<{ $color: boolean }>`
+  first:bg-gray-light
   ${(p: { $color: boolean }) => (p.$color ? 'bg-blue-dark' : 'bg-yellow')}
   tablet:block
   mobile:hidden

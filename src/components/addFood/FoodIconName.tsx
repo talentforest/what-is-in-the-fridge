@@ -5,6 +5,7 @@ import { showEmoji } from 'src/lib/slice/index';
 import { useSubmitFood } from 'src/hooks';
 import styles from 'styles/EmojiBox.module.css';
 import tw from 'tailwind-styled-components';
+import { Desc } from './FoodQuantity';
 
 const FoodIconName = () => {
   const { emoji } = useAppSelector((state) => state.emoji);
@@ -72,12 +73,6 @@ const Icon = tw.div`
   h-12
   bg-white
   shadow-md
-`;
-const Desc = tw.span`
-  inline-block
-  text-[14px]
-  text-orange
-  mb-2
 `;
 
 export default FoodIconName;

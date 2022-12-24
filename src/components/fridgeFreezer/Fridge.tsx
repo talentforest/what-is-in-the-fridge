@@ -1,17 +1,24 @@
 import tw from 'tailwind-styled-components';
+import styles from 'styles/FridgeDoor.module.css';
 import Compartment from './Compartment';
 import ChangeModeBtn from './ChangeModeBtn';
 import ShoppingBagFood from './ShoppingBagFood';
 import { useAppSelector } from 'src/lib/hooks';
+import { useState } from 'react';
 
 const Fridge = () => {
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
+  const [open, setOpen] = useState(false);
+
+  const onFridgeOpenClick = () => {
+    setOpen((prev) => !prev);
+  };
 
   return (
     <>
       <ChangeModeBtn btnName='냉동칸 보기' />
-      <FridgeSection>
-        <FridgeInner>
+      <FridgeSection className={`${styles.fridge} ${open ? styles.open : ''}`}>
+        <FridgeInner className={styles.leftDoor}>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
             <Compartment
               key={spaceKey}
@@ -20,7 +27,10 @@ const Fridge = () => {
             />
           ))}
         </FridgeInner>
-        <FridgeDoor>
+        <FridgeDoor className={styles.rightDoor} onClick={onFridgeOpenClick}>
+          <div className={styles.fridgeFront}>
+            <div className={styles.knob} />
+          </div>
           {Object.keys(fridge.door).map((spaceKey: string) => (
             <Compartment
               key={spaceKey}
@@ -38,19 +48,21 @@ const Fridge = () => {
 };
 
 const FridgeSection = tw.section`
-  mx-auto
+  relative
   flex
   gap-0.5
-  w-full
   tablet:min-h-[400px]
   tablet:max-h-[600px]
   tablet:h-4/5
   mobile:h-2/3
   tablet:mb-0
-
   mobile:mb-1
+  mx-auto
+  w-full
 `;
 const FridgeInner = tw.div`
+  absolute
+  h-full
   flex
   flex-col
   justify-between
@@ -58,11 +70,10 @@ const FridgeInner = tw.div`
   w-1/2
   tablet:p-3
   mobile:p-2
-  rounded-2xl
   shadow-2xl
   bg-gray-light
-  border
   border-gray
+  border
 `;
 const FridgeDoor = tw(FridgeInner)`
 `;
