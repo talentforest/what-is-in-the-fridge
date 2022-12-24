@@ -1,23 +1,33 @@
 import tw from 'tailwind-styled-components';
 import styles from 'styles/DoorOpen.module.css';
 import Compartment from './Compartment';
-import ChangeModeBtn from './ChangeModeBtn';
 import ShoppingBagFood from './ShoppingBagFood';
-import { useAppSelector } from 'src/lib/hooks';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { changeFridgeOpen } from 'src/lib/slice';
+import { CloseBtn } from './Freezer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 
 const Fridge = () => {
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
-  const [open, setOpen] = useState(false);
+  const { fridgeOpen } = useAppSelector((state) => state.doorOpen);
+  const dispatch = useAppDispatch();
 
   const onFridgeOpenClick = () => {
-    setOpen((prev) => !prev);
+    dispatch(changeFridgeOpen());
   };
 
   return (
     <>
-      <ChangeModeBtn />
-      <FridgeSection className={`${styles.fridge} ${open ? styles.open : ''}`}>
+      {fridgeOpen && (
+        <CloseBtn onClick={onFridgeOpenClick}>
+          <FontAwesomeIcon icon={faDoorClosed} color='#333' size='2x' />
+          <span>문닫기</span>
+        </CloseBtn>
+      )}
+      <FridgeSection
+        className={`${styles.fridge} ${fridgeOpen ? styles.open : ''}`}
+      >
         <FridgeInner className={styles.leftDoor}>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
             <Compartment
@@ -27,8 +37,8 @@ const Fridge = () => {
             />
           ))}
         </FridgeInner>
-        <FridgeDoor className={styles.rightDoor} onClick={onFridgeOpenClick}>
-          <div className={styles.fridgeFront}>
+        <FridgeDoor className={styles.rightDoor}>
+          <div className={styles.fridgeFront} onClick={onFridgeOpenClick}>
             <Knob />
           </div>
           {Object.keys(fridge.door).map((spaceKey: string) => (
@@ -72,10 +82,11 @@ const FridgeInner = tw.div`
 const FridgeDoor = tw(FridgeInner)`
 `;
 export const Knob = tw.div`
-  shadow-lg
+ 
   cursor-pointer
   bg-gray-dark
-  rounded-md
+  shadow-inner
+  rounded-sm
   w-3
   h-12
   ml-5

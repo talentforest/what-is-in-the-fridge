@@ -6,14 +6,16 @@
   perspective: 2000px;
   /* transition */
   scale: 0.8;
-  transition: scale 0.6s;
+  transition: all 0.6s;
+  translate: 0 -20px;
 }
 .rightDoor {
   border-radius: 10px;
   /* transition */
-  transform-origin: top right;
-  transition: transform 0.5s;
+  z-index: 10;
   opacity: 1;
+  transform-origin: top right;
+  transition: all 0.5s;
 }
 .leftDoor {
   border-radius: 10px;
@@ -29,7 +31,7 @@
   border-radius: 10px;
   /* transition */
   opacity: 1;
-  transition: opacity 0.3s;
+  transition: all 0.3s;
 }
 
 /* Door open swing effect */
@@ -37,16 +39,23 @@
   display: flex;
   justify-content: flex-start;
   scale: 1;
-  transition: scale 0.6s;
+  /* transition */
+  transition: all 0.6s;
+  translate: 0 0;
+}
+.fridge.open.freezer {
+  translate: 0 -70px;
 }
 .fridge.open .rightDoor {
   transform: rotateY(180deg);
   opacity: 1;
+  z-index: 10;
 }
 .fridge.open .leftDoor {
-  transition: translate 0.3s;
+  transition: all 0.3s;
 }
 .fridge.open .fridgeFront {
+  z-index: 0;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: all 0.3s;
 }

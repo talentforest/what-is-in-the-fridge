@@ -4,7 +4,7 @@ import fridgeFoodsReducer from './slice/fridgeFoodsSlice';
 import addToShoppingBagReducer from './slice/shoppingBagSlice';
 import showEmojiReducer from './slice/openCloseState/showEmojiSlice';
 import showFoodModalReducer from './slice/openCloseState/showFoodModalSlice';
-import changeModeReducer from './slice/freezerModeReducer';
+import changeDoorReducer from './slice/doorOpenSlice';
 import freezerFoodsReducer from './slice/freezerFoodsSlice';
 import changeAddedFoodReducer from './slice/addedFood';
 import showAddedFoodModalReducer from './slice/openCloseState/showAddedFoodModal';
@@ -17,7 +17,7 @@ export const store = configureStore({
     bookmark: changeBookmarkReducer,
     keyword: changeKeywordReducer,
     addFoodArea: addFoodAreaReducer,
-    freezerMode: changeModeReducer,
+    doorOpen: changeDoorReducer,
     emoji: showEmojiReducer,
     foodModal: showFoodModalReducer,
     food: changeFoodReducer,
