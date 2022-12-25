@@ -41,7 +41,8 @@ const AddFoodForm = ({ tab, onSubmit }: IAddFoodFormProps) => {
           <span>뒤로가기</span>
         </BackBtn>
       )}
-      {tab === 'input' && <Title>직접 식품 정보 입력하기</Title>}
+      {tab === 'input' && <Title>직접 식료품 정보 입력하기</Title>}
+      {tab === 'bookmark' && <Title>즐겨찾는 식료품 추가 정보 입력하기</Title>}
       <Form onSubmit={onSubmit}>
         {food?.imgUrl && (
           <ImgBox>
@@ -109,7 +110,7 @@ const SubmitBtn = tw.button`
   rounded-lg
   bg-green
   p-2
-  text-xs 
+  text-md
   text-gray-dark
   font-bold
   shadow-md

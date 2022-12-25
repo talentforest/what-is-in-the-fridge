@@ -1,21 +1,92 @@
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Emoji } from 'emoji-picker-react';
-import Image from 'next/image';
-import { useAppSelector } from 'src/lib/hooks';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { cutLetter } from 'src/utils/cutLetter';
 import tw from 'tailwind-styled-components';
-import { Title } from './SearchResult';
+import {
+  faCartPlus,
+  faCircleCheck,
+  faEdit,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import { changeFoodInfo, removeBookmark } from 'src/lib/slice';
+import { useEditFoodInfo, useSubmitFood } from 'src/hooks';
+import { initialState } from 'src/hooks/useAddFood';
+import { v4 as uuidv4 } from 'uuid';
+import Image from 'next/image';
+import AddFoodForm from '../addFood/AddFoodForm';
 
-const Bookmark = () => {
+const Bookmark = ({ tab }: { tab: string }) => {
+  const [edit, setEdit] = useState(false);
+  const { food } = useAppSelector((state) => state.food);
+  const { onSubmit } = useSubmitFood();
   const { bookmark } = useAppSelector((state) => state.bookmark);
+  const { addedFood } = useAppSelector((state) => state.addedFood);
+  const dispatch = useAppDispatch();
+  const { changeBookmarkStateInArr } = useEditFoodInfo();
 
-  return (
+  useEffect(() => {
+    if (tab === 'bookmark') {
+      dispatch(changeFoodInfo(initialState));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onEditClick = () => {
+    setEdit((prev) => !prev);
+    if (edit) return alert('즐겨찾는 식품이 수정되었어요.');
+  };
+
+  const onRemoveClick = (item: any) => {
+    // 즐겨찾는 식품 리스트에서 삭제 버튼 누르면
+    dispatch(removeBookmark(item));
+    // 추가된 식품에서도 북마크 해제
+    changeBookmarkStateInArr();
+  };
+
+  const onAddFoodClick = (item: any) => {
+    const result = {
+      ...food,
+      id: uuidv4(),
+      imgUrl: item.imgUrl,
+      name: item.name,
+      type: item.type,
+      emoji: item.emoji,
+      bookmark: true,
+    };
+
+    dispatch(changeFoodInfo(result));
+  };
+
+  return !food?.id ? (
     <Wrapper>
-      <Title>즐겨찾는 식품</Title>
+      <Header>
+        <Title>즐겨찾는 식료품 목록에서 추가하기</Title>
+        {edit ? (
+          <EditIcon icon={faCircleCheck} onClick={onEditClick} />
+        ) : (
+          <EditIcon icon={faEdit} onClick={onEditClick} />
+        )}
+      </Header>
       <BookmarkBox>
         {bookmark.map((item) => (
           <BookmarkItem key={item.id}>
+            {edit ? (
+              <Btn
+                color='#666'
+                icon={faTrashCan}
+                onClick={() => {
+                  onRemoveClick(item);
+                }}
+              />
+            ) : (
+              <Btn
+                icon={faCartPlus}
+                color='#295bff'
+                onClick={() => onAddFoodClick(item)}
+              />
+            )}
             <ImgBox>
               {item?.imgUrl ? (
                 <ImgBox>
@@ -30,24 +101,38 @@ const Bookmark = () => {
                   />
                 </ImgBox>
               ) : (
-                <Emoji unified={item.emoji} size={50} />
+                <Emoji unified={item.emoji} size={35} />
               )}
             </ImgBox>
-            {/* <PlusCartBtn role='button' icon={faCartPlus} size='lg' /> */}
-            <Info>{cutLetter(item.name, 15)}</Info>
+            <Info>{cutLetter(item.name, 12)}</Info>
           </BookmarkItem>
         ))}
       </BookmarkBox>
     </Wrapper>
+  ) : (
+    <AddFoodForm onSubmit={onSubmit} tab={tab} />
   );
 };
 
+const Header = tw.header` 
+  flex
+  justify-between
+  items-center
+  mb-3
+`;
+const Title = tw.h1`
+  text-md
+`;
+const EditIcon = tw(FontAwesomeIcon)` 
+  hover:text-gray
+  hover:scale-105
+  cursor-pointer
+`;
 const Wrapper = tw.div`
   w-full
   h-full
   overflow-auto
 `;
-
 const BookmarkBox = tw.div`
   grid
   grid-cols-3
@@ -72,30 +157,22 @@ const BookmarkItem = tw.div`
   justify-between
   items-center
   gap-1
-  h-24
+  h-[85px]
 `;
-const PlusCartBtn = tw(FontAwesomeIcon)`
-  shadow-md
-  bg-red-light
-  text-white
-  hover:text-green
-  hover:scale-105
-  hover: ease-in-out
-  hover:transition 
-  hover:duration-300
+const Btn = tw(FontAwesomeIcon)`
   absolute
-  -top-5
-  right-4
-  text-[14px]
-  rounded-full
-  p-2
-  border
+  z-10
+  right-2
+  top-8
+  w-4
+  h-4
+  cursor-pointer
 `;
 const ImgBox = tw.div`
   border-gray-light
   relative
-  w-16
-  h-16
+  w-10
+  h-10
   rounded-lg
   flex
   justify-center
