@@ -1,25 +1,10 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/index';
+import { addDay, addMonth, addYear } from 'src/utils/Date';
 
 export const usePlusDate = () => {
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
-
-  function addDay(date: string, days: number) {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result.toLocaleDateString();
-  }
-  function addMonth(date: string) {
-    const result = new Date(date);
-    result.setMonth(result.getMonth() + 1);
-    return result.toLocaleDateString();
-  }
-  function addYear(date: string) {
-    const result = new Date(date);
-    result.setFullYear(result.getFullYear() + 1);
-    return result.toLocaleDateString();
-  }
 
   const onDatePlusClick = (
     e: React.FormEvent<HTMLButtonElement>,
