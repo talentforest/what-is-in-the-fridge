@@ -1,30 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IFood } from './foodSlice';
 
 const initialState = {
-  bookmark: [
-    {
-      id: 'bookmark_example',
-      name: '삼겹살',
-      type: '🥩 정육,수산',
-      emoji: '1f969',
-      imgUrl: '',
-      bookmark: true,
-    },
-  ],
+  bookmark: [] as IFood[],
 };
 
 const bookmarkSlice = createSlice({
   name: 'bookmark',
   initialState,
   reducers: {
-    changeBookmark: (state, action) => {
-      state.bookmark = action.payload;
+    addBookmark: (state, action) => {
+      state.bookmark = [...state.bookmark, action.payload];
+    },
+    removeBookmark: (state, action) => {
+      state.bookmark = state.bookmark.filter(
+        (item) => item.name !== action.payload.name
+      );
     },
   },
 });
 
 const { reducer: changeBookmarkReducer } = bookmarkSlice;
 
-export const { changeBookmark } = bookmarkSlice.actions;
+export const { addBookmark, removeBookmark } = bookmarkSlice.actions;
 
 export default changeBookmarkReducer;

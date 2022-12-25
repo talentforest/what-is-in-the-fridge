@@ -38,7 +38,7 @@ const AddFoodSection = () => {
             <Title>냉장실 식료품 추가하기</Title>
             {tab === 'search' && <SearchResult tab={tab} />}
             {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
-            {tab === 'bookmark' && <Bookmark />}
+            {tab === 'bookmark' && <Bookmark tab={tab} />}
           </AddFoodBox>
         </>
       ) : (
@@ -50,7 +50,7 @@ const AddFoodSection = () => {
           <TabBtns tab={tab} setTab={setTab} onDesktopClick={onDesktopClick} />
           {tab === 'search' && <SearchResult tab={tab} />}
           {tab === 'input' && <AddFoodForm tab={tab} onSubmit={onSubmit} />}
-          {tab === 'bookmark' && <Bookmark />}
+          {tab === 'bookmark' && <Bookmark tab={tab} />}
         </AddFoodBox>
       )}
       {modal && <Modal />}

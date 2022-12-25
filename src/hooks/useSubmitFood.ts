@@ -17,7 +17,7 @@ export const useSubmitFood = () => {
     if (expiryDate.length === 0) return alert('식료품 유통기한을 적어주세요.');
     if (quantity.length === 0) return alert('식료품 개수를 적어주세요.');
 
-    const result = { ...food, bookmark: false };
+    const result = { ...food };
     dispatch(changeFoodInfo(result));
     dispatch(showFoodModal());
   };

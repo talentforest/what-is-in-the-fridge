@@ -117,7 +117,7 @@ const SearchResult = ({ tab }: { tab: string }) => {
 };
 
 export const Title = tw.h2`
-  text-[14px]
+  text-md
   mb-3
 `;
 const Form = tw.form`

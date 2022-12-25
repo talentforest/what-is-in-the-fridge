@@ -1,6 +1,6 @@
 export { changeFreezerOpen, changeFridgeOpen } from './doorOpenSlice';
 export { changeKeyword } from './keywordSlice';
-export { changeBookmark } from './bookmarkSlice';
+export { addBookmark, removeBookmark } from './bookmarkSlice';
 export { showEmoji } from './openCloseState/showEmojiSlice';
 export { changeAddedFoodInfo } from './addedFood';
 export { changeFoodInfo } from './foodSlice';
