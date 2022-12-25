@@ -8,6 +8,7 @@ import {
 import { useAppDispatch } from 'src/lib/hooks';
 import { IFood, ISearchedFood, spaceName } from 'src/lib/slice/foodSlice';
 import { useDragFood } from 'src/hooks/index';
+import { getLeftDays } from 'src/utils/Date';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 
@@ -48,15 +49,16 @@ const DraggableFood = ({ food }: IFoodProps) => {
 
   return (
     <DragBox ref={dragRef} style={isDraggingStyle} onClick={onClick}>
+      <ExpiryDateAlert $leftDays={getLeftDays(food.expiryDate)} />
       {food.imgUrl ? (
         <ImgBox>
           <Img
             src={food.imgUrl}
             alt='Picture of Food'
             fill
-            sizes='(max-width: 768px) 300px,
-              (max-width: 1200px) 100px,
-              30px'
+            sizes='(max-width: 768px) 100px,
+            (max-width: 1200px) 50px,
+            30px'
             priority
           />
         </ImgBox>
@@ -72,6 +74,22 @@ const DragBox = tw.button`
   h-fit
   translate-x-0
   translate-y-0
+`;
+const ExpiryDateAlert = tw.div<{ $leftDays: number }>`
+  ${(p: { $leftDays: number }) =>
+    p.$leftDays < 0
+      ? 'bg-red'
+      : p.$leftDays <= 3
+      ? 'bg-orange'
+      : p.$leftDays <= 7
+      ? 'bg-yellow'
+      : 'transparent'}
+  absolute
+  -top-0.5
+  right-0
+  h-1.5
+  w-1.5
+  rounded-full
 `;
 const ImgBox = tw.div`
   relative
