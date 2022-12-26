@@ -1,8 +1,8 @@
+import { useAppSelector } from 'src/lib/hooks';
 import tw from 'tailwind-styled-components';
 import Freezer from '../fridgeFreezer/Freezer';
 import Fridge from '../fridgeFreezer/Fridge';
-import Modal from '../common/Modal';
-import { useAppSelector } from 'src/lib/hooks';
+import Modal from '../fridgeFreezer/Modal';
 
 const FridgeFreezerSection = () => {
   const { modal } = useAppSelector((state) => state.addedFoodModal);
@@ -14,7 +14,7 @@ const FridgeFreezerSection = () => {
         {!fridgeOpen && <Freezer />}
         {!freezerOpen && <Fridge />}
       </Section>
-      {modal && <Modal addedFoodModal />}
+      {modal && <Modal />}
     </FridgeFreezer>
   );
 };
@@ -24,7 +24,6 @@ const FridgeFreezer = tw.section`
   relative
 `;
 const Section = tw.div`
-  relative
   mx-auto
   flex 
   flex-col

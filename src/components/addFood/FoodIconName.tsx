@@ -1,11 +1,11 @@
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
-import { categoryConfig, Picker, previewConfig } from '../../utils/emojiConfig';
+import { categoryConfig, Picker, previewConfig } from 'src/utils/emojiConfig';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { showEmoji } from 'src/lib/slice/index';
 import { useSubmitFood } from 'src/hooks';
+import { Desc } from './FoodQuantity';
 import styles from 'styles/EmojiBox.module.css';
 import tw from 'tailwind-styled-components';
-import { Desc } from './FoodQuantity';
 
 const FoodIconName = () => {
   const { emoji } = useAppSelector((state) => state.emoji);

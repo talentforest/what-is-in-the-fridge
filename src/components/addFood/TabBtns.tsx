@@ -7,24 +7,25 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { FormEvent } from 'react';
-import { useAppSelector } from 'src/lib/hooks';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { changeTab } from 'src/lib/slice';
 import tw from 'tailwind-styled-components';
 
 interface ITabBtnProps {
-  tab: string;
-  setTab: (tab: string) => void;
   onDesktopClick: () => void;
 }
 
-const TabBtns = ({ tab, setTab, onDesktopClick }: ITabBtnProps) => {
+const TabBtns = ({ onDesktopClick }: ITabBtnProps) => {
+  const { tab } = useAppSelector((state) => state.tab);
   const { close } = useAppSelector((state) => state.addFoodArea);
+  const dispatch = useAppDispatch();
 
   const onTabBtnClick = (e: FormEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
     if (close) {
       onDesktopClick();
     }
-    setTab(name);
+    dispatch(changeTab(name));
   };
 
   return (

@@ -12,9 +12,9 @@ export default function Navigation() {
 
   return (
     <Nav>
-      <Link href='/'>
+      <LogoBox href='/'>
         <Logo>What&#39;s in my FRIDGE?</Logo>
-      </Link>
+      </LogoBox>
       <Menu>
         {windowSize.width >= screens.tablet ? (
           <List href='/my-fridge' $active={pathname === '/my-fridge'}>
@@ -29,7 +29,11 @@ export default function Navigation() {
     </Nav>
   );
 }
-
+const LogoBox = tw(Link)` 
+  flex
+  gap-1
+  items-center
+`;
 const Nav = tw.nav`
   flex
   justify-between
@@ -38,7 +42,7 @@ const Nav = tw.nav`
   h-12
   tablet:text-base
   mobile:text-[12px]
-  tablet:px-16
+  tablet:px-12
   mobile:px-5
 `;
 const Logo = tw.h1`

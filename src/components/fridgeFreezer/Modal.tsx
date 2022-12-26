@@ -1,22 +1,14 @@
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
+import { useAppSelector } from 'src/lib/hooks';
 import { foodInfoNames } from 'src/utils/foodCategory';
-import { useEditFoodInfo, useAddFood } from 'src/hooks/index';
+import { useEditFoodInfo } from 'src/hooks/index';
 import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addBookmark, changeFoodInfo, removeBookmark } from 'src/lib/slice';
-import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
-import FoodToAddBtns from '../addFood/FoodToAddBtns';
+import AddedFoodBtns from './AddedFoodBtns';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 
-interface IModalProps {
-  addedFoodModal?: boolean;
-}
-
-const Modal = ({ addedFoodModal }: IModalProps) => {
-  const dispatch = useAppDispatch();
-  const { food } = useAppSelector((state) => state.food);
+const Modal = () => {
   const { addedFood } = useAppSelector((state) => state.addedFood);
   const {
     edit,
@@ -28,52 +20,29 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
     quantityRef,
     dateRef,
   } = useEditFoodInfo();
-  const { closeFoodModal } = useAddFood();
-
-  const bookmarkClick = () => {
-    const result = { ...food, bookmark: !food.bookmark };
-    dispatch(changeFoodInfo(result));
-    const bookmarkInfo = {
-      id: food.id,
-      name: food.name,
-      type: food.type,
-      emoji: food.emoji,
-      imgUrl: food.imgUrl,
-      bookmark: food.bookmark,
-    };
-    !food.bookmark
-      ? dispatch(addBookmark(bookmarkInfo))
-      : dispatch(removeBookmark(bookmarkInfo));
-  };
-
-  const foodInfo = addedFoodModal ? addedFood : food;
-  const closeModal = addedFoodModal ? closeAddedFoodModal : closeFoodModal;
-  const changeBookmark = addedFoodModal ? onBookMarkClick : bookmarkClick;
 
   return (
     <>
-      <Overlay onClick={closeModal} $addedFoodModal={addedFoodModal} />
-      <ModalBox $addedFoodModal={addedFoodModal}>
+      <Overlay onClick={closeAddedFoodModal} />
+      <ModalBox>
         <Header>
-          <Title>
-            {addedFoodModal ? '내 식료품 정보' : '추가하는 식료품 정보'}
-          </Title>
-          <CloseBtn onClick={closeModal} $color='bg-red-light'>
+          <Title>내 식료품 정보</Title>
+          <CloseBtn onClick={closeAddedFoodModal} $color='bg-red-light'>
             <FontAwesomeIcon icon={faXmark} size='lg' color='#333' />
           </CloseBtn>
         </Header>
         <Main>
-          <EmojiBox>
-            {!foodInfo.imgUrl ? (
+          <ImgBox>
+            {!addedFood.imgUrl ? (
               <Emoji
-                unified={foodInfo.emoji}
+                unified={addedFood.emoji}
                 size={60}
                 emojiStyle={EmojiStyle.APPLE}
               />
             ) : (
               <Img
-                src={foodInfo.imgUrl}
-                alt='Picture of Food'
+                src={addedFood.imgUrl}
+                alt={addedFood.name}
                 fill
                 sizes='(max-width: 768px) 300px,
                 (max-width: 1200px) 100px,
@@ -81,28 +50,35 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
                 priority
               />
             )}
-            <BookMark onClick={changeBookmark} $isBookMark={foodInfo.bookmark}>
+            <BookMark
+              onClick={onBookMarkClick}
+              $isBookMark={addedFood.bookmark}
+            >
               <FontAwesomeIcon
                 icon={faStar}
-                color={foodInfo.bookmark ? 'gold' : 'white'}
+                color={addedFood.bookmark ? 'gold' : 'white'}
               />
             </BookMark>
-          </EmojiBox>
+          </ImgBox>
           {edit ? (
             <Info>
               <Item>
                 <Name>카테고리</Name>
-                {foodInfo.type}
+                {addedFood.type}
               </Item>
               <Item>
                 <Name>이름</Name>
-                <Input type='text' defaultValue={foodInfo.name} ref={nameRef} />
+                <Input
+                  type='text'
+                  defaultValue={addedFood.name}
+                  ref={nameRef}
+                />
               </Item>
               <Item>
                 <Name>수량</Name>
                 <Input
                   type='number'
-                  defaultValue={foodInfo.quantity}
+                  defaultValue={addedFood.quantity}
                   ref={quantityRef}
                 />
               </Item>
@@ -110,53 +86,34 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
                 <Name>유통기한</Name>
                 <Input
                   type='date'
-                  defaultValue={foodInfo.expiryDate}
+                  defaultValue={addedFood.expiryDate}
                   ref={dateRef}
                 />
               </Item>
               <SubmitBtn onClick={onEditSubmitClick}>수정완료</SubmitBtn>
             </Info>
           ) : (
-            <Info>
-              {Object.keys(foodInfoNames).map((name) => (
-                <Item key={name}>
-                  <Name>{foodInfoNames[name]}</Name>
-                  <ItemInfo>{foodInfo[name]}</ItemInfo>
-                </Item>
-              ))}
-            </Info>
+            <>
+              <Info>
+                {Object.keys(foodInfoNames).map((name) => (
+                  <Item key={name}>
+                    <Name>{foodInfoNames[name]}</Name>
+                    <ItemInfo>{addedFood[name]}</ItemInfo>
+                  </Item>
+                ))}
+              </Info>
+            </>
           )}
         </Main>
-        {!edit &&
-          (addedFoodModal ? (
-            <AddedFoodBtns setEdit={() => setEdit((prev) => !prev)} />
-          ) : (
-            <FoodToAddBtns />
-          ))}
+        {!edit && <AddedFoodBtns setEdit={() => setEdit((prev) => !prev)} />}
       </ModalBox>
     </>
   );
 };
 
-const BookMark = tw.button<{ $isBookMark: boolean }>`
-  w-10
-  h-10
-  absolute
-  -top-3
-  -right-3
-  rounded-full
-  flex
-  justify-center
-  items-center
-  bg-yello
-  shadow-md
-  ${(p: { $isBookMark: boolean }) =>
-    p.$isBookMark ? 'bg-blue-dark' : 'bg-gray-light'} 
-`;
 const Overlay = tw.div`
   absolute
-  mobile:${(p: { $addedFoodModal: boolean }) =>
-    p.$addedFoodModal ? '-top-12' : 'top-0'}
+  -top-12
   right-0
   left-0
   h-screen
@@ -171,8 +128,7 @@ const ModalBox = tw.div`
   items-center
   justify-between
   absolute
-  ${(p: { $addedFoodModal: boolean }) =>
-    p.$addedFoodModal ? '-top-12' : 'top-0'}
+  -top-12
   left-0
   right-0
   bottom-0
@@ -180,7 +136,6 @@ const ModalBox = tw.div`
   bg-yellow-light
   rounded-3xl
   z-10
-
   tablet:p-6
   mobile:p-4
   tablet:max-w-[450px]
@@ -204,15 +159,18 @@ const CloseBtn = tw.button`
   cursor-pointer
 `;
 const Main = tw.div`
+  w-full
+  h-full
   flex
   mobile:flex-col
   tablet:flex-row
   items-center
-  justify-evenly
-  gap-4
-  w-full
+  justify-center
+  tablet:gap-10
+  mobile:gap-3
+  tablet:px-4
 `;
-const EmojiBox = tw.div`
+const ImgBox = tw.div`
   relative
   flex
   justify-center
@@ -222,6 +180,22 @@ const EmojiBox = tw.div`
   rounded-lg
   shadow-lg
   bg-white
+  mb-2
+`;
+const BookMark = tw.button<{ $isBookMark: boolean }>`
+  w-8
+  h-8
+  absolute
+  bottom-0
+  -right-4
+  rounded-full
+  flex
+  justify-center
+  items-center
+  bg-yellow
+  shadow-md
+  ${(p: { $isBookMark: boolean }) =>
+    p.$isBookMark ? 'bg-blue-dark' : 'bg-gray-light'} 
 `;
 const Img = tw(Image)`
   rounded-xl
@@ -233,9 +207,8 @@ const Info = tw.ul`
   flex-col
   mobile:gap-2
   tablet:gap-3
-  mobile:w-52
-  tablet:w-fit
-  w-full
+  mobile:w-full
+  tablet:w-56
 `;
 const Item = tw.li`
   flex
@@ -247,31 +220,33 @@ const Item = tw.li`
 `;
 const Name = tw.div`
   tablet:w-16
-  mobile:w-1/4
+  mobile:w-14
   text-gray
 `;
 const ItemInfo = tw.span` 
-  tablet:text-start
-  mobile:text-end
-  break-keep
-  w-2/3
+  text-end
+  break-all
+  w-fit
+  max-w-[150px]
 `;
 const Input = tw.input`
-  text-start
   w-36
   rounded-lg
   px-2
   py-1
   shadow-lg
+  text-end
 `;
 const SubmitBtn = tw.button`
   mt-3
   p-2
+  h-10
   rounded-lg
   bg-green
   shadow-lg
   text-white
-  font-semibold
+  tablet:text-base
+  mobile:text-[12px]
 `;
 
 export default Modal;

@@ -1,21 +1,17 @@
-import {
-  faDeleteLeft,
-  faSearch,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
+import { faDeleteLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Input } from './FoodIconName';
 import { useSearchFood } from 'src/hooks/useSearchFood';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetcher, url } from 'src/pages/api/productInfo';
 import { useSubmitFood } from 'src/hooks';
+import { useEffect } from 'react';
+import { changeKeyword } from 'src/lib/slice';
 import SearchItem from './SearchItem';
 import AddFoodForm from './AddFoodForm';
 import useSWR, { SWRConfig } from 'swr';
 import tw from 'tailwind-styled-components';
 import Loading from '../common/Loading';
-import { useEffect } from 'react';
-import { changeKeyword } from 'src/lib/slice';
 
 export interface IFoodData {
   item: {
@@ -37,15 +33,16 @@ export interface IFoodData {
   };
 }
 
-const SearchResult = ({ tab }: { tab: string }) => {
-  const { onKeywordChange, onKeywordSubmit, removeKeyword } = useSearchFood();
+const SearchResult = () => {
+  const { tab } = useAppSelector((state) => state.tab);
   const { keyword } = useAppSelector((state) => state.keyword);
-  const { onSubmit } = useSubmitFood();
   const { food } = useAppSelector((state) => state.food);
-  const { data, isLoading } = useSWR(
-    keyword.length !== 0 && food.name ? url(food.name) : null,
-    fetcher
-  );
+  const { onKeywordChange, onKeywordSubmit, removeKeyword } = useSearchFood();
+  const { onSubmit } = useSubmitFood();
+
+  const fetch_condition = keyword !== '' && food.name ? url(food.name) : null;
+  const { data, isLoading } = useSWR(fetch_condition, fetcher);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -73,7 +70,7 @@ const SearchResult = ({ tab }: { tab: string }) => {
               onChange={onKeywordChange}
               placeholder='냉장고 넣을 식품을 검색해보세요.'
             />
-            {data && keyword.length !== 0 ? (
+            {data && keyword !== '' ? (
               <SearchBtn type='submit' onClick={removeKeyword}>
                 <FontAwesomeIcon icon={faDeleteLeft} size='lg' />
               </SearchBtn>
@@ -90,12 +87,12 @@ const SearchResult = ({ tab }: { tab: string }) => {
           {!isLoading ? (
             <>
               {data?.body && (
-                <CountBox>
+                <ResultNum>
                   <span>검색결과</span>
-                  <span>{`${data?.body.items.length || 0}건`}</span>
-                </CountBox>
+                  <span>{`${data?.body.items.length}건`}</span>
+                </ResultNum>
               )}
-              <ResultBox>
+              <ResultList>
                 {data?.body.items.length !== 0 ? (
                   data?.body.items?.map((result: IFoodData) => (
                     <SearchItem key={result?.item.imgurl1} result={result} />
@@ -103,14 +100,14 @@ const SearchResult = ({ tab }: { tab: string }) => {
                 ) : (
                   <EmptyBox>검색 결과가 없습니다.</EmptyBox>
                 )}
-              </ResultBox>
+              </ResultList>
             </>
           ) : (
             <Loading />
           )}
         </>
       ) : (
-        <AddFoodForm onSubmit={onSubmit} tab={tab} />
+        <AddFoodForm onSubmit={onSubmit} />
       )}
     </SWRConfig>
   );
@@ -128,11 +125,12 @@ const Form = tw.form`
 const SearchBtn = tw.button`
   bg-white
   absolute
-  right-3
-  px-2
+  right-4
+  px-1
+  m-1
   text-gray
   w-fit
-  h-10
+  h-8
   text-[14px]
 `;
 const ResultDesc = tw.p`
@@ -142,14 +140,14 @@ const ResultDesc = tw.p`
   mb-2
   text-gray
 `;
-const CountBox = tw.div`
+const ResultNum = tw.div`
   text-[12px]
   flex
   justify-between
   pt-1
   text-gray
 `;
-const ResultBox = tw.div`
+const ResultList = tw.section`
   mt-1
   -mx-2
   px-2

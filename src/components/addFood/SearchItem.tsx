@@ -21,7 +21,7 @@ const SearchItem = ({ result }: SearchItemProps) => {
       <ImgBox>
         <Img
           src={imgurl1}
-          alt='Picture of Food'
+          alt={prdlstNm}
           fill
           sizes='(max-width: 768px) 100px,
           (max-width: 1200px) 50px,

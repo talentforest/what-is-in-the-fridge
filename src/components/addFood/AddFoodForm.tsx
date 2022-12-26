@@ -1,9 +1,3 @@
-import tw from 'tailwind-styled-components';
-import FoodType from '../addFood/FoodType';
-import ExpiryDate from '../addFood/ExpiryDate';
-import FoodIconName from '../addFood/FoodIconName';
-import FoodQuantity from '../addFood/FoodQuantity';
-import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -11,13 +5,19 @@ import { changeFoodInfo } from 'src/lib/slice';
 import { useEffect } from 'react';
 import { initialState } from 'src/hooks/useAddFood';
 import { Title } from './SearchResult';
+import tw from 'tailwind-styled-components';
+import FoodType from '../addFood/FoodType';
+import ExpiryDate from '../addFood/ExpiryDate';
+import FoodIconName from '../addFood/FoodIconName';
+import FoodQuantity from '../addFood/FoodQuantity';
+import Image from 'next/image';
 
 interface IAddFoodFormProps {
-  tab: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const AddFoodForm = ({ tab, onSubmit }: IAddFoodFormProps) => {
+const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
+  const { tab } = useAppSelector((state) => state.tab);
   const { food } = useAppSelector((state) => state.food);
   const dispatch = useAppDispatch();
 
@@ -48,11 +48,11 @@ const AddFoodForm = ({ tab, onSubmit }: IAddFoodFormProps) => {
           <ImgBox>
             <Img
               src={food.imgUrl}
-              alt='Picture of Food'
+              alt={food.name}
               fill
-              sizes='(max-width: 768px) 300px,
-                (max-width: 1200px) 100px,
-                30px'
+              sizes='(max-width: 768px) 100px,
+              (max-width: 1200px) 100px,
+              30px'
               priority
             />
           </ImgBox>

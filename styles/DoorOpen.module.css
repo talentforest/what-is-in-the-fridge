@@ -1,6 +1,5 @@
 /* Common CSS */
 .fridge {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,7 +77,7 @@
   .fridge.open {
     width: 90vw;
     height: 65%;
-    translate: 0 -20px;
+    translate: 0 -30px;
   }
 }
 
