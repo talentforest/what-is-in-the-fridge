@@ -64,18 +64,21 @@ const TabBtns = ({ tab, setTab, onDesktopClick }: ITabBtnProps) => {
 const TabBox = tw.div`
   absolute
   top-12
-  -right-12
+  tablet:-right-12
+  mobile:-right-9
   flex
   flex-col
   gap-1
 `;
 const TabBtn = tw(motion.button)<{ $color: boolean }>`
   first:bg-gray-light
+  tablet:first:block
+  mobile:first:hidden
   ${(p: { $color: boolean }) => (p.$color ? 'bg-blue-dark' : 'bg-yellow')}
-  tablet:block
-  mobile:hidden
-  w-12
-  h-12
+  tablet:w-12
+  tablet:h-12
+  mobile:w-9
+  mobile:h-10
   pr-1
   rounded-r-xl
   z-5

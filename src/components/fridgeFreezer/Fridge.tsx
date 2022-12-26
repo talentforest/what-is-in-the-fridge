@@ -19,16 +19,14 @@ const Fridge = () => {
 
   return (
     <>
-      {fridgeOpen && (
-        <CloseBtn onClick={onFridgeOpenClick}>
-          <FontAwesomeIcon icon={faDoorClosed} color='#333' size='2x' />
-          <span>문닫기</span>
-        </CloseBtn>
-      )}
-      <FridgeSection
-        className={`${styles.fridge} ${fridgeOpen ? styles.open : ''}`}
-      >
-        <FridgeInner className={styles.leftDoor}>
+      <section className={`${styles.fridge} ${fridgeOpen ? styles.open : ''}`}>
+        {fridgeOpen && (
+          <CloseBtn onClick={onFridgeOpenClick}>
+            <FontAwesomeIcon icon={faDoorClosed} color='#333' size='2x' />
+            <span>문닫기</span>
+          </CloseBtn>
+        )}
+        <Door className={styles.leftDoor}>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
             <Compartment
               key={spaceKey}
@@ -36,8 +34,8 @@ const Fridge = () => {
               spaceKey={spaceKey}
             />
           ))}
-        </FridgeInner>
-        <FridgeDoor className={styles.rightDoor}>
+        </Door>
+        <Door className={styles.rightDoor}>
           <div className={styles.fridgeFront} onClick={onFridgeOpenClick}>
             <Knob />
           </div>
@@ -50,28 +48,18 @@ const Fridge = () => {
               <Shelf />
             </Compartment>
           ))}
-        </FridgeDoor>
-      </FridgeSection>
+        </Door>
+      </section>
       <ShoppingBagFood />
     </>
   );
 };
 
-const FridgeSection = tw.section`
-  w-full
-  tablet:min-h-[400px]
-  tablet:max-h-[600px]
-  tablet:h-4/5
-  mobile:h-2/3
-`;
-const FridgeInner = tw.div`
-  absolute
-  h-full
+const Door = tw.div`
   flex
   flex-col
   justify-between
   gap-2
-  w-1/2
   tablet:p-3
   mobile:p-2
   shadow-2xl
@@ -79,18 +67,18 @@ const FridgeInner = tw.div`
   border
   border-gray
 `;
-const FridgeDoor = tw(FridgeInner)`
-`;
 export const Knob = tw.div`
- 
   cursor-pointer
   bg-gray-dark
   shadow-inner
-  rounded-sm
-  w-3
-  h-12
-  ml-5
-  mt-3
+  rounded-md
+  tablet:w-3
+  tablet:h-12
+  mobile:w-2
+  mobile:h-6
+  tablet:ml-6
+  mobile:ml-3
+  mt-4
 `;
 export const Shelf = tw.div`
   w-full
@@ -103,7 +91,8 @@ export const Shelf = tw.div`
   bg-gray-light
   opacity-50
   rounded-b-lg
-  h-12
+  mobile:h-10
+  tablet:h-12
 `;
 
 export default Fridge;

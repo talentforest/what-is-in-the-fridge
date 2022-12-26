@@ -19,18 +19,18 @@ const Freezer = () => {
 
   return (
     <>
-      {freezerOpen && (
-        <CloseBtn onClick={onFreezerOpenClick}>
-          <FontAwesomeIcon icon={faDoorClosed} color='#333' size='2x' />
-          <span>문닫기</span>
-        </CloseBtn>
-      )}
-      <FreezerSection
-        className={`${styles.fridge} ${freezerOpen ? styles.open : ''} ${
-          freezerOpen ? styles.freezer : ''
+      <section
+        className={`${styles.fridge} ${styles.freezer} ${
+          freezerOpen ? styles.open : ''
         }`}
       >
-        <FreezerInner className={styles.leftDoor}>
+        {freezerOpen && (
+          <CloseBtn onClick={onFreezerOpenClick}>
+            <FontAwesomeIcon icon={faDoorClosed} color='#333' />
+            <span>문닫기</span>
+          </CloseBtn>
+        )}
+        <Door className={styles.leftDoor}>
           {Object.keys(freezer.inner).map((spaceKey: string) => (
             <Compartment
               key={spaceKey}
@@ -38,8 +38,8 @@ const Freezer = () => {
               spaceKey={spaceKey}
             />
           ))}
-        </FreezerInner>
-        <FreezerDoor className={styles.rightDoor}>
+        </Door>
+        <Door className={styles.rightDoor}>
           <div className={styles.fridgeFront} onClick={onFreezerOpenClick}>
             <FreezerKnob />
           </div>
@@ -52,8 +52,8 @@ const Freezer = () => {
               <Shelf />
             </Compartment>
           ))}
-        </FreezerDoor>
-      </FreezerSection>
+        </Door>
+      </section>
       <ShoppingBagFood />
     </>
   );
@@ -62,8 +62,10 @@ const Freezer = () => {
 export const CloseBtn = tw.button` 
   shadow-3xl
   p-1
-  h-14
-  w-14
+  mobile:w-12
+  mobile:h-12
+  tablet:h-14
+  tablet:w-14
   rounded-full
   bg-yellow
   border
@@ -72,30 +74,19 @@ export const CloseBtn = tw.button`
   flex-col
   justify-center
   items-center
-  text-sm
+  text-[10px]
   gap-1
   absolute
-  -right-16
-  top-20
+  tablet:right-2
+  tablet:-top-20
+  mobile:-top-14
+  mobile:right-2
 `;
-const FreezerSection = tw.section`
-  w-full
-  tablet:h-80
-  mobile:h-2/5
-  translate-y-16
-  pt-2
-  h-full
-`;
-const FreezerInner = tw.div`
-  absolute
-  h-full
+const Door = tw.div`
   flex
   flex-col
   justify-between
   gap-2
-  desktop:w-1/2
-  tablet:w-1/2
-  mobile:w-1/2
   tablet:p-3
   mobile:p-2
   shadow-2xl
@@ -103,12 +94,10 @@ const FreezerInner = tw.div`
   border
   border-gray
 `;
-const FreezerDoor = tw(FreezerInner)`
-`;
 const FreezerKnob = tw(Knob)`
   absolute
-  bottom-5
-
+  mobile:bottom-3
+  tablet:bottom-5
 `;
 
 export default Freezer;

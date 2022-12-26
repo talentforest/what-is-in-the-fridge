@@ -13,7 +13,7 @@ import { initialState } from 'src/hooks/useAddFood';
 import { Title } from './SearchResult';
 
 interface IAddFoodFormProps {
-  tab?: string;
+  tab: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
@@ -80,9 +80,11 @@ const BackBtn = tw.button`
   mb-3
 `;
 const Form = tw.form`
-  mobile:h-[calc(100vh-theme(spacing.24))]
+  
+  mobile:h-[calc(100vh-theme(spacing.16))]
   overflow-auto
   rounded-lg
+  pb-2
 `;
 const ImgBox = tw.div`
   relative
@@ -106,7 +108,8 @@ const ItemTitle = tw.h4`
 `;
 const SubmitBtn = tw.button`
   w-full
-  mt-4
+  h-12
+  mt-8
   rounded-lg
   bg-green
   p-2

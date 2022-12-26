@@ -49,6 +49,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
 
   return (
     <DragBox ref={dragRef} style={isDraggingStyle} onClick={onClick}>
+      <CoverBox />
       <ExpiryDateAlert $leftDays={getLeftDays(food.expiryDate)} />
       {food.imgUrl ? (
         <ImgBox>
@@ -90,6 +91,12 @@ const ExpiryDateAlert = tw.div<{ $leftDays: number }>`
   h-1.5
   w-1.5
   rounded-full
+`;
+const CoverBox = tw.div`
+  absolute
+  w-full
+  h-full
+  z-10
 `;
 const ImgBox = tw.div`
   relative

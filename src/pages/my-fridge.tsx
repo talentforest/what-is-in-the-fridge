@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import FridgeFreezerSection from 'src/components/template/FridgeFreezerSection';
 import AddFoodSection from 'src/components/template/AddFoodSection';
-import BookmarkSection from 'src/components/addFood/Bookmark';
 
 const MyFridge = () => {
   return (
