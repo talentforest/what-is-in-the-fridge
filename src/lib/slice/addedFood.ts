@@ -8,7 +8,7 @@ const initialState: { addedFood: IFood } = {
     type: '',
     name: '',
     emoji: '1f34b',
-    expiryDate: new Date().toLocaleDateString(),
+    expiryDate: '',
     quantity: '',
     bookmark: false,
   },

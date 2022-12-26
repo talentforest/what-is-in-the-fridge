@@ -36,7 +36,7 @@ export const usePlusDate = () => {
   const onDateChange = (e: React.FormEvent<HTMLInputElement>) => {
     const result = {
       ...food,
-      expiryDate: new Date(e.currentTarget.value).toLocaleDateString(),
+      expiryDate: e.currentTarget.value,
     };
 
     dispatch(changeFoodInfo(result));

@@ -86,7 +86,7 @@ const ExpiryDateAlert = tw.div<{ $leftDays: number }>`
       ? 'bg-yellow'
       : 'transparent'}
   absolute
-  -top-0.5
+  -top-1.5
   right-0
   h-1.5
   w-1.5
@@ -97,6 +97,12 @@ const CoverBox = tw.div`
   w-full
   h-full
   z-10
+  transparent
+  translate-x-0
+  translate-y-0
+  flex
+  justify-center
+  items-center
 `;
 const ImgBox = tw.div`
   relative

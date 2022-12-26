@@ -5,6 +5,7 @@ import {
   addToShoppingBag,
 } from 'src/lib/slice/index';
 import { changeKeyword } from 'src/lib/slice';
+import { today } from 'src/utils/Date';
 
 export const initialState = {
   id: '',
@@ -12,7 +13,7 @@ export const initialState = {
   name: '',
   space: 'shoppingBag',
   emoji: '1f34b',
-  expiryDate: new Date().toLocaleDateString(),
+  expiryDate: today,
   quantity: '',
 };
 
