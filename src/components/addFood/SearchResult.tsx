@@ -126,9 +126,10 @@ const Form = tw.form`
   mb-2
 `;
 const SearchBtn = tw.button`
+  bg-white
   absolute
   right-3
-  px-3
+  px-2
   text-gray
   w-fit
   h-10
@@ -157,7 +158,7 @@ const ResultBox = tw.div`
   grid-cols-2
   auto-rows-min
   gap-2
-  h-[calc(100vh-theme(spacing.56))]
+  h-[calc(100vh-theme(spacing.48))]
   rounded-3xl
   overflow-scroll
 `;

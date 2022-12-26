@@ -19,7 +19,7 @@ const AddFoodSection = () => {
   const { windowSize } = useWindowSize();
   const { onSubmit } = useSubmitFood();
   const slideXAnimation = useAnimation();
-  const { onMobileClick, onDesktopClick, CLOSE_X } =
+  const { onMobileClick, onDesktopClick, CLOSE_X, MOBILE_CLOSE_X } =
     useSlideAnimation(slideXAnimation);
 
   return (
@@ -31,19 +31,23 @@ const AddFoodSection = () => {
           </CartBtn>
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
-            transition={{ type: 'linear', duration: 0.3 }}
-            initial={{ x: CLOSE_X }}
+            transition={{ type: 'linear', duration: 0.4 }}
+            initial={{ x: MOBILE_CLOSE_X }}
             animate={slideXAnimation}
           >
-            <Title>냉장실 식료품 추가하기</Title>
+            <TabBtns
+              tab={tab}
+              setTab={setTab}
+              onDesktopClick={onDesktopClick}
+            />
             {tab === 'search' && <SearchResult tab={tab} />}
-            {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+            {tab === 'input' && <AddFoodForm onSubmit={onSubmit} tab={tab} />}
             {tab === 'bookmark' && <Bookmark tab={tab} />}
           </AddFoodBox>
         </>
       ) : (
         <AddFoodBox
-          transition={{ type: 'linear', duration: 0.3, color: '#2d67d2' }}
+          transition={{ type: 'linear', duration: 0.4, color: '#2d67d2' }}
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
@@ -65,18 +69,12 @@ const AddFoodBox = tw(motion.section)`
   top-0
   bottom-0
   tablet:w-72
-  mobile:w-64
+  mobile:w-10/12
   p-4
   tablet:rounded-r-2xl
   mobile:rounded-r-3xl
   z-5
 `;
-const Title = tw.h2`
-text-gray-dark
-  font-bold
-  mb-2
-`;
-
 const CartBtn = tw.button`
   bg-yellow
   shadow-xl
@@ -85,7 +83,7 @@ const CartBtn = tw.button`
   h-24
   absolute
   bottom-4
-  right-32
+  right-4
   flex
   justify-center
   items-center

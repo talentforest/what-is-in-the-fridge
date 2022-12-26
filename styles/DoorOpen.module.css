@@ -1,23 +1,27 @@
+/* Common CSS */
 .fridge {
   position: relative;
   display: flex;
   justify-content: center;
-  /* 원근 */
+  align-items: center;
   perspective: 2000px;
-  /* transition */
-  scale: 0.8;
+  scale: 0.9;
   transition: all 0.6s;
-  translate: 0 -20px;
 }
 .rightDoor {
+  position: absolute;
+  width: 50%;
+  height: 100%;
   border-radius: 10px;
-  /* transition */
   z-index: 10;
   opacity: 1;
-  transform-origin: top right;
-  transition: all 0.5s;
+  transform-origin: right;
+  transition: opacity 0.5s;
 }
 .leftDoor {
+  position: absolute;
+  height: 100%;
+  width: 50%;
   border-radius: 10px;
 }
 .fridgeFront {
@@ -27,29 +31,28 @@
   width: 100%;
   height: 100%;
   background-color: #d3d3d3;
-  z-index: 1;
   border-radius: 10px;
-  /* transition */
+  z-index: 1;
   opacity: 1;
   transition: all 0.3s;
 }
-
 /* Door open swing effect */
 .fridge.open {
   display: flex;
   justify-content: flex-start;
   scale: 1;
-  /* transition */
   transition: all 0.6s;
-  translate: 0 0;
 }
 .fridge.open.freezer {
-  translate: 0 -70px;
+  height: 36%;
 }
 .fridge.open .rightDoor {
+  overflow: hidden;
   transform: rotateY(180deg);
   opacity: 1;
   z-index: 10;
+  transform-origin: right;
+  transition: all 0.5s;
 }
 .fridge.open .leftDoor {
   transition: all 0.3s;
@@ -58,4 +61,64 @@
   z-index: 0;
   opacity: 0;
   transition: all 0.3s;
+}
+
+/* Mobile */
+@media (min-width: 280px) {
+  .fridge {
+    width: 90vw;
+    height: 65vw;
+    translate: 0 -18%;
+  }
+  .fridge.freezer {
+    height: 40vw;
+    translate: 0 -18%;
+  }
+  /* open effect */
+  .fridge.open {
+    width: 90vw;
+    height: 65%;
+    translate: 0 -20px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  .fridge {
+    width: 70vw;
+    height: 55vw;
+    translate: 0 -10%;
+  }
+  .fridge.freezer {
+    height: 35vw;
+    translate: 0 -4%;
+  }
+  .fridge.open {
+    width: 70vw;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1023px) {
+  .fridge {
+    width: 50vw;
+    height: 34vw;
+    translate: 0 -6%;
+  }
+  .fridge.freezer {
+    height: 20vw;
+    translate: 0 2%;
+  }
+  .fridge.open {
+    width: 50vw;
+    translate: 0 6%;
+    height: 70%;
+  }
+  .fridge.open.freezer {
+    width: 50vw;
+    height: 50%;
+  }
+  .rightDoor {
+    transition: all 0.5s;
+  }
 }

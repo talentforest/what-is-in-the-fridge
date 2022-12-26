@@ -18,7 +18,6 @@ import Image from 'next/image';
 import AddFoodForm from '../addFood/AddFoodForm';
 
 const Bookmark = ({ tab }: { tab: string }) => {
-  const [edit, setEdit] = useState(false);
   const { food } = useAppSelector((state) => state.food);
   const { onSubmit } = useSubmitFood();
   const { bookmark } = useAppSelector((state) => state.bookmark);
@@ -32,11 +31,6 @@ const Bookmark = ({ tab }: { tab: string }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onEditClick = () => {
-    setEdit((prev) => !prev);
-    if (edit) return alert('즐겨찾는 식품이 수정되었어요.');
-  };
 
   const onRemoveClick = (item: any) => {
     // 즐겨찾는 식품 리스트에서 삭제 버튼 누르면
@@ -63,30 +57,22 @@ const Bookmark = ({ tab }: { tab: string }) => {
     <Wrapper>
       <Header>
         <Title>즐겨찾는 식료품 목록에서 추가하기</Title>
-        {edit ? (
-          <EditIcon icon={faCircleCheck} onClick={onEditClick} />
-        ) : (
-          <EditIcon icon={faEdit} onClick={onEditClick} />
-        )}
       </Header>
       <BookmarkBox>
         {bookmark.map((item) => (
           <BookmarkItem key={item.id}>
-            {edit ? (
-              <Btn
-                color='#666'
-                icon={faTrashCan}
-                onClick={() => {
-                  onRemoveClick(item);
-                }}
-              />
-            ) : (
-              <Btn
-                icon={faCartPlus}
-                color='#295bff'
-                onClick={() => onAddFoodClick(item)}
-              />
-            )}
+            <Btn
+              color='#666'
+              icon={faTrashCan}
+              onClick={() => {
+                onRemoveClick(item);
+              }}
+            />
+            <Btn
+              icon={faCartPlus}
+              color='#295bff'
+              onClick={() => onAddFoodClick(item)}
+            />
             <ImgBox>
               {item?.imgUrl ? (
                 <ImgBox>
@@ -122,11 +108,6 @@ const Header = tw.header`
 `;
 const Title = tw.h1`
   text-md
-`;
-const EditIcon = tw(FontAwesomeIcon)` 
-  hover:text-gray
-  hover:scale-105
-  cursor-pointer
 `;
 const Wrapper = tw.div`
   w-full

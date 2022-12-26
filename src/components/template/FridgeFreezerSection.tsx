@@ -24,16 +24,14 @@ const FridgeFreezer = tw.section`
   relative
 `;
 const Section = tw.div`
- relative
+  relative
   mx-auto
   flex 
   flex-col
   justify-center
   items-center
   h-full
-  desktop:w-1/2
-  tablet:w-2/3
-  mobile:w-11/12
+  w-fit
 `;
 
 export default FridgeFreezerSection;
