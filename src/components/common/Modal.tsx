@@ -5,12 +5,10 @@ import { useEditFoodInfo, useAddFood } from 'src/hooks/index';
 import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addBookmark, changeFoodInfo, removeBookmark } from 'src/lib/slice';
-import { changeStrDate } from 'src/utils/changeStrDate';
 import AddedFoodBtns from '../fridgeFreezer/AddedFoodBtns';
 import FoodToAddBtns from '../addFood/FoodToAddBtns';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
-import { useEffect } from 'react';
 
 interface IModalProps {
   addedFoodModal?: boolean;
@@ -20,9 +18,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
   const dispatch = useAppDispatch();
   const { food } = useAppSelector((state) => state.food);
   const { addedFood } = useAppSelector((state) => state.addedFood);
-  const { bookmark } = useAppSelector((state) => state.bookmark);
   const {
-    changeBookmarkStateInArr,
     edit,
     setEdit,
     closeAddedFoodModal,
@@ -45,8 +41,6 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
       imgUrl: food.imgUrl,
       bookmark: food.bookmark,
     };
-    // 여기서 북마크가 false고 같은 이름의 식료품이 없는지 체크한 다음 추가
-    // 아 근데 같은 이름을 넣고 싶을 수도 있잖아..........
     !food.bookmark
       ? dispatch(addBookmark(bookmarkInfo))
       : dispatch(removeBookmark(bookmarkInfo));
@@ -116,7 +110,7 @@ const Modal = ({ addedFoodModal }: IModalProps) => {
                 <Name>유통기한</Name>
                 <Input
                   type='date'
-                  defaultValue={changeStrDate(new Date(foodInfo.expiryDate))}
+                  defaultValue={foodInfo.expiryDate}
                   ref={dateRef}
                 />
               </Item>

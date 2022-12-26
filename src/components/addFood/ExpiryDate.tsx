@@ -4,7 +4,6 @@ import { useAppSelector } from 'src/lib/hooks';
 import { Input } from './FoodIconName';
 import { dateType } from 'src/utils/dateType';
 import { usePlusDate } from 'src/hooks/index';
-import { changeStrDate } from 'src/utils/changeStrDate';
 import tw from 'tailwind-styled-components';
 import React from 'react';
 
@@ -12,13 +11,11 @@ const ExpiryDate = () => {
   const { onDatePlusClick, onDateChange } = usePlusDate();
   const { food } = useAppSelector((state) => state.food);
 
+  console.log(food.expiryDate);
+
   return (
     <>
-      <Input
-        type='date'
-        value={changeStrDate(new Date(food.expiryDate))}
-        onChange={onDateChange}
-      />
+      <Input type='date' value={food.expiryDate} onChange={onDateChange} />
       <PlusDate>
         {dateType.map((item) => (
           <DateBtn

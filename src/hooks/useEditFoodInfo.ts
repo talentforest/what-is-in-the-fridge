@@ -34,9 +34,7 @@ export const useEditFoodInfo = () => {
       ...addedFood,
       name: nameRef.current?.value,
       quantity: quantityRef.current?.value,
-      expiryDate: new Date(
-        dateRef.current?.value as string
-      ).toLocaleDateString(),
+      expiryDate: dateRef.current?.value,
     } as IFood;
 
     const spaceType = getSpaceType(addedFood.space, freezerOpen);

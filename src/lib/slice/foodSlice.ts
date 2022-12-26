@@ -34,7 +34,7 @@ const initialState: { food: IFood | ISearchedFood } = {
     type: '🥩 정육,수산',
     name: '',
     emoji: '1f34b',
-    expiryDate: new Date().toLocaleDateString(),
+    expiryDate: '2022-12-25',
     quantity: '',
     bookmark: false,
   },
