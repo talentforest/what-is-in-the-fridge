@@ -1,3 +1,4 @@
+export { changeTab } from './tabSlice';
 export { changeFreezerOpen, changeFridgeOpen } from './doorOpenSlice';
 export { changeKeyword } from './keywordSlice';
 export { addBookmark, removeBookmark } from './bookmarkSlice';

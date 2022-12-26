@@ -4,16 +4,16 @@ import { useAppSelector } from 'src/lib/hooks';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screens';
 import { useWindowSize, useSubmitFood, useSlideAnimation } from 'src/hooks';
-import { useState } from 'react';
-import Modal from '../common/Modal';
+import Modal from '../fridgeFreezer/Modal';
 import SearchResult from '../addFood/SearchResult';
 import AddFoodForm from '../addFood/AddFoodForm';
 import tw from 'tailwind-styled-components';
 import TabBtns from '../addFood/TabBtns';
-import Bookmark from '../addFood/Bookmark';
+import BookmarkList from '../addFood/BookmarkList';
+import AddModal from '../addFood/AddModal';
 
 const AddFoodSection = () => {
-  const [tab, setTab] = useState('search');
+  const { tab } = useAppSelector((state) => state.tab);
   const { modal } = useAppSelector((state) => state.foodModal);
   const { open, close } = useAppSelector((state) => state.addFoodArea);
   const { windowSize } = useWindowSize();
@@ -35,14 +35,10 @@ const AddFoodSection = () => {
             initial={{ x: MOBILE_CLOSE_X }}
             animate={slideXAnimation}
           >
-            <TabBtns
-              tab={tab}
-              setTab={setTab}
-              onDesktopClick={onDesktopClick}
-            />
-            {tab === 'search' && <SearchResult tab={tab} />}
-            {tab === 'input' && <AddFoodForm onSubmit={onSubmit} tab={tab} />}
-            {tab === 'bookmark' && <Bookmark tab={tab} />}
+            <TabBtns onDesktopClick={onDesktopClick} />
+            {tab === 'search' && <SearchResult />}
+            {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+            {tab === 'bookmark' && <BookmarkList />}
           </AddFoodBox>
         </>
       ) : (
@@ -51,13 +47,13 @@ const AddFoodSection = () => {
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
-          <TabBtns tab={tab} setTab={setTab} onDesktopClick={onDesktopClick} />
-          {tab === 'search' && <SearchResult tab={tab} />}
-          {tab === 'input' && <AddFoodForm tab={tab} onSubmit={onSubmit} />}
-          {tab === 'bookmark' && <Bookmark tab={tab} />}
+          <TabBtns onDesktopClick={onDesktopClick} />
+          {tab === 'search' && <SearchResult />}
+          {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+          {tab === 'bookmark' && <BookmarkList />}
         </AddFoodBox>
       )}
-      {modal && <Modal />}
+      {modal && <AddModal />}
     </>
   );
 };
@@ -95,8 +91,7 @@ const CartIconBtn = tw(FontAwesomeIcon)`
 `;
 const Overlay = tw.div`
   absolute
-  ${(p: { $addedFoodModal: boolean }) =>
-    p.$addedFoodModal ? '-top-12' : 'top-0'}
+  top-0
   right-0
   w-full
   h-screen

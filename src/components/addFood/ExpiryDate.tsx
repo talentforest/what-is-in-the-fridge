@@ -2,16 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useAppSelector } from 'src/lib/hooks';
 import { Input } from './FoodIconName';
-import { dateType } from 'src/utils/dateType';
 import { usePlusDate } from 'src/hooks/index';
+import { dateType } from 'src/utils/Date';
 import tw from 'tailwind-styled-components';
 import React from 'react';
 
 const ExpiryDate = () => {
   const { onDatePlusClick, onDateChange } = usePlusDate();
   const { food } = useAppSelector((state) => state.food);
-
-  console.log(food.expiryDate);
 
   return (
     <>

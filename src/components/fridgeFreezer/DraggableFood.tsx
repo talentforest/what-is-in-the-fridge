@@ -55,7 +55,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
         <ImgBox>
           <Img
             src={food.imgUrl}
-            alt='Picture of Food'
+            alt={food.name}
             fill
             sizes='(max-width: 768px) 100px,
             (max-width: 1200px) 50px,

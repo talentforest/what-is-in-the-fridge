@@ -39,7 +39,6 @@ const Type = tw.li`
   justify-center
   text-[13px]
   shadow-md
-  
 `;
 
 export default FoodType;
