@@ -7,14 +7,16 @@ import { useEffect } from 'react';
 import { changeFoodInfo, removeBookmark } from 'src/lib/slice';
 import { useEditFoodInfo, useSubmitFood } from 'src/hooks';
 import { initialState } from 'src/hooks/useAddFood';
-import { v4 as uuidv4 } from 'uuid';
+import { ISearchedFood } from 'src/lib/slice/foodSlice';
 import Image from 'next/image';
 import AddFoodForm from './AddFoodForm';
+import useCheckExistFood from 'src/hooks/useCheckExistFood';
 import tw from 'tailwind-styled-components';
 
 const BookmarkList = () => {
   const { tab } = useAppSelector((state) => state.tab);
   const { food } = useAppSelector((state) => state.food);
+  const { isFridgeFood, isFreezerFood } = useCheckExistFood();
   const { bookmark } = useAppSelector((state) => state.bookmark);
   const { onSubmit } = useSubmitFood();
   const { changeBookmarkStateInArr } = useEditFoodInfo();
@@ -28,23 +30,30 @@ const BookmarkList = () => {
   }, []);
 
   const onRemoveClick = (item: any) => {
-    // 즐겨찾는 식품 리스트에서 삭제 버튼 누르면
-    dispatch(removeBookmark(item));
-    // 추가된 식품에서도 북마크 해제
-    changeBookmarkStateInArr();
+    const confirmMSG = confirm('정말 삭제하시겠어요?');
+    if (confirmMSG) {
+      // 즐겨찾는 식품 리스트에서 삭제 버튼 누르면
+      dispatch(removeBookmark(item));
+      // 추가된 식품에서도 북마크 해제
+      changeBookmarkStateInArr();
+    }
   };
 
-  const onAddFoodClick = (item: any) => {
-    const result = {
-      ...food,
-      id: uuidv4(),
-      imgUrl: item.imgUrl,
-      name: item.name,
-      type: item.type,
-      emoji: item.emoji,
-      bookmark: true,
-    };
-    dispatch(changeFoodInfo(result));
+  const onAddFoodClick = (item: ISearchedFood) => {
+    isFridgeFood(item);
+    isFreezerFood(item);
+    // isFreezerInnerFood(item);
+    // isFreezerDoorFood(item);
+    // const result = {
+    //   ...food,
+    //   id: uuidv4(),
+    //   imgUrl: item.imgUrl,
+    //   name: item.name,
+    //   type: item.type,
+    //   emoji: item.emoji,
+    //   bookmark: true,
+    // };
+    // dispatch(changeFoodInfo(result));
   };
 
   return !food?.id ? (
