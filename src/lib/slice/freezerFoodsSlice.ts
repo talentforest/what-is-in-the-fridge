@@ -1,25 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IFood } from 'src/lib/slice/foodSlice';
 
-interface spaceState {
-  [key: string]: IFood[];
-}
+type spaceType = { [key: string]: IFood[] };
+type keyType = {
+  [key: string]: freezerInner | freezerDoor;
+};
+type key = {
+  [key: string]: FreezerSide;
+};
 
-interface freezerInner extends spaceState {
+interface freezerInner extends spaceType {
   space_1: IFood[];
   space_2: IFood[];
 }
 
-interface freezerDoor extends spaceState {
+interface freezerDoor extends spaceType {
   space_3: IFood[];
   space_4: IFood[];
 }
 
+interface FreezerSide extends keyType {
+  inner: freezerInner;
+  door: freezerDoor;
+}
+
 interface IShoppingBagFoods {
-  freezer: {
-    inner: freezerInner;
-    door: freezerDoor;
-  };
+  freezer: FreezerSide;
 }
 
 const initialState: IShoppingBagFoods = {

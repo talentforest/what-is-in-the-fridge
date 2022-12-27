@@ -10,9 +10,9 @@ export type spaceName =
   | 'space_7'
   | 'shoppingBag';
 
-type spaceType = { [key: string]: string | spaceName | boolean };
+type keyType = { [key: string]: string | spaceName | boolean };
 
-export interface IFood extends spaceType {
+export interface IFood extends keyType {
   id: string;
   space: spaceName;
   type: string;
@@ -23,7 +23,7 @@ export interface IFood extends spaceType {
   bookmark: boolean;
 }
 
-export interface ISearchedFood extends IFood {
+export interface ISearchedFood extends IFood, keyType {
   imgUrl: string;
 }
 
