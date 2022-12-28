@@ -13,6 +13,7 @@ import BookmarkList from '../addFood/BookmarkList';
 import AddModal from '../addFood/AddModal';
 
 const AddFoodSection = () => {
+  const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const { tab } = useAppSelector((state) => state.tab);
   const { modal } = useAppSelector((state) => state.foodModal);
   const { open, close } = useAppSelector((state) => state.addFoodArea);
@@ -37,7 +38,7 @@ const AddFoodSection = () => {
           >
             <TabBtns onDesktopClick={onDesktopClick} />
             {tab === 'search' && <SearchResult />}
-            {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+            {tab === 'input' && <AddFoodForm />}
             {tab === 'bookmark' && <BookmarkList />}
           </AddFoodBox>
         </>
@@ -49,7 +50,7 @@ const AddFoodSection = () => {
         >
           <TabBtns onDesktopClick={onDesktopClick} />
           {tab === 'search' && <SearchResult />}
-          {tab === 'input' && <AddFoodForm onSubmit={onSubmit} />}
+          {tab === 'input' && <AddFoodForm />}
           {tab === 'bookmark' && <BookmarkList />}
         </AddFoodBox>
       )}

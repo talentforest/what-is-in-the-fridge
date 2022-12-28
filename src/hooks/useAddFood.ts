@@ -5,7 +5,7 @@ import {
   addToShoppingBag,
 } from 'src/lib/slice/index';
 import { changeKeyword } from 'src/lib/slice';
-import { today } from 'src/utils/Date';
+import { today } from 'src/utils/dateUtils';
 
 export const initialState = {
   id: '',

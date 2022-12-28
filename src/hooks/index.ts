@@ -1,6 +1,6 @@
 export { useAddFood } from './useAddFood';
 export { useDragFood } from './useDragFood';
-export { useEditFoodInfo } from './useEditFoodInfo';
+export { useEditFood } from './useEditFood';
 export { useHandleAddedFood } from './useHandleAddedFood';
 export { usePlusDate } from './usePlusDate';
 export { useSubmitFood } from './useSubmitFood';

@@ -27,11 +27,11 @@ interface FridgeSide extends keyType {
   door: fridgeDoor;
 }
 
-interface IShoppingBagFoods extends key {
+export interface IFridgeFoods extends key {
   fridge: FridgeSide;
 }
 
-const initialState: IShoppingBagFoods = {
+const initialState: IFridgeFoods = {
   fridge: {
     inner: {
       space_1: [

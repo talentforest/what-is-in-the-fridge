@@ -4,9 +4,17 @@ import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo, showEmoji, showFoodModal } from 'src/lib/slice/index';
 import { IfoodCategory } from 'src/utils/foodCategory';
 import { v4 as uuidv4 } from 'uuid';
+import { ISearchedFood } from 'src/lib/slice/foodSlice';
+import useCheckExistFood from './useCheckExistFood';
 
 export const useSubmitFood = () => {
   const { food } = useAppSelector((state) => state.food);
+  const {
+    isExistedFood,
+    isShoppingBagFoodAlert,
+    isFridgeFoodAlert,
+    isFreezerFoodAlert,
+  } = useCheckExistFood();
   const dispatch = useAppDispatch();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,9 +25,14 @@ export const useSubmitFood = () => {
     if (expiryDate.length === 0) return alert('식료품 유통기한을 적어주세요.');
     if (quantity.length === 0) return alert('식료품 개수를 적어주세요.');
 
-    const result = { ...food };
-    dispatch(changeFoodInfo(result));
-    dispatch(showFoodModal());
+    if (isExistedFood(food as ISearchedFood)) {
+      isShoppingBagFoodAlert(food as ISearchedFood);
+      isFridgeFoodAlert(food as ISearchedFood);
+      isFreezerFoodAlert(food as ISearchedFood);
+    } else {
+      dispatch(changeFoodInfo(food));
+      dispatch(showFoodModal());
+    }
   };
 
   const onEmojiClick = (emojiData: EmojiClickData) => {

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFoodInfo } from 'src/lib/slice/index';
-import { addDay, addMonth, addYear } from 'src/utils/Date';
+import { addDay, addMonth, addYear } from 'src/utils/dateUtils';
 
 export const usePlusDate = () => {
   const { food } = useAppSelector((state) => state.food);

@@ -24,11 +24,11 @@ interface FreezerSide extends keyType {
   door: freezerDoor;
 }
 
-interface IShoppingBagFoods {
+export interface IFreezerFoods {
   freezer: FreezerSide;
 }
 
-const initialState: IShoppingBagFoods = {
+const initialState: IFreezerFoods = {
   freezer: {
     inner: {
       space_1: [

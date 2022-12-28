@@ -1,7 +1,7 @@
 export { changeTab } from './tabSlice';
 export { changeFreezerOpen, changeFridgeOpen } from './doorOpenSlice';
 export { changeKeyword } from './keywordSlice';
-export { addBookmark, removeBookmark } from './bookmarkSlice';
+export { modifyBookmark, addBookmark, removeBookmark } from './bookmarkSlice';
 export { showEmoji } from './openCloseState/showEmojiSlice';
 export { changeAddedFoodInfo } from './addedFood';
 export { changeFoodInfo } from './foodSlice';
