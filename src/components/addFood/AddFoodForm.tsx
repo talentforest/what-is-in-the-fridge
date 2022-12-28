@@ -5,13 +5,13 @@ import { changeFoodInfo } from 'src/lib/slice';
 import { useEffect } from 'react';
 import { initialState } from 'src/hooks/useAddFood';
 import { Title } from './SearchResult';
+import { useSubmitFood } from 'src/hooks';
 import tw from 'tailwind-styled-components';
 import FoodType from '../addFood/FoodType';
 import ExpiryDate from '../addFood/ExpiryDate';
 import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
 import Image from 'next/image';
-import { useSubmitFood } from 'src/hooks';
 
 const AddFoodForm = () => {
   const { tab } = useAppSelector((state) => state.tab);

@@ -9,6 +9,9 @@ const bookmarkSlice = createSlice({
   name: 'bookmark',
   initialState,
   reducers: {
+    modifyBookmark: (state, action) => {
+      state.bookmark = action.payload;
+    },
     addBookmark: (state, action) => {
       state.bookmark = [...state.bookmark, action.payload];
     },
@@ -22,6 +25,7 @@ const bookmarkSlice = createSlice({
 
 const { reducer: changeBookmarkReducer } = bookmarkSlice;
 
-export const { addBookmark, removeBookmark } = bookmarkSlice.actions;
+export const { modifyBookmark, addBookmark, removeBookmark } =
+  bookmarkSlice.actions;
 
 export default changeBookmarkReducer;

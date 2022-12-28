@@ -1,9 +1,10 @@
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { useAppSelector } from 'src/lib/hooks';
 import { foodInfoNames } from 'src/utils/foodCategory';
-import { useEditFoodInfo } from 'src/hooks/index';
+import { useEditFood } from 'src/hooks/index';
 import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useHandleBookmark } from 'src/hooks/useHandleBookmark';
 import AddedFoodBtns from './AddedFoodBtns';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
@@ -15,11 +16,11 @@ const Modal = () => {
     setEdit,
     closeAddedFoodModal,
     onEditSubmitClick,
-    onBookMarkClick,
     nameRef,
     quantityRef,
     dateRef,
-  } = useEditFoodInfo();
+  } = useEditFood();
+  const { onBookmarkClick } = useHandleBookmark();
 
   return (
     <>
@@ -50,15 +51,17 @@ const Modal = () => {
                 priority
               />
             )}
-            <BookMark
-              onClick={onBookMarkClick}
-              $isBookMark={addedFood.bookmark}
-            >
-              <FontAwesomeIcon
-                icon={faStar}
-                color={addedFood.bookmark ? 'gold' : 'white'}
-              />
-            </BookMark>
+            {!edit && (
+              <Bookmark
+                onClick={onBookmarkClick}
+                $isBookmark={addedFood.bookmark}
+              >
+                <FontAwesomeIcon
+                  icon={faStar}
+                  color={addedFood.bookmark ? 'gold' : 'white'}
+                />
+              </Bookmark>
+            )}
           </ImgBox>
           {edit ? (
             <Info>
@@ -182,7 +185,7 @@ const ImgBox = tw.div`
   bg-white
   mb-2
 `;
-const BookMark = tw.button<{ $isBookMark: boolean }>`
+const Bookmark = tw.button<{ $isBookmark: boolean }>`
   w-8
   h-8
   absolute
@@ -194,8 +197,8 @@ const BookMark = tw.button<{ $isBookMark: boolean }>`
   items-center
   bg-yellow
   shadow-md
-  ${(p: { $isBookMark: boolean }) =>
-    p.$isBookMark ? 'bg-blue-dark' : 'bg-gray-light'} 
+  ${(p: { $isBookmark: boolean }) =>
+    p.$isBookmark ? 'bg-blue-dark' : 'bg-gray-light'} 
 `;
 const Img = tw(Image)`
   rounded-xl

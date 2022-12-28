@@ -4,22 +4,18 @@ import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { cutLetter } from 'src/utils/cutLetter';
 import { faCartPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from 'react';
-import { changeFoodInfo, removeBookmark } from 'src/lib/slice';
-import { useEditFoodInfo, useSubmitFood } from 'src/hooks';
+import { changeFoodInfo } from 'src/lib/slice';
 import { initialState } from 'src/hooks/useAddFood';
-import { ISearchedFood } from 'src/lib/slice/foodSlice';
+import { useHandleBookmark } from 'src/hooks/useHandleBookmark';
 import Image from 'next/image';
 import AddFoodForm from './AddFoodForm';
-import useCheckExistFood from 'src/hooks/useCheckExistFood';
 import tw from 'tailwind-styled-components';
 
 const BookmarkList = () => {
   const { tab } = useAppSelector((state) => state.tab);
   const { food } = useAppSelector((state) => state.food);
-  const { isFridgeFood, isFreezerFood } = useCheckExistFood();
   const { bookmark } = useAppSelector((state) => state.bookmark);
-  const { onSubmit } = useSubmitFood();
-  const { changeBookmarkStateInArr } = useEditFoodInfo();
+  const { onRemoveClick, onAddFoodClick } = useHandleBookmark();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,33 +24,6 @@ const BookmarkList = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onRemoveClick = (item: any) => {
-    const confirmMSG = confirm('정말 삭제하시겠어요?');
-    if (confirmMSG) {
-      // 즐겨찾는 식품 리스트에서 삭제 버튼 누르면
-      dispatch(removeBookmark(item));
-      // 추가된 식품에서도 북마크 해제
-      changeBookmarkStateInArr();
-    }
-  };
-
-  const onAddFoodClick = (item: ISearchedFood) => {
-    isFridgeFood(item);
-    isFreezerFood(item);
-    // isFreezerInnerFood(item);
-    // isFreezerDoorFood(item);
-    // const result = {
-    //   ...food,
-    //   id: uuidv4(),
-    //   imgUrl: item.imgUrl,
-    //   name: item.name,
-    //   type: item.type,
-    //   emoji: item.emoji,
-    //   bookmark: true,
-    // };
-    // dispatch(changeFoodInfo(result));
-  };
 
   return !food?.id ? (
     <Wrapper>
@@ -81,25 +50,15 @@ const BookmarkList = () => {
             </ImgBox>
             <Info>{cutLetter(item.name, 14)}</Info>
             <Btns>
-              <Btn
-                icon={faCartPlus}
-                color='#295bff'
-                onClick={() => onAddFoodClick(item)}
-              />
-              <Btn
-                icon={faTrashCan}
-                color='#888'
-                onClick={() => {
-                  onRemoveClick(item);
-                }}
-              />
+              <Btn icon={faCartPlus} onClick={() => onAddFoodClick(item)} />
+              <Btn icon={faTrashCan} onClick={() => onRemoveClick(item)} />
             </Btns>
           </BookmarkItem>
         ))}
       </BookmarkBox>
     </Wrapper>
   ) : (
-    <AddFoodForm onSubmit={onSubmit} />
+    <AddFoodForm />
   );
 };
 
@@ -144,6 +103,8 @@ const Btn = tw(FontAwesomeIcon)`
   w-4
   h-4
   cursor-pointer
+  first:text-blue-dark
+  text-gray
 `;
 const ImgBox = tw.div`
   border-gray-light
