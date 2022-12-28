@@ -11,14 +11,12 @@ import ExpiryDate from '../addFood/ExpiryDate';
 import FoodIconName from '../addFood/FoodIconName';
 import FoodQuantity from '../addFood/FoodQuantity';
 import Image from 'next/image';
+import { useSubmitFood } from 'src/hooks';
 
-interface IAddFoodFormProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}
-
-const AddFoodForm = ({ onSubmit }: IAddFoodFormProps) => {
+const AddFoodForm = () => {
   const { tab } = useAppSelector((state) => state.tab);
   const { food } = useAppSelector((state) => state.food);
+  const { onSubmit } = useSubmitFood();
   const dispatch = useAppDispatch();
 
   useEffect(() => {

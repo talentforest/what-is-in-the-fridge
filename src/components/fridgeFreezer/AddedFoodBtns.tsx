@@ -19,21 +19,24 @@ const AddedFoodBtns = ({ setEdit }: IAddedFoodBtnsProps) => {
   return (
     <Btns>
       <Btn $color='bg-green' onClick={setEdit}>
-        <FontAwesomeIcon icon={faEdit} />
+        <Icon icon={faEdit} />
         <BtnName>수정</BtnName>
       </Btn>
       <Btn $color='bg-red-light' onClick={removeAddedFood}>
-        <FontAwesomeIcon icon={faTrashCan} />
+        <Icon icon={faTrashCan} />
         <BtnName>삭제</BtnName>
       </Btn>
       <Btn $color='bg-blue' onClick={moveToAnotherMode}>
-        <FontAwesomeIcon icon={faDiceD6} />
+        <Icon icon={faDiceD6} />
         <BtnName>{fridgeOpen ? '냉동실' : '냉장실'}로</BtnName>
       </Btn>
     </Btns>
   );
 };
 
+const Icon = tw(FontAwesomeIcon)`
+  text-base
+`;
 const Btns = tw.div`
   w-full
   tablet:px-4
@@ -49,14 +52,15 @@ const Btn = tw.button`
   tablet:flex-row
   mobile:flex-col
   justify-center
-  gap-2
+  items-center
+  tablet:gap-2
+  mobile:gap-1
   ${(p: { $color: boolean }) => p.$color}
   cursor-pointer
   shadow-lg
   rounded-lg
-  py-3
+  py-2
   px-0.5
-  items-center
   text-white
   tablet:text-base
   mobile:text-[12px]

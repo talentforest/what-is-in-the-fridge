@@ -1,16 +1,14 @@
 import { Emoji } from 'emoji-picker-react';
 import { useAppSelector } from 'src/lib/hooks';
 import { useAddFood } from 'src/hooks/index';
-import { faPlus, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useBookmark } from 'src/hooks/useBookmark';
 import { foodInfoNames } from 'src/utils/foodCategory';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 
 const AddModal = () => {
   const { food } = useAppSelector((state) => state.food);
-  const { bookmarkClick } = useBookmark();
   const { closeFoodModal, onAddFoodClick } = useAddFood();
 
   return (
@@ -38,12 +36,6 @@ const AddModal = () => {
                 priority
               />
             )}
-            <BookMark onClick={bookmarkClick} $isBookMark={food.bookmark}>
-              <FontAwesomeIcon
-                icon={faStar}
-                color={food.bookmark ? 'gold' : 'white'}
-              />
-            </BookMark>
           </ImgBox>
           <Info>
             {Object.keys(foodInfoNames).map((name) => (
@@ -136,21 +128,6 @@ const ImgBox = tw.div`
   items-center
   h-28
   w-28
-`;
-const BookMark = tw.button<{ $isBookMark: boolean }>`
-  w-8
-  h-8
-  absolute
-  bottom-0
-  -right-4
-  rounded-full
-  flex
-  justify-center
-  items-center
-  bg-yellow
-  shadow-md
-  ${(p: { $isBookMark: boolean }) =>
-    p.$isBookMark ? 'bg-blue-dark' : 'bg-gray-light'} 
 `;
 const Img = tw(Image)`
   rounded-xl

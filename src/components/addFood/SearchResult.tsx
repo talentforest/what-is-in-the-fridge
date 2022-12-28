@@ -38,7 +38,6 @@ const SearchResult = () => {
   const { keyword } = useAppSelector((state) => state.keyword);
   const { food } = useAppSelector((state) => state.food);
   const { onKeywordChange, onKeywordSubmit, removeKeyword } = useSearchFood();
-  const { onSubmit } = useSubmitFood();
 
   const fetch_condition = keyword !== '' && food.name ? url(food.name) : null;
   const { data, isLoading } = useSWR(fetch_condition, fetcher);
@@ -107,7 +106,7 @@ const SearchResult = () => {
           )}
         </>
       ) : (
-        <AddFoodForm onSubmit={onSubmit} />
+        <AddFoodForm />
       )}
     </SWRConfig>
   );
