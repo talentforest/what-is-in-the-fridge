@@ -23,9 +23,10 @@ const SearchItem = ({ result }: SearchItemProps) => {
           src={imgurl1}
           alt={prdlstNm}
           fill
-          sizes='(max-width: 768px) 100px,
-          (max-width: 1200px) 50px,
+          sizes='(max-width: 768px) 200px,
+          (max-width: 1200px) 200px,
           30px'
+          priority
         />
       </ImgBox>
       <PlusCartBtn
