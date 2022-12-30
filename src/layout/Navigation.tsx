@@ -15,7 +15,7 @@ export default function Navigation() {
       <LogoBox href='/'>
         <Logo>What&#39;s in my FRIDGE?</Logo>
       </LogoBox>
-      <Menu>
+      <MenuBox>
         {windowSize.width >= screens.tablet ? (
           <List href='/my-fridge' $active={pathname === '/my-fridge'}>
             나의 냉장고
@@ -25,15 +25,11 @@ export default function Navigation() {
             <FontAwesomeIcon icon={faBagShopping} size='xl' color='#ff7b00' />
           </List>
         )}
-      </Menu>
+      </MenuBox>
     </Nav>
   );
 }
-const LogoBox = tw(Link)` 
-  flex
-  gap-1
-  items-center
-`;
+
 const Nav = tw.nav`
   flex
   justify-between
@@ -44,13 +40,18 @@ const Nav = tw.nav`
   mobile:text-[12px]
   tablet:px-12
   mobile:px-5
+  text-md
+`;
+const LogoBox = tw(Link)` 
+  flex
+  gap-1
+  items-center
 `;
 const Logo = tw.h1`
   text-orange
-  font-bold
-  text-[13px]
+  text-md
 `;
-const Menu = tw.ul`
+const MenuBox = tw.ul`
   flex
   justify-between
   items-center

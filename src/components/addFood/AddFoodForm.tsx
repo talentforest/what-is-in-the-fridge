@@ -78,7 +78,7 @@ const BackBtn = tw.button`
   mb-3
 `;
 const Form = tw.form`
-  
+  scrollbar-hide
   mobile:h-[calc(100vh-theme(spacing.16))]
   overflow-auto
   rounded-lg

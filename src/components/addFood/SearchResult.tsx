@@ -147,6 +147,7 @@ const ResultNum = tw.div`
   text-gray
 `;
 const ResultList = tw.section`
+  scrollbar-hide
   mt-1
   -mx-2
   px-2

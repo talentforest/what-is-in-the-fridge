@@ -36,8 +36,8 @@ module.exports = {
       sm: ['12px'],
       md: ['14px'],
       base: ['16px'],
-      lg: ['20px', '28px'],
-      xl: ['24px', '32px'],
+      lg: ['20px'],
+      xl: ['24px'],
     },
     scaleX: {
       '-1': '-1',
@@ -47,5 +47,5 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 };
