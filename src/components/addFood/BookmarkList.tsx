@@ -28,7 +28,7 @@ const BookmarkList = () => {
   return !food?.id ? (
     <Wrapper>
       <Title>즐겨찾는 식료품 목록에서 추가하기</Title>
-      <BookmarkBox>
+      <List>
         {bookmark.map((item) => (
           <BookmarkItem key={item.id}>
             <ImgBox>
@@ -55,7 +55,7 @@ const BookmarkList = () => {
             </Btns>
           </BookmarkItem>
         ))}
-      </BookmarkBox>
+      </List>
     </Wrapper>
   ) : (
     <AddFoodForm />
@@ -69,7 +69,8 @@ const Wrapper = tw.div`
   w-full
   h-full
 `;
-const BookmarkBox = tw.div`
+const List = tw.div`
+  scrollbar-hide
   p-2
   -mx-2
   mt-2
@@ -78,7 +79,9 @@ const BookmarkBox = tw.div`
   mobile:grid-cols-2
   auto-rows-min
   gap-2
-  h-[calc(100vh-theme(spacing.56))]
+  desktop:h-[90vh]
+  tablet:h-[95vh]
+  mobile:h-[90vh]
   rounded-3xl
   overflow-scroll
 `;
