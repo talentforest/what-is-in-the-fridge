@@ -69,7 +69,7 @@ const SearchResult = () => {
               placeholder='냉장고 넣을 식품을 검색해보세요.'
             />
             {data && keyword !== '' ? (
-              <SearchBtn type='submit' onClick={removeKeyword}>
+              <SearchBtn type='button' onClick={removeKeyword}>
                 <FontAwesomeIcon icon={faDeleteLeft} size='lg' />
               </SearchBtn>
             ) : (
