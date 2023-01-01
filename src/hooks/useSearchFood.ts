@@ -27,6 +27,7 @@ export const useSearchFood = () => {
       ...food,
       name: keyword,
     };
+
     dispatch(changeFoodInfo(result));
   };
 

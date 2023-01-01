@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { useRef } from 'react';
 import { useScrollFadeIn } from 'src/hooks';
+import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 
 interface IFeatureDescItemProps {

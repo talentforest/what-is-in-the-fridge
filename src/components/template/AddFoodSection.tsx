@@ -3,7 +3,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { useAppSelector } from 'src/lib/hooks';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screens';
-import { useWindowSize, useSubmitFood, useSlideAnimation } from 'src/hooks';
+import { useWindowSize, useSlideAnimation } from 'src/hooks';
 import SearchResult from '../addFood/SearchResult';
 import AddFoodForm from '../addFood/AddFoodForm';
 import tw from 'tailwind-styled-components';
@@ -12,12 +12,10 @@ import BookmarkList from '../addFood/BookmarkList';
 import AddModal from '../addFood/AddModal';
 
 const AddFoodSection = () => {
-  const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const { tab } = useAppSelector((state) => state.tab);
   const { modal } = useAppSelector((state) => state.foodModal);
   const { open, close } = useAppSelector((state) => state.addFoodArea);
   const { windowSize } = useWindowSize();
-  const { onSubmit } = useSubmitFood();
   const slideXAnimation = useAnimation();
   const { onMobileClick, onDesktopClick, CLOSE_X, MOBILE_CLOSE_X } =
     useSlideAnimation(slideXAnimation);
