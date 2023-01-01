@@ -1,8 +1,7 @@
 import { useAppSelector } from 'src/lib/hooks';
 import { ISearchedFood } from 'src/lib/slice/foodSlice';
 
-const useCheckExistFood = () => {
-  const { food } = useAppSelector((state) => state.food);
+export const useCheckExistFood = () => {
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
@@ -82,5 +81,3 @@ const useCheckExistFood = () => {
     isFreezerFoodAlert,
   };
 };
-
-export default useCheckExistFood;

@@ -1,4 +1,4 @@
-import { useWindowSize } from 'src/hooks/index';
+import { useWindowSize } from 'src/hooks';
 import { useRouter } from 'next/router';
 import { screens } from 'src/utils/screens';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

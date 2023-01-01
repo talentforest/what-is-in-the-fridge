@@ -11,7 +11,7 @@ import {
   modifyBookmark,
 } from 'src/lib/slice/index';
 import { getSpaceType } from 'src/utils/getSpaceType';
-import useCheckExistFood from './useCheckExistFood';
+import { useCheckExistFood } from 'src/hooks';
 
 export const useEditFood = () => {
   const [edit, setEdit] = useState(false);
@@ -28,9 +28,9 @@ export const useEditFood = () => {
   } = useCheckExistFood();
   const dispatch = useAppDispatch();
 
-  const nameRef = useRef<HTMLInputElement>(null);
-  const quantityRef = useRef<HTMLInputElement>(null);
-  const dateRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>();
+  const quantityRef = useRef<HTMLInputElement>();
+  const dateRef = useRef<HTMLInputElement>();
 
   const currentMode = freezerOpen ? freezer : fridge;
   const changeDoorState = freezerOpen ? changeFreezerDoor : changeFridgeDoor;

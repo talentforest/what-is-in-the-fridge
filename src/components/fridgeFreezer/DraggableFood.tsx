@@ -7,7 +7,7 @@ import {
 } from 'src/lib/slice/index';
 import { useAppDispatch } from 'src/lib/hooks';
 import { IFood, ISearchedFood, spaceName } from 'src/lib/slice/foodSlice';
-import { useDragFood } from 'src/hooks/index';
+import { useDragFood } from 'src/hooks';
 import { getLeftDays } from 'src/utils/dateUtils';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';

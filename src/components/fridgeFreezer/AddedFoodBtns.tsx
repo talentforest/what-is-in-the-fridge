@@ -4,7 +4,7 @@ import {
   faEdit,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
-import { useHandleAddedFood } from 'src/hooks/index';
+import { useHandleAddedFood } from 'src/hooks';
 import { useAppSelector } from 'src/lib/hooks';
 import tw from 'tailwind-styled-components';
 

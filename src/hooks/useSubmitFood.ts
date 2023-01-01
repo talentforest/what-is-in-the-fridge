@@ -5,7 +5,7 @@ import { changeFoodInfo, showEmoji, showFoodModal } from 'src/lib/slice/index';
 import { IfoodCategory } from 'src/utils/foodCategory';
 import { v4 as uuidv4 } from 'uuid';
 import { ISearchedFood } from 'src/lib/slice/foodSlice';
-import useCheckExistFood from './useCheckExistFood';
+import { useCheckExistFood } from 'src/hooks';
 
 export const useSubmitFood = () => {
   const { food } = useAppSelector((state) => state.food);

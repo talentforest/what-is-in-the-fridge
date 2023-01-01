@@ -6,7 +6,7 @@ import { faCartPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from 'react';
 import { changeFoodInfo } from 'src/lib/slice';
 import { initialState } from 'src/hooks/useAddFood';
-import { useHandleBookmark } from 'src/hooks/useHandleBookmark';
+import { useHandleBookmark } from 'src/hooks';
 import Image from 'next/image';
 import AddFoodForm from './AddFoodForm';
 import tw from 'tailwind-styled-components';
