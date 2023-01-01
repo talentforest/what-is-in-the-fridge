@@ -29,32 +29,36 @@ const BookmarkList = () => {
     <Wrapper>
       <Title>즐겨찾는 식료품 목록에서 추가하기</Title>
       <List>
-        {bookmark.map((item) => (
-          <BookmarkItem key={item.id}>
-            <ImgBox>
-              {item?.imgUrl ? (
-                <ImgBox>
-                  <Img
-                    src={item.imgUrl}
-                    alt={item.name}
-                    fill
-                    sizes='(max-width: 768px) 300px,
+        {bookmark?.length ? (
+          bookmark.map((item) => (
+            <BookmarkItem key={item.id}>
+              <ImgBox>
+                {item?.imgUrl ? (
+                  <ImgBox>
+                    <Img
+                      src={item.imgUrl}
+                      alt={item.name}
+                      fill
+                      sizes='(max-width: 768px) 300px,
                     (max-width: 1200px) 100px,
                     30px'
-                    priority
-                  />
-                </ImgBox>
-              ) : (
-                <Emoji unified={item.emoji} size={35} />
-              )}
-            </ImgBox>
-            <Info>{cutLetter(item.name, 14)}</Info>
-            <Btns>
-              <Btn icon={faCartPlus} onClick={() => onAddFoodClick(item)} />
-              <Btn icon={faTrashCan} onClick={() => onRemoveClick(item)} />
-            </Btns>
-          </BookmarkItem>
-        ))}
+                      priority
+                    />
+                  </ImgBox>
+                ) : (
+                  <Emoji unified={item.emoji} size={35} />
+                )}
+              </ImgBox>
+              <Info>{cutLetter(item.name, 14)}</Info>
+              <Btns>
+                <Btn icon={faCartPlus} onClick={() => onAddFoodClick(item)} />
+                <Btn icon={faTrashCan} onClick={() => onRemoveClick(item)} />
+              </Btns>
+            </BookmarkItem>
+          ))
+        ) : (
+          <EmptyBox>아직 등록된 즐겨찾는 식료품이 없습니다.</EmptyBox>
+        )}
       </List>
     </Wrapper>
   ) : (
@@ -62,6 +66,16 @@ const BookmarkList = () => {
   );
 };
 
+const EmptyBox = tw.div`
+  text-center
+  p-8
+  text-md
+  tablet:col-span-3
+  mobile:col-span-2
+  rounded-lg
+  bg-white
+  shadow-xl
+`;
 const Title = tw.h2`
   text-md
 `;

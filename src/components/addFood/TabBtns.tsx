@@ -73,7 +73,7 @@ const TabBox = tw.div`
 `;
 const TabBtn = tw(motion.button)<{ $color: boolean }>`
   first:bg-gray-light
-  tablet:first:block
+  desktop:first:block
   mobile:first:hidden
   ${(p: { $color: boolean }) => (p.$color ? 'bg-blue-dark' : 'bg-yellow')}
   tablet:w-12

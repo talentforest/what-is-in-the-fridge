@@ -22,6 +22,7 @@ const FridgeFreezerSection = () => {
 const FridgeFreezer = tw.section`
   h-[calc(100vh-theme(spacing.12))]
   relative
+  overflow-hidden
 `;
 const Section = tw.div`
   mx-auto

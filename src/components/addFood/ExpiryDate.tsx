@@ -13,7 +13,7 @@ const ExpiryDate = () => {
 
   return (
     <>
-      <Input type='date' value={food.expiryDate} onChange={onDateChange} />
+      <DateInput type='date' value={food.expiryDate} onChange={onDateChange} />
       <PlusDate>
         {dateType.map((item) => (
           <DateBtn
@@ -32,6 +32,10 @@ const ExpiryDate = () => {
   );
 };
 
+const DateInput = tw(Input)`
+  min-w-full
+  bg-white
+`;
 const PlusDate = tw.div`
   mt-2
   flex
@@ -39,8 +43,7 @@ const PlusDate = tw.div`
   text-sm
 `;
 const DateBtn = tw.button<{ $color: string }>`
-  py-1
-  px-2
+  p-2
   rounded-3xl
   flex
   items-center

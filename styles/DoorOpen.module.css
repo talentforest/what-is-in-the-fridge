@@ -15,7 +15,7 @@
   z-index: 10;
   opacity: 1;
   transform-origin: right;
-  transition: opacity 0.5s;
+  transition: all 0.5s;
 }
 .leftDoor {
   position: absolute;
@@ -67,7 +67,7 @@
   .fridge {
     width: 90vw;
     height: 65vw;
-    translate: 0 -18%;
+    translate: 0 -19%;
   }
   .fridge.freezer {
     height: 40vw;
@@ -82,11 +82,12 @@
 }
 
 /* Tablet */
-@media (min-width: 640px) {
+@media (min-width: 500px) {
   .fridge {
     width: 70vw;
     height: 55vw;
-    translate: 0 -10%;
+    translate: 0 -10.5%;
+    /* border: 1px solid red; */
   }
   .fridge.freezer {
     height: 35vw;
@@ -106,7 +107,7 @@
   }
   .fridge.freezer {
     height: 20vw;
-    translate: 0 2%;
+    translate: 0 2.5%;
   }
   .fridge.open {
     width: 50vw;

@@ -19,24 +19,21 @@ const AddedFoodBtns = ({ setEdit }: IAddedFoodBtnsProps) => {
   return (
     <Btns>
       <Btn $color='bg-green' onClick={setEdit}>
-        <Icon icon={faEdit} />
-        <BtnName>수정</BtnName>
+        <FontAwesomeIcon icon={faEdit} size='lg' />
+        <span>수정</span>
       </Btn>
       <Btn $color='bg-red-light' onClick={removeAddedFood}>
-        <Icon icon={faTrashCan} />
-        <BtnName>삭제</BtnName>
+        <FontAwesomeIcon icon={faTrashCan} size='lg' />
+        <span>삭제</span>
       </Btn>
       <Btn $color='bg-blue' onClick={moveToAnotherMode}>
-        <Icon icon={faDiceD6} />
-        <BtnName>{fridgeOpen ? '냉동실' : '냉장실'}로</BtnName>
+        <FontAwesomeIcon icon={faDiceD6} size='lg' />
+        <span>{fridgeOpen ? '냉동실' : '냉장실'}로</span>
       </Btn>
     </Btns>
   );
 };
 
-const Icon = tw(FontAwesomeIcon)`
-  text-base
-`;
 const Btns = tw.div`
   w-full
   tablet:px-4
@@ -64,9 +61,6 @@ const Btn = tw.button`
   text-white
   tablet:text-base
   mobile:text-[12px]
-`;
-const BtnName = tw.span`
-  leading-5
 `;
 
 export default AddedFoodBtns;
