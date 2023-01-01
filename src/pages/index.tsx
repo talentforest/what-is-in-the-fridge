@@ -24,7 +24,11 @@ export default function Home() {
           name='description'
           content='관리는 한눈에 파악하는 것에서부터 시작해요. 냉장고 안 식재료를 한눈에 보고 상태를 파악하고 싶으세요? 냉장고 안 식재료 관리에 도음을 드립니다.'
         />
-        <meta name='image' property='og:image' content='/bookmarklist.png' />
+        <meta
+          name='image'
+          property='og:image'
+          content='/assets/bookmarklist.png'
+        />
         <meta
           name='keywords'
           content='냉장고, 냉장고 지도, 냉장고 관리, 식재료, 식재료 관리, 식료품, 유통기한, 냉파, 냉장고 파먹기, 냉장고 재료, 즐겨찾는 식품, 즐겨찾기'
@@ -42,10 +46,10 @@ export default function Home() {
         <Img
           src='/assets/메인.png'
           alt='즐겨찾기 식품 리스트'
-          width={200}
-          height={200}
-          sizes='(max-width: 768px) 300px,
-          (max-width: 1200px) 100px,
+          width={600}
+          height={600}
+          sizes='(max-width: 768px) 600px,
+          (max-width: 1200px) 300px,
           30px'
           priority
         />
@@ -65,7 +69,7 @@ export default function Home() {
           ))}
         </List>
       </Section>
-      <Section $color>
+      <Section $color $tilt>
         <SubTitle>
           <strong>냉장고에 뭐가 있지?</strong>는 다양한 냉장고 관리 기능이
           있어요.
@@ -133,8 +137,9 @@ const Title = tw.h1`
 `;
 const Button = tw(Link)`
   cursor-pointer
-  w-fit
-  px-4
+  tablet:w-52
+  mobile:w-48
+  px-3
   desktop:h-16
   tablet:h-14
   mobile:h-12
@@ -142,7 +147,7 @@ const Button = tw(Link)`
   mobile:text-md
   rounded-xl
   flex
-  gap-2
+  gap-1
   items-center
   justify-center
   bg-yellow
@@ -154,7 +159,9 @@ const Button = tw(Link)`
   transition
   duration-300
   ease-in-out
+  appearance-none
 `;
+
 const Section = tw.section<{ $color: boolean; $tilt: boolean }>`
   py-10
   flex
@@ -165,7 +172,8 @@ const Section = tw.section<{ $color: boolean; $tilt: boolean }>`
   bg-green
   first:bg-transparent
   ${(p: { $color: boolean }) => (p.$color ? 'bg-green' : 'bg-transparent')}
-  ${(p: { $tilt: boolean }) => (p.$tilt ? 'py-40' : 'pt-20')}
+  ${(p: { $tilt: boolean }) => (p.$tilt ? 'mobile:py-20' : 'mobile:pt-20')}
+  ${(p: { $tilt: boolean }) => (p.$tilt ? 'tablet:py-40' : 'tablet:pt-20')}
 `;
 const SubTitle = tw.h2`
   mb-10

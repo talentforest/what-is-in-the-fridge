@@ -6,12 +6,18 @@ import { useSubmitFood } from 'src/hooks';
 import { Desc } from './FoodQuantity';
 import styles from 'styles/EmojiBox.module.css';
 import tw from 'tailwind-styled-components';
+import { useEffect, useRef } from 'react';
 
 const FoodIconName = () => {
   const { emoji } = useAppSelector((state) => state.emoji);
   const { food } = useAppSelector((state) => state.food);
   const { onEmojiClick, onNameChange } = useSubmitFood();
   const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <>
@@ -40,6 +46,7 @@ const FoodIconName = () => {
         </>
       )}
       <Input
+        ref={inputRef}
         type='text'
         placeholder='식료품의 이름을 적어주세요.'
         value={food.name}
@@ -51,12 +58,13 @@ const FoodIconName = () => {
 
 export const Input = tw.input`
   rounded-lg
-  shadow-lg
+  shadow-md
   w-full
   h-10
   px-2
   text-base
   focus:outline-yellow
+  appearance-none
 `;
 const IconBox = tw.div`
   w-fit

@@ -248,7 +248,7 @@ const SubmitBtn = tw.button`
   shadow-lg
   text-white
   tablet:text-base
-  mobile:text-[12px]
+  mobile:text-md
 `;
 
 export default Modal;

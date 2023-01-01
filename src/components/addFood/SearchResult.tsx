@@ -4,7 +4,7 @@ import { Input } from './FoodIconName';
 import { useSearchFood } from 'src/hooks';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetcher, url } from 'src/pages/api/productInfo';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { changeKeyword } from 'src/lib/slice';
 import SearchItem from './SearchItem';
 import AddFoodForm from './AddFoodForm';
@@ -42,11 +42,14 @@ const SearchResult = () => {
   const { data, isLoading } = useSWR(fetch_condition, fetcher);
 
   const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (tab === 'search') {
       dispatch(changeKeyword(''));
     }
+    inputRef.current?.focus();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -63,6 +66,7 @@ const SearchResult = () => {
           <Title>상품 검색하기</Title>
           <Form onSubmit={onKeywordSubmit}>
             <Input
+              ref={inputRef}
               type='text'
               value={keyword}
               onChange={onKeywordChange}
@@ -114,6 +118,7 @@ const SearchResult = () => {
 export const Title = tw.h2`
   text-md
   mb-3
+  font-semibold
 `;
 const Form = tw.form`
   flex

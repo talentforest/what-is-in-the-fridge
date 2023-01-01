@@ -17,20 +17,20 @@ const AddFoodSection = () => {
   const { open, close } = useAppSelector((state) => state.addFoodArea);
   const { windowSize } = useWindowSize();
   const slideXAnimation = useAnimation();
-  const { onMobileClick, onDesktopClick, CLOSE_X, MOBILE_CLOSE_X } =
+  const { onMobileClick, onDesktopClick, CLOSE_X, FAR_CLOSE_X } =
     useSlideAnimation(slideXAnimation);
 
   return (
     <>
-      {screens.tablet >= windowSize.width ? (
+      {screens.desktop >= windowSize.width ? (
         <>
           <CartBtn onClick={onMobileClick}>
-            <CartIconBtn icon={faCartPlus} color='#66a8ea' size='3x' />
+            <CartIconBtn icon={faCartPlus} color='#66a8ea' />
           </CartBtn>
           {open && <Overlay onClick={onMobileClick} />}
           <AddFoodBox
-            transition={{ type: 'linear', duration: 0.4 }}
-            initial={{ x: MOBILE_CLOSE_X }}
+            transition={{ type: 'linear', duration: 0.6 }}
+            initial={{ x: FAR_CLOSE_X }}
             animate={slideXAnimation}
           >
             <TabBtns onDesktopClick={onDesktopClick} />
@@ -41,7 +41,7 @@ const AddFoodSection = () => {
         </>
       ) : (
         <AddFoodBox
-          transition={{ type: 'linear', duration: 0.4, color: '#2d67d2' }}
+          transition={{ type: 'linear', duration: 0.6, color: '#2d67d2' }}
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
@@ -73,11 +73,15 @@ const CartBtn = tw.button`
   bg-yellow
   shadow-xl
   rounded-full
-  w-24
-  h-24
+  mobile:w-24
+  mobile:h-24
+  tablet:w-36
+  tablet:h-36
   absolute
-  bottom-4
-  right-4
+  tablet:right-10
+  tablet:bottom-10
+  mobile:bottom-4
+  mobile:right-4
   flex
   justify-center
   items-center
@@ -86,6 +90,8 @@ const CartBtn = tw.button`
 const CartIconBtn = tw(FontAwesomeIcon)`
   pr-1
   pt-2
+  tablet:h-16
+  mobile:h-12
 `;
 const Overlay = tw.div`
   absolute

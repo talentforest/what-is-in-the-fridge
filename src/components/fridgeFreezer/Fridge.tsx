@@ -22,7 +22,7 @@ const Fridge = () => {
       <section className={`${styles.fridge} ${fridgeOpen ? styles.open : ''}`}>
         {fridgeOpen && (
           <CloseBtn onClick={onFridgeOpenClick}>
-            <FontAwesomeIcon icon={faDoorClosed} color='#333' size='2x' />
+            <FontAwesomeIcon icon={faDoorClosed} color='#333' />
             <span>문닫기</span>
           </CloseBtn>
         )}

@@ -82,7 +82,8 @@ const Form = tw.form`
   mobile:h-[calc(100vh-theme(spacing.16))]
   overflow-auto
   rounded-lg
-  pb-2
+  p-1.5
+  -m-1.5
 `;
 const ImgBox = tw.div`
   relative

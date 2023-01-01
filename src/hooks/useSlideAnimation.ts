@@ -2,7 +2,7 @@ import { AnimationControls } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { closeAddFoodArea, openAddFoodArea } from 'src/lib/slice';
 
-const MOBILE_CLOSE_X = -400;
+const FAR_CLOSE_X = -600;
 const CLOSE_X = -275;
 
 export const useSlideAnimation = (slideXAnimation: AnimationControls) => {
@@ -11,7 +11,7 @@ export const useSlideAnimation = (slideXAnimation: AnimationControls) => {
 
   const onMobileClick = () => {
     open
-      ? slideXAnimation.start({ x: MOBILE_CLOSE_X })
+      ? slideXAnimation.start({ x: FAR_CLOSE_X })
       : slideXAnimation.start({ x: 0 });
     dispatch(openAddFoodArea());
   };
@@ -26,6 +26,6 @@ export const useSlideAnimation = (slideXAnimation: AnimationControls) => {
     onMobileClick,
     onDesktopClick,
     CLOSE_X,
-    MOBILE_CLOSE_X,
+    FAR_CLOSE_X,
   };
 };
