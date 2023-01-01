@@ -1,10 +1,9 @@
 import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { useAppSelector } from 'src/lib/hooks';
 import { foodInfoNames } from 'src/utils/foodCategory';
-import { useEditFood } from 'src/hooks/index';
+import { useEditFood, useHandleBookmark } from 'src/hooks';
 import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHandleBookmark } from 'src/hooks/useHandleBookmark';
 import AddedFoodBtns from './AddedFoodBtns';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';

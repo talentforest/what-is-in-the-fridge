@@ -1,6 +1,7 @@
 import tw from 'tailwind-styled-components';
-import styles from 'styles/TiltBox.module.css';
 import Image from 'next/image';
+import { useRef } from 'react';
+import { useScrollFadeIn } from 'src/hooks';
 
 interface IRecommendDescItemProps {
   contents: string;
@@ -8,8 +9,11 @@ interface IRecommendDescItemProps {
 }
 
 const RecommendDescItem = ({ contents, imgUrl }: IRecommendDescItemProps) => {
+  const targetDom = useRef<HTMLElement>(null);
+  const { style } = useScrollFadeIn({ targetDom });
+
   return (
-    <Item>
+    <Item ref={targetDom} style={{ ...style }}>
       <Desc>{contents}</Desc>
       <ImgBox>
         <Image
@@ -27,17 +31,21 @@ const RecommendDescItem = ({ contents, imgUrl }: IRecommendDescItemProps) => {
 };
 
 const Item = tw.li`
+  shadow-xl
+  rounded-xl
+  relative
   m-auto
   w-4/5
+  h-40
   flex 
   flex-col
-  justify-center
+  bg-yellow
   items-center
   gap-2
-  px-5
-  py-10
-  tablet:mb-0
-  mobile:mb-4
+  px-10
+  py-5
+  tablet:mb-20
+  mobile:mb-40
   tablet:rounded-3xl
 `;
 const Desc = tw.p` 
@@ -46,7 +54,8 @@ const Desc = tw.p`
   w-48
 `;
 const ImgBox = tw.div`
-  relative
+  absolute
+  -bottom-20
   w-40
   h-40
   rounded-full

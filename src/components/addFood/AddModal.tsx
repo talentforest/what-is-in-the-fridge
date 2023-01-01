@@ -1,6 +1,6 @@
 import { Emoji } from 'emoji-picker-react';
 import { useAppSelector } from 'src/lib/hooks';
-import { useAddFood } from 'src/hooks/index';
+import { useAddFood } from 'src/hooks';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { foodInfoNames } from 'src/utils/foodCategory';

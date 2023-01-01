@@ -3,7 +3,7 @@ import { addBookmark, removeBookmark } from 'src/lib/slice';
 import { changeFoodInfo, IFood, ISearchedFood } from 'src/lib/slice/foodSlice';
 import { useEditFood } from './useEditFood';
 import { v4 as uuidv4 } from 'uuid';
-import useCheckExistFood from './useCheckExistFood';
+import { useCheckExistFood } from 'src/hooks';
 
 export const useHandleBookmark = () => {
   const { food } = useAppSelector((state) => state.food);

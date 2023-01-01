@@ -4,7 +4,6 @@ import { useAppSelector } from 'src/lib/hooks';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screens';
 import { useWindowSize, useSubmitFood, useSlideAnimation } from 'src/hooks';
-import Modal from '../fridgeFreezer/Modal';
 import SearchResult from '../addFood/SearchResult';
 import AddFoodForm from '../addFood/AddFoodForm';
 import tw from 'tailwind-styled-components';

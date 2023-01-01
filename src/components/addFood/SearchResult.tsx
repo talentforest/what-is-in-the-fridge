@@ -1,10 +1,9 @@
 import { faDeleteLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Input } from './FoodIconName';
-import { useSearchFood } from 'src/hooks/useSearchFood';
+import { useSearchFood } from 'src/hooks';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetcher, url } from 'src/pages/api/productInfo';
-import { useSubmitFood } from 'src/hooks';
 import { useEffect } from 'react';
 import { changeKeyword } from 'src/lib/slice';
 import SearchItem from './SearchItem';

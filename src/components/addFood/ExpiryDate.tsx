@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useAppSelector } from 'src/lib/hooks';
 import { Input } from './FoodIconName';
-import { usePlusDate } from 'src/hooks/index';
+import { usePlusDate } from 'src/hooks';
 import { dateType } from 'src/utils/dateUtils';
 import tw from 'tailwind-styled-components';
 import React from 'react';

@@ -1,6 +1,6 @@
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSearchFood } from 'src/hooks/useSearchFood';
+import { useSearchFood } from 'src/hooks';
 import { cutLetter } from 'src/utils/cutLetter';
 import { IFoodData } from './SearchResult';
 import tw from 'tailwind-styled-components';

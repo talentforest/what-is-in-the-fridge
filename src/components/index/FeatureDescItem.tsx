@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { useRef } from 'react';
+import { useScrollFadeIn } from 'src/hooks';
 import tw from 'tailwind-styled-components';
 
 interface IFeatureDescItemProps {
@@ -7,10 +9,13 @@ interface IFeatureDescItemProps {
 }
 
 const FeatureDescItem = ({ contents, imgUrl }: IFeatureDescItemProps) => {
+  const targetDom = useRef<HTMLElement>(null);
+  const { style } = useScrollFadeIn({ targetDom });
+
   return (
     <Item>
       <Desc>{contents}</Desc>
-      <ImgBox>
+      <ImgBox ref={targetDom} style={{ ...style }}>
         <Image
           src={imgUrl}
           alt='즐겨찾기 식품 리스트'
@@ -26,25 +31,21 @@ const FeatureDescItem = ({ contents, imgUrl }: IFeatureDescItemProps) => {
 };
 
 const Item = tw.li`
-
   flex 
   flex-col
-  justify-center
+  justify-between
   items-center
-  gap-3
-  px-5
-  py-10
+  gap-2
   tablet:mb-0
-  mobile:mb-4
-  tablet:rounded-3xl
+  mobile:mb-24
 `;
 const Desc = tw.p` 
   text-center
   w-56
   break-keep
+  
 `;
 const ImgBox = tw.div`
-
   object-cover
   object-top
   w-60
