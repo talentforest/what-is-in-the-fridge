@@ -22,16 +22,18 @@ const FridgeFreezerSection = () => {
 const FridgeFreezer = tw.section`
   h-[calc(100vh-theme(spacing.12))]
   relative
-  overflow-hidden
 `;
 const Section = tw.div`
-  mx-auto
+  m-auto
   flex 
   flex-col
   justify-center
   items-center
   h-full
-  w-fit
+  w-full
+  overflow-hidden
+  mobile:pb-10
+  tablet:pb-0
 `;
 
 export default FridgeFreezerSection;

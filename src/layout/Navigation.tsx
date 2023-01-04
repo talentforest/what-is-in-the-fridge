@@ -1,10 +1,9 @@
 import { useWindowSize } from 'src/hooks';
 import { useRouter } from 'next/router';
 import { screens } from 'src/utils/screens';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 import tw from 'tailwind-styled-components';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navigation() {
   const { pathname } = useRouter();
@@ -22,7 +21,13 @@ export default function Navigation() {
           </List>
         ) : (
           <List href='/my-fridge' $active={pathname === '/my-fridge'}>
-            <FontAwesomeIcon icon={faBagShopping} size='xl' color='#ff7b00' />
+            <Image
+              src='/assets/fridge.svg'
+              alt='fridge icon'
+              height={20}
+              width={20}
+              color='red'
+            />
           </List>
         )}
       </MenuBox>

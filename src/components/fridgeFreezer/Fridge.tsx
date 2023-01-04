@@ -19,7 +19,7 @@ const Fridge = () => {
 
   return (
     <>
-      <section className={`${styles.fridge} ${fridgeOpen ? styles.open : ''}`}>
+      <div className={`${styles.fridge} ${fridgeOpen ? styles.open : ''}`}>
         {fridgeOpen && (
           <CloseBtn onClick={onFridgeOpenClick}>
             <FontAwesomeIcon icon={faDoorClosed} color='#333' />
@@ -49,7 +49,7 @@ const Fridge = () => {
             </Compartment>
           ))}
         </Door>
-      </section>
+      </div>
       <ShoppingBagFood />
     </>
   );
@@ -73,9 +73,9 @@ export const Knob = tw.div`
   shadow-inner
   rounded-md
   tablet:w-3
-  tablet:h-12
-  mobile:w-2
-  mobile:h-6
+  tablet:h-10
+  mobile:w-2.5
+  mobile:h-8
   tablet:ml-6
   mobile:ml-3
   mt-4

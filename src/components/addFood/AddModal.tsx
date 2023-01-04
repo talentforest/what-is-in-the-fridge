@@ -56,15 +56,16 @@ const AddModal = () => {
 };
 
 const Overlay = tw.div`
+
   absolute
-  mobile:top-0
+  -top-12
   right-0
   left-0
   h-screen
   bg-gray-dark
   opacity-50
   cursor-pointer
-  z-10
+  z-13
 `;
 const ModalBox = tw.div`
   flex

@@ -4,28 +4,17 @@ import tw from 'tailwind-styled-components';
 const Footer = () => {
   return (
     <FooterBox>
-      <Title>프로젝트: 냉장고에 뭐 있지?</Title>
+      <Title>프로젝트: 냉장고에 뭐가 있지?</Title>
       <ListBox>
         <List>
-          <Label>이메일</Label>
+          <Label>Email</Label>
           <span>talentforest0501@gmail.com</span>
         </List>
         <List>
-          <Label>깃헙</Label>
+          <Label>GitHub</Label>
           <Link href='https://github.com/talentforest'>
             https://github.com/talentforest
           </Link>
-        </List>
-        <List>
-          <LinkBtn href='https://www.notion.so/jellieplanet/5e4525d3574345058a94f01232ac6456'>
-            이력서
-          </LinkBtn>
-          <LinkBtn
-            $color
-            href='https://jellieplanet.notion.site/SIDE-PROJECTS-eed56193b0834588b17e81c30dbf1525'
-          >
-            다른 볼만한 프로젝트
-          </LinkBtn>
         </List>
       </ListBox>
     </FooterBox>
