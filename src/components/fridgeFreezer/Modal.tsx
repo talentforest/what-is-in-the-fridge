@@ -236,8 +236,10 @@ const Input = tw.input`
   rounded-lg
   px-2
   py-1
-  shadow-lg
+  shadow-md
   text-end
+  bg-white
+  appearance-none
 `;
 const SubmitBtn = tw.button`
   mt-3
