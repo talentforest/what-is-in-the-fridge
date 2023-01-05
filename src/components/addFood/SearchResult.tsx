@@ -1,7 +1,7 @@
 import { faDeleteLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Input } from './FoodIconName';
-import { useSearchFood } from 'src/hooks';
+import { useSearchFood, useWindowSize } from 'src/hooks';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetcher, url } from 'src/pages/api/productInfo';
 import { useEffect, useRef } from 'react';
@@ -11,6 +11,7 @@ import AddFoodForm from './AddFoodForm';
 import useSWR, { SWRConfig } from 'swr';
 import tw from 'tailwind-styled-components';
 import Loading from '../common/Loading';
+import { screens } from 'src/utils/screens';
 
 export interface IFoodData {
   item: {
@@ -36,22 +37,27 @@ const SearchResult = () => {
   const { tab } = useAppSelector((state) => state.tab);
   const { keyword } = useAppSelector((state) => state.keyword);
   const { food } = useAppSelector((state) => state.food);
+  const { open, close } = useAppSelector((state) => state.addFoodArea);
+  const { windowSize } = useWindowSize();
   const { onKeywordChange, onKeywordSubmit, removeKeyword } = useSearchFood();
 
   const fetch_condition = keyword !== '' && food.name ? url(food.name) : null;
   const { data, isLoading } = useSWR(fetch_condition, fetcher);
-  const { open, close } = useAppSelector((state) => state.addFoodArea);
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  console.log(open && windowSize.width < screens.desktop);
   useEffect(() => {
     if (tab === 'search') {
       dispatch(changeKeyword(''));
     }
-    if (!close || open) {
+    if (open && windowSize.width < screens.desktop) {
       inputRef.current?.focus();
     }
-  }, [open, close]);
+    if (!close && windowSize.width > screens.desktop) {
+      inputRef.current?.focus();
+    }
+  }, [open, close, windowSize.width]);
 
   return (
     <SWRConfig
