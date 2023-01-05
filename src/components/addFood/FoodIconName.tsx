@@ -3,21 +3,24 @@ import { categoryConfig, Picker, previewConfig } from 'src/utils/emojiConfig';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { showEmoji } from 'src/lib/slice/index';
 import { useSubmitFood } from 'src/hooks';
+import { useEffect, useRef } from 'react';
 import { Desc } from './FoodQuantity';
 import styles from 'styles/EmojiBox.module.css';
 import tw from 'tailwind-styled-components';
-import { useEffect, useRef } from 'react';
 
 const FoodIconName = () => {
   const { emoji } = useAppSelector((state) => state.emoji);
   const { food } = useAppSelector((state) => state.food);
+  const { open, close } = useAppSelector((state) => state.addFoodArea);
   const { onEmojiClick, onNameChange } = useSubmitFood();
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
+    if (!close || open) {
+      inputRef.current?.focus();
+    }
+  }, [close, open]);
 
   return (
     <>

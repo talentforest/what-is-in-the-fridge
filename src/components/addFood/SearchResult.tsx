@@ -40,7 +40,7 @@ const SearchResult = () => {
 
   const fetch_condition = keyword !== '' && food.name ? url(food.name) : null;
   const { data, isLoading } = useSWR(fetch_condition, fetcher);
-
+  const { open, close } = useAppSelector((state) => state.addFoodArea);
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -48,10 +48,10 @@ const SearchResult = () => {
     if (tab === 'search') {
       dispatch(changeKeyword(''));
     }
-    inputRef.current?.focus();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!close || open) {
+      inputRef.current?.focus();
+    }
+  }, [open, close]);
 
   return (
     <SWRConfig
