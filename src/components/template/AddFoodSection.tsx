@@ -17,23 +17,23 @@ const AddFoodSection = () => {
   const { open, close } = useAppSelector((state) => state.addFoodArea);
   const { windowSize } = useWindowSize();
   const slideXAnimation = useAnimation();
-  const { onMobileClick, onDesktopClick, CLOSE_X, FAR_CLOSE_X } =
+  const { onFarSlideClick, onSlideClick, CLOSE_X, FAR_CLOSE_X } =
     useSlideAnimation(slideXAnimation);
 
   return (
     <>
       {screens.desktop >= windowSize.width ? (
         <>
-          <CartBtn onClick={onMobileClick}>
+          <CartBtn onClick={onFarSlideClick}>
             <CartIconBtn icon={faCartPlus} color='#66a8ea' />
           </CartBtn>
-          {open && <Overlay onClick={onMobileClick} />}
+          {open && <Overlay onClick={onFarSlideClick} />}
           <AddFoodBox
             transition={{ type: 'linear', duration: 0.6 }}
             initial={{ x: FAR_CLOSE_X }}
             animate={slideXAnimation}
           >
-            <TabBtns onDesktopClick={onDesktopClick} />
+            <TabBtns onSlideClick={onSlideClick} />
             {tab === 'search' && <SearchResult />}
             {tab === 'input' && <AddFoodForm />}
             {tab === 'bookmark' && <BookmarkList />}
@@ -45,7 +45,7 @@ const AddFoodSection = () => {
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
-          <TabBtns onDesktopClick={onDesktopClick} />
+          <TabBtns onSlideClick={onSlideClick} />
           {tab === 'search' && <SearchResult />}
           {tab === 'input' && <AddFoodForm />}
           {tab === 'bookmark' && <BookmarkList />}

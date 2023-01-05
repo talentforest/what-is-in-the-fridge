@@ -9,13 +9,13 @@ export const useSlideAnimation = (slideXAnimation: AnimationControls) => {
   const { open, close } = useAppSelector((state) => state.addFoodArea);
   const dispatch = useAppDispatch();
 
-  const onMobileClick = () => {
+  const onFarSlideClick = () => {
     open
       ? slideXAnimation.start({ x: FAR_CLOSE_X })
       : slideXAnimation.start({ x: 0 });
     dispatch(openAddFoodArea());
   };
-  const onDesktopClick = () => {
+  const onSlideClick = () => {
     close
       ? slideXAnimation.start({ x: 0 })
       : slideXAnimation.start({ x: CLOSE_X });
@@ -23,8 +23,8 @@ export const useSlideAnimation = (slideXAnimation: AnimationControls) => {
   };
 
   return {
-    onMobileClick,
-    onDesktopClick,
+    onFarSlideClick,
+    onSlideClick,
     CLOSE_X,
     FAR_CLOSE_X,
   };
