@@ -46,7 +46,6 @@ const SearchResult = () => {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  console.log(open && windowSize.width < screens.desktop);
   useEffect(() => {
     if (tab === 'search') {
       dispatch(changeKeyword(''));
