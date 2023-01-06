@@ -6,12 +6,12 @@ import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetcher, url } from 'src/pages/api/productInfo';
 import { useEffect, useRef } from 'react';
 import { changeKeyword } from 'src/lib/slice';
+import { screens } from 'src/utils/screens';
 import SearchItem from './SearchItem';
 import AddFoodForm from './AddFoodForm';
 import useSWR, { SWRConfig } from 'swr';
 import tw from 'tailwind-styled-components';
 import Loading from '../common/Loading';
-import { screens } from 'src/utils/screens';
 
 export interface IFoodData {
   item: {

@@ -10,7 +10,7 @@ export const useSearchFood = () => {
   const dispatch = useAppDispatch();
 
   const onKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+    const { value } = e.currentTarget;
     if (keyword.length === 0) {
       const result = {
         ...food,
@@ -38,6 +38,7 @@ export const useSearchFood = () => {
       id: uuidv4(),
       imgUrl,
     };
+    console.log(result);
     dispatch(changeFoodInfo(result));
   };
 
