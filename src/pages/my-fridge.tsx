@@ -21,6 +21,7 @@ const MyFridge = () => {
       </Head>
       <FridgeFreezerSection />
       <AddFoodSection />
+      <></>
     </>
   );
 };
