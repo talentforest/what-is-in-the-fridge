@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+<<<<<<< HEAD
 
 module.exports = {
   important: true,
@@ -48,4 +49,15 @@ module.exports = {
     extend: {},
   },
   plugins: [require('tailwind-scrollbar-hide')],
+=======
+module.exports = {
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+>>>>>>> 205e175 (initial file setting)
 };
