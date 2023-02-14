@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>냉장고에 뭐가 있지?</title>
+        <title>냉장고에 뭐가 있지??</title>
         <meta name='title' property='og:title' content='냉장고에 뭐가 있지?' />
         <meta
           name='description'
