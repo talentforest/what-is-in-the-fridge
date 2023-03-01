@@ -36,7 +36,7 @@ const SearchItem = ({ result }: SearchItemProps) => {
         size='lg'
       />
       <Info>
-        {cutLetter(prdlstNm, 15)}{' '}
+        {cutLetter(prdlstNm, 15)}
         {!(capacity === '알수없음') && capacity?.slice(0, 4)}
       </Info>
     </ResultItem>

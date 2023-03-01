@@ -23,12 +23,13 @@ const ShoppingBagFood = () => {
 
 const ShoppingBagBox = tw.div`
   absolute
-  desktop:bottom-4
-  tablet:right-2
-  tablet:bottom-4
-  tablet:left-auto
   mobile:left-2
   mobile:bottom-4
+  tablet:bottom-8
+  tablet:left-8
+  desktop:bottom-4
+  desktop:left-auto
+  desktop:right-0
   tablet:w-56
   tablet:h-56
   mobile:w-40

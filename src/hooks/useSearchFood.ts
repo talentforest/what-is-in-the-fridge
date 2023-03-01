@@ -38,7 +38,6 @@ export const useSearchFood = () => {
       id: uuidv4(),
       imgUrl,
     };
-    console.log(result);
     dispatch(changeFoodInfo(result));
   };
 

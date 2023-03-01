@@ -9,14 +9,26 @@ export const useWindowSize = () => {
     width: 0,
   });
 
+  const throttle = (func: () => void, delay: number) => {
+    let inProgress = false;
+    return () => {
+      if (inProgress) return;
+      inProgress = true;
+      setTimeout(() => {
+        func();
+        inProgress = false;
+      }, delay);
+    };
+  };
+
   useEffect(() => {
-    function handleResize() {
+    const handleResize = throttle(() => {
       setWindowSize({
         width: window.innerWidth,
       });
-    }
+    }, 500);
     window.addEventListener('resize', handleResize);
-    handleResize();
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 

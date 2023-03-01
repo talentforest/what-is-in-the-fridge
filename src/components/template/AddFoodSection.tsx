@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useAnimation } from 'framer-motion';
 import { useAppSelector } from 'src/lib/hooks';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faClose } from '@fortawesome/free-solid-svg-icons';
 import { screens } from 'src/utils/screens';
 import { useWindowSize, useSlideAnimation } from 'src/hooks';
 import SearchResult from '../addFood/SearchResult';
@@ -33,7 +33,7 @@ const AddFoodSection = () => {
             initial={{ x: FAR_CLOSE_X }}
             animate={slideXAnimation}
           >
-            <TabBtns onSlideClick={onSlideClick} />
+            <TabBtns onSlideClick={onSlideClick}></TabBtns>
             {tab === 'search' && <SearchResult />}
             {tab === 'input' && <AddFoodForm />}
             {tab === 'bookmark' && <BookmarkList />}
@@ -45,6 +45,9 @@ const AddFoodSection = () => {
           initial={close ? { x: CLOSE_X } : { x: 0 }}
           animate={slideXAnimation}
         >
+          <CloseBtn onClick={onSlideClick}>
+            <FontAwesomeIcon icon={faClose} size='xl' color='#aaa' />
+          </CloseBtn>
           <TabBtns onSlideClick={onSlideClick} />
           {tab === 'search' && <SearchResult />}
           {tab === 'input' && <AddFoodForm />}
@@ -86,6 +89,11 @@ const CartBtn = tw.button`
   justify-center
   items-center
   cursor-pointer
+`;
+const CloseBtn = tw.button`
+  absolute
+  right-4
+  top-4
 `;
 const CartIconBtn = tw(FontAwesomeIcon)`
   pr-1

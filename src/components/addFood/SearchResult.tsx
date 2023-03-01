@@ -56,6 +56,7 @@ const SearchResult = () => {
     if (!close && windowSize.width > screens.desktop) {
       inputRef.current?.focus();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, close, windowSize.width]);
 
   return (

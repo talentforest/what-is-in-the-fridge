@@ -35,21 +35,13 @@ const BookmarkList = () => {
               <ImgBox>
                 {item?.imgUrl ? (
                   <ImgBox>
-                    <Img
-                      src={item.imgUrl}
-                      alt={item.name}
-                      fill
-                      sizes='(max-width: 768px) 300px,
-                    (max-width: 1200px) 100px,
-                    30px'
-                      priority
-                    />
+                    <Img src={item.imgUrl} alt={item.name} fill priority />
                   </ImgBox>
                 ) : (
                   <Emoji unified={item.emoji} size={35} />
                 )}
               </ImgBox>
-              <Info>{cutLetter(item.name, 14)}</Info>
+              <Info>{cutLetter(item.name, 11)}</Info>
               <Btns>
                 <Btn icon={faCartPlus} onClick={() => onAddFoodClick(item)} />
                 <Btn icon={faTrashCan} onClick={() => onRemoveClick(item)} />
@@ -93,10 +85,9 @@ const List = tw.div`
   mobile:grid-cols-2
   auto-rows-min
   gap-2
-  desktop:h-[90vh]
+  desktop:h-[93vh]
   tablet:h-[95vh]
   mobile:h-[90vh]
-  rounded-3xl
   overflow-scroll
 `;
 const BookmarkItem = tw.div`
@@ -109,7 +100,7 @@ const BookmarkItem = tw.div`
   justify-between
   items-center
   gap-1
-  h-28
+  
 `;
 const Btns = tw.div`
   w-full
@@ -125,6 +116,7 @@ const Btn = tw(FontAwesomeIcon)`
 `;
 const ImgBox = tw.div`
   border-gray-light
+  border
   relative
   w-10
   h-10
@@ -132,14 +124,18 @@ const ImgBox = tw.div`
   flex
   justify-center
   items-center
+  mb-1
 `;
 const Img = tw(Image)`
+  absolute
+  top-0
+  
   rounded-lg
   object-cover
   object-center
 `;
 const Info = tw.div`
-  h-5
+  h-8
   flex 
   flex-col
   justify-center

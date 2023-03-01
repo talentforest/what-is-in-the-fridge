@@ -1,12 +1,7 @@
-import {
-  faPen,
-  faRightLeft,
-  faSearch,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import { FormEvent } from 'react';
+import { FormEvent, ReactNode } from 'react';
 import { useWindowSize } from 'src/hooks';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeTab } from 'src/lib/slice';
@@ -15,9 +10,10 @@ import tw from 'tailwind-styled-components';
 
 interface ITabBtnProps {
   onSlideClick: () => void;
+  children?: ReactNode;
 }
 
-const TabBtns = ({ onSlideClick }: ITabBtnProps) => {
+const TabBtns = ({ onSlideClick, children }: ITabBtnProps) => {
   const { tab } = useAppSelector((state) => state.tab);
   const { close } = useAppSelector((state) => state.addFoodArea);
   const { windowSize } = useWindowSize();
@@ -33,11 +29,7 @@ const TabBtns = ({ onSlideClick }: ITabBtnProps) => {
 
   return (
     <TabBox>
-      {windowSize.width > screens.desktop && (
-        <TabBtn onClick={onSlideClick}>
-          <FontAwesomeIcon icon={faRightLeft} size='2x' color='#aaa' />
-        </TabBtn>
-      )}
+      {children && windowSize.width >= screens.desktop && { children }}
       <TabBtn name='search' onClick={onTabBtnClick} $color={tab === 'search'}>
         <FontAwesomeIcon
           icon={faSearch}
@@ -78,6 +70,7 @@ const TabBox = tw.div`
 `;
 const TabBtn = tw(motion.button)<{ $color: boolean }>`
   ${(p: { $color: boolean }) => (p.$color ? 'bg-blue-dark' : 'bg-yellow')}
+ 
   tablet:w-12
   tablet:h-12
   mobile:w-9

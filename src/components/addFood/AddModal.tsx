@@ -56,7 +56,6 @@ const AddModal = () => {
 };
 
 const Overlay = tw.div`
-
   absolute
   -top-12
   right-0

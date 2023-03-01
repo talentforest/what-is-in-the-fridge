@@ -1,10 +1,12 @@
-import Document, { DocumentContext } from 'next/document';
+import Document, { DocumentContext, DocumentInitialProps } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 //@ts-ignore
-import bundleCss from '!raw-loader!styles/tailwindSSR.css'; //빌드한거 import
+import bundleCss from '!raw-loader!styles/tailwindSSR.css';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getInitialProps(
+    ctx: DocumentContext
+  ): Promise<DocumentInitialProps> {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 

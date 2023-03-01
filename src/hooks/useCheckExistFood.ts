@@ -32,20 +32,20 @@ export const useCheckExistFood = () => {
     });
   };
 
-  const isFreezerFood = (addFood: ISearchedFood) => {
-    return Object.keys(freezer).map((side) => {
-      return Object.keys(freezer[side]).map((spaceName) => {
-        if (freezer[side][spaceName].some((item) => item.name === addFood.name))
-          return 'exist';
-      });
-    });
-  };
-
   const isFridgeFoodAlert = (addFood: ISearchedFood) => {
     Object.keys(fridge).map((side) => {
       Object.keys(fridge[side]).map((spaceName) => {
         if (fridge[side][spaceName].some((item) => item.name === addFood.name))
           return alert(msg('냉장실', side, `${spaceName}`));
+      });
+    });
+  };
+
+  const isFreezerFood = (addFood: ISearchedFood) => {
+    return Object.keys(freezer).map((side) => {
+      return Object.keys(freezer[side]).map((spaceName) => {
+        if (freezer[side][spaceName].some((item) => item.name === addFood.name))
+          return 'exist';
       });
     });
   };
