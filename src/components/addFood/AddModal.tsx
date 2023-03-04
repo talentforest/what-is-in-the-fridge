@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { foodInfoNames } from 'src/utils/foodCategory';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
+import Overlay from '../common/Overlay';
+import { ModalBox } from '../fridgeFreezer/Modal';
+import CloseBtn from '../common/CloseBtn';
 
 const AddModal = () => {
   const { food } = useAppSelector((state) => state.food);
@@ -13,13 +16,11 @@ const AddModal = () => {
 
   return (
     <>
-      <Overlay onClick={closeFoodModal} />
+      <Overlay closeModal={closeFoodModal} />
       <ModalBox>
         <Header>
           <Title>추가하는 식료품 정보</Title>
-          <CloseBtn onClick={closeFoodModal} $color='bg-red-light'>
-            <FontAwesomeIcon icon={faXmark} size='lg' color='#333' />
-          </CloseBtn>
+          <CloseBtn onCloseClick={closeFoodModal} />
         </Header>
         <Main>
           <ImgBox>
@@ -30,9 +31,7 @@ const AddModal = () => {
                 src={food.imgUrl}
                 alt={food.name}
                 fill
-                sizes='(max-width: 768px) 300px,
-                (max-width: 1200px) 100px,
-                30px'
+                sizes='150px'
                 priority
               />
             )}
@@ -41,7 +40,11 @@ const AddModal = () => {
             {Object.keys(foodInfoNames).map((name) => (
               <Item key={name}>
                 <Name>{foodInfoNames[name]}</Name>
-                <ItemInfo>{food[name]}</ItemInfo>
+                <ItemInfo>
+                  {name === 'expiryDate'
+                    ? new Date(food[name]).toLocaleDateString()
+                    : food[name]}
+                </ItemInfo>
               </Item>
             ))}
           </Info>
@@ -55,120 +58,89 @@ const AddModal = () => {
   );
 };
 
-const Overlay = tw.div`
-  absolute
-  -top-12
-  right-0
-  left-0
-  h-screen
-  bg-gray-dark
-  opacity-50
-  cursor-pointer
-  z-13
-`;
-const ModalBox = tw.div`
-  flex
-  flex-col
-  items-center
-  justify-between
-  gap-3
-  absolute
-  top-0
-  left-0
-  right-0
-  bottom-0
-  m-auto
-  bg-yellow-light
-  rounded-3xl
-  z-10
-  tablet:p-6
-  mobile:p-4
-  tablet:max-w-[450px]
-  tablet:h-80
-  mobile:w-3/4
-  mobile:h-[400px]
-`;
 const Header = tw.header`
   w-full
   flex
   justify-between
   items-center
 `;
+
 const Title = tw.h2`
   font-bold
-  mobile:text-[14px]
+  text-[14px]
   tablet:text-base
 `;
-const CloseBtn = tw.button`
-  cursor-pointer
-`;
+
 const Main = tw.div`
   border
   border-gray-light
   flex
-  mobile:flex-col
-  tablet:flex-row
+  flex-col
   items-center
   justify-evenly
-  mobile:gap-4
-  tablet:gap-8
+  gap-4
   py-2
-  mobile:w-full
-  tablet:w-full
+  w-full
+  h-full
+  tablet:flex-row
+  tablet:gap-8
   tablet:h-44
-  mobile:h-full
   rounded-lg
   bg-white
   p-2
 `;
+
 const ImgBox = tw.div`
   relative
+  h-28
+  w-28
   flex
   justify-center
   items-center
-  h-28
-  w-28
 `;
+
 const Img = tw(Image)`
   rounded-xl
   object-cover
   object-center
 `;
 const Info = tw.ul`
+  w-full
   flex
   flex-col
-  mobile:gap-2
-  tablet:gap-3
-  mobile:w-full
+  gap-2
   tablet:w-52  
+  tablet:gap-3
 `;
+
 const Item = tw.li`
   flex
-  tablet:gap-5
-  mobile:gap-2
+  gap-2
   items-center
   justify-between
-  mobile:text-md
+  text-md
+  tablet:gap-5
   tablet:text-base
 `;
+
 const Name = tw.div`
-  tablet:w-16
-  mobile:w-14
+  w-14
   text-gray
+  tablet:w-16
 `;
+
 const ItemInfo = tw.span` 
   text-end
   break-all
   w-fit
   max-w-[150px]
 `;
+
 const AddBtn = tw.button`
-  tablet:w-36
-  mobile:w-full
+  w-full
   p-3
   flex
-  tablet:self-end
-  mobile:justify-center
+  justify-center
   items-center
   gap-2
   bg-blue-dark
@@ -177,6 +149,8 @@ const AddBtn = tw.button`
   text-white
   text-base
   cursor-pointer
+  tablet:w-36
+  tablet:self-end
 `;
 
 export default AddModal;

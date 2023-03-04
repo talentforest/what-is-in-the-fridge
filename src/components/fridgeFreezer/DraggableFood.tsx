@@ -53,15 +53,7 @@ const DraggableFood = ({ food }: IFoodProps) => {
       <ExpiryDateAlert $leftDays={getLeftDays(food.expiryDate)} />
       {food.imgUrl ? (
         <ImgBox>
-          <Img
-            src={food.imgUrl}
-            alt={food.name}
-            fill
-            sizes='(max-width: 768px) 100px,
-            (max-width: 1200px) 50px,
-            30px'
-            priority
-          />
+          <Img src={food.imgUrl} alt={food.name} fill sizes='100px' priority />
         </ImgBox>
       ) : (
         <Emoji unified={food.emoji} size={30} />

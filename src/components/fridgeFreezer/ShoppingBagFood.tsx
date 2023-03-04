@@ -23,17 +23,18 @@ const ShoppingBagFood = () => {
 
 const ShoppingBagBox = tw.div`
   absolute
-  mobile:left-2
-  mobile:bottom-4
-  tablet:bottom-8
-  tablet:left-8
-  desktop:bottom-4
-  desktop:left-auto
-  desktop:right-0
+  left-0
+  bottom-4
+  border
+  w-40
+  h-40
   tablet:w-56
   tablet:h-56
-  mobile:w-40
-  mobile:h-40
+  tablet:left-auto
+  tablet:bottom-8
+  tablet:right-0
+  desktop:bottom-4
+  desktop:right-0
 `;
 const CartIcon = tw(FontAwesomeIcon)`
   absolute

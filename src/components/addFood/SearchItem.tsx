@@ -19,15 +19,7 @@ const SearchItem = ({ result }: SearchItemProps) => {
   return (
     <ResultItem>
       <ImgBox>
-        <Img
-          src={imgurl1}
-          alt={prdlstNm}
-          fill
-          sizes='(max-width: 768px) 200px,
-          (max-width: 1200px) 200px,
-          30px'
-          priority
-        />
+        <Img src={imgurl1} alt={prdlstNm} fill sizes='150px' priority />
       </ImgBox>
       <PlusCartBtn
         role='button'
@@ -47,8 +39,8 @@ const ResultItem = tw.div`
   relative
   bg-white
   p-2
-  rounded-xl
-  shadow-lg
+  rounded-lg
+  shadow-md
   flex
   flex-col
   justify-between
@@ -56,9 +48,10 @@ const ResultItem = tw.div`
   gap-1
   h-36
 `;
+
 const PlusCartBtn = tw(FontAwesomeIcon)`
   shadow-md
-  bg-red-light
+  bg-blue-dark
   text-white
   hover:text-green
   hover:scale-105
@@ -73,18 +66,23 @@ const PlusCartBtn = tw(FontAwesomeIcon)`
   rounded-full
   p-2
 `;
+
 const ImgBox = tw.div`
-  border-gray-light
   relative
-  w-24
-  h-24
+  w-20
+  h-20
+  shadow-md
   rounded-lg
+  border
+  border-gray-light
 `;
+
 const Img = tw(Image)`
   rounded-lg
   object-cover
   object-center
 `;
+
 const Info = tw.div`
   h-9
   flex 

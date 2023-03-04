@@ -3,13 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { featureDecsArr, recommendDescArr } from 'src/utils/descriptions';
 import { useScrollFadeIn } from 'src/hooks';
 import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import Head from 'next/head';
 import Link from 'next/link';
 import RecommendDescItem from 'src/components/index/RecommendDescItem';
-import TiltBox from 'src/components/index/TiltBox';
 import FeatureDescItem from 'src/components/index/FeatureDescItem';
 import tw from 'tailwind-styled-components';
 import Image from 'next/image';
+
+const pathVariants = {
+  start: {
+    pathLength: 0,
+  },
+  end: {
+    pathLength: 1,
+  },
+};
 
 export default function Home() {
   const targetDom = useRef<HTMLElement>(null);
@@ -35,27 +44,48 @@ export default function Home() {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <FirstScreen>
+      {/* First Page */}
+      <Section>
         <Contents>
           <Title>냉장고에 뭐가 있지?</Title>
-          <Button href='/my-fridge'>
+          <Btn href='/my-fridge'>
             <span>냉장고 관리 체험해보기</span>
             <FontAwesomeIcon icon={faChevronRight} size='sm' />
-          </Button>
+          </Btn>
         </Contents>
-        <Img
-          src='/assets/메인.png'
-          alt='즐겨찾기 식품 리스트'
-          width={600}
-          height={600}
-          sizes='(max-width: 768px) 600px,
-          (max-width: 1200px) 300px,
-          30px'
-          priority
-        />
-      </FirstScreen>
-      <Section $color $tilt>
-        <TiltBox top />
+        <ImgBox>
+          <Image
+            src='/assets/냉장고.png'
+            alt='냉장고'
+            width={280}
+            height={280}
+            priority
+          />
+          <Search
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth='4'
+            stroke='white'
+            className='w-16 h-16'
+          >
+            <motion.path
+              variants={pathVariants}
+              initial='start'
+              animate='end'
+              strokeWidth={4}
+              transition={{
+                default: { duration: 1 },
+              }}
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
+            />
+          </Search>
+        </ImgBox>
+      </Section>
+      {/* Second Page */}
+      <Section $color>
         <SubTitle ref={targetDom} style={{ ...style }}>
           <strong>냉장고에 뭐가 있지?</strong>는 이럴 때 쓰시면 좋아요.
         </SubTitle>
@@ -69,7 +99,7 @@ export default function Home() {
           ))}
         </List>
       </Section>
-      <Section $color $tilt>
+      <Section $color>
         <SubTitle>
           <strong>냉장고에 뭐가 있지?</strong>는 다양한 냉장고 관리 기능이
           있어요.
@@ -83,44 +113,29 @@ export default function Home() {
             />
           ))}
         </List>
-        <TiltBox />
       </Section>
-      <Section $tilt>
+      <Section>
         <SubTitle>한번 체험해보시겠어요?</SubTitle>
         <Title>냉장고에 뭐가 있지?</Title>
-        <Button href='/my-fridge'>
+        <Btn href='/my-fridge'>
           <span>냉장고 관리 체험해보기</span>
           <FontAwesomeIcon icon={faChevronRight} size='sm' />
-        </Button>
+        </Btn>
       </Section>
     </>
   );
 }
 
-const FirstScreen = tw.section`
+const Section = tw.section<{ $color: boolean }>`
+  border-bottom
+  py-10
   flex
+  flex-col
+  justify-center
   items-center
-  desktop:gap-2
-  tablet:gap-4
-  mobile:gap-8
-  tablet:h-[calc(100vh-theme(spacing.24))]
-  tablet:max-h-[700px]
-  tablet:flex-row
-  desktop:w-[800px]
-  tablet:w-[700px]
-  m-auto
-  mobile:p-10
-  mobile:h-[calc(90vh-theme(spacing.10))]
-  mobile:flex-col
-  tablet:justify-between
-  mobile:justify-center
+  min-h-screen
 `;
-const Img = tw(Image)` 
-  mobile:h-auto
-  mobile:w-80
-  tablet:w-[250px]
-  relative
-`;
+
 const Contents = tw.div` 
   flex
   flex-col
@@ -128,6 +143,7 @@ const Contents = tw.div`
   tablet:items-start
   w-fit
 `;
+
 const Title = tw.h1`
   mobile:text-[24px]
   tablet:text-[28px]
@@ -135,24 +151,22 @@ const Title = tw.h1`
   font-bold
   mobile:mb-5
 `;
-const Button = tw(Link)`
+
+const Btn = tw(Link)`
+  border-2
+  border-gray-light
   cursor-pointer
-  tablet:w-52
-  mobile:w-48
-  px-3
-  desktop:h-16
-  tablet:h-14
-  mobile:h-12
-  tablet:text-base
-  mobile:text-md
-  rounded-xl
   flex
-  gap-1
   items-center
   justify-center
+  gap-2
+  p-4
+  font-bold
+  text-base
+  rounded-full
+  shadow-lg
   bg-yellow
   text-blue-dark
-  shadow-md
   hover:text-yellow
   hover:bg-blue-dark
   hover:scale-105
@@ -162,19 +176,22 @@ const Button = tw(Link)`
   appearance-none
 `;
 
-const Section = tw.section<{ $color: boolean; $tilt: boolean }>`
-  py-10
-  flex
-  flex-col
-  justify-center
-  items-center
-  relative  
-  bg-green
-  first:bg-transparent
-  ${(p: { $color: boolean }) => (p.$color ? 'bg-green' : 'bg-transparent')}
-  ${(p: { $tilt: boolean }) => (p.$tilt ? 'mobile:py-20' : 'mobile:pt-20')}
-  ${(p: { $tilt: boolean }) => (p.$tilt ? 'tablet:py-40' : 'tablet:pt-20')}
+const ImgBox = tw.div`
+  relative
+  mt-10
 `;
+
+const Search = tw.svg`
+  absolute
+  top-20
+  bottom-0
+  left-0
+  right-12
+  m-auto
+  stroke-yellow
+  font-bold
+`;
+
 const SubTitle = tw.h2`
   mb-10
   tablet:text-[30px]
@@ -184,6 +201,7 @@ const SubTitle = tw.h2`
   p-10
   break-keep
 `;
+
 const List = tw.ul`
   tablet:grid
   tablet:grid-cols-2

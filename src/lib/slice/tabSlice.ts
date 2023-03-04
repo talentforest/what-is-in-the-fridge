@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tab: 'search',
+  tab: '식품 검색',
 };
 
 const tabSlice = createSlice({

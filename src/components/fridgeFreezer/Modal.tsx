@@ -2,11 +2,13 @@ import { Emoji, EmojiStyle } from 'emoji-picker-react';
 import { useAppSelector } from 'src/lib/hooks';
 import { foodInfoNames } from 'src/utils/foodCategory';
 import { useEditFood, useHandleBookmark } from 'src/hooks';
-import { faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddedFoodBtns from './AddedFoodBtns';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
+import Overlay from '../common/Overlay';
+import CloseBtn from '../common/CloseBtn';
 
 const Modal = () => {
   const { addedFood } = useAppSelector((state) => state.addedFood);
@@ -23,13 +25,11 @@ const Modal = () => {
 
   return (
     <>
-      <Overlay onClick={closeAddedFoodModal} />
+      <Overlay closeModal={closeAddedFoodModal} />
       <ModalBox>
         <Header>
           <Title>내 식료품 정보</Title>
-          <CloseBtn onClick={closeAddedFoodModal} $color='bg-red-light'>
-            <FontAwesomeIcon icon={faXmark} size='lg' color='#333' />
-          </CloseBtn>
+          <CloseBtn onCloseClick={closeAddedFoodModal} />
         </Header>
         <Main>
           <ImgBox>
@@ -44,9 +44,7 @@ const Modal = () => {
                 src={addedFood.imgUrl}
                 alt={addedFood.name}
                 fill
-                sizes='(max-width: 768px) 300px,
-                (max-width: 1200px) 100px,
-                30px'
+                sizes='150px'
                 priority
               />
             )}
@@ -95,16 +93,18 @@ const Modal = () => {
               <SubmitBtn onClick={onEditSubmitClick}>수정완료</SubmitBtn>
             </Info>
           ) : (
-            <>
-              <Info>
-                {Object.keys(foodInfoNames).map((name) => (
-                  <Item key={name}>
-                    <Name>{foodInfoNames[name]}</Name>
-                    <ItemInfo>{addedFood[name]}</ItemInfo>
-                  </Item>
-                ))}
-              </Info>
-            </>
+            <Info>
+              {Object.keys(foodInfoNames).map((name) => (
+                <Item key={name}>
+                  <Name>{foodInfoNames[name]}</Name>
+                  <ItemInfo>
+                    {name === 'expiryDate'
+                      ? new Date(addedFood[name]).toLocaleDateString()
+                      : addedFood[name]}
+                  </ItemInfo>
+                </Item>
+              ))}
+            </Info>
           )}
         </Main>
         {!edit && <AddedFoodBtns setEdit={() => setEdit((prev) => !prev)} />}
@@ -113,38 +113,29 @@ const Modal = () => {
   );
 };
 
-const Overlay = tw.div`
+export const ModalBox = tw.div`
+  z-30
   absolute
-  -top-12
-  right-0
-  left-0
-  h-screen
-  bg-gray-dark
-  opacity-50
-  cursor-pointer
-  z-10
-`;
-const ModalBox = tw.div`
-  flex
-  flex-col
-  items-center
-  justify-between
-  absolute
-  -top-12
+  top-0
   left-0
   right-0
   bottom-0
   m-auto
-  bg-yellow-light
-  rounded-3xl
-  z-10
+  w-4/5
+  h-fit
+  p-4
+  flex
+  flex-col
+  items-center
+  justify-between
+  gap-2
+  rounded-xl
+  shadow-2xl
+  bg-blue-light
   tablet:p-6
-  mobile:p-4
   tablet:max-w-[450px]
-  tablet:h-80
-  mobile:w-3/4
-  mobile:h-[400px]
 `;
+
 const Header = tw.header`
   w-full
   flex
@@ -152,38 +143,36 @@ const Header = tw.header`
   items-center
   mb-2
 `;
+
 const Title = tw.h2`
   font-bold
-  mobile:text-[14px]
-  tablet:text-base
 `;
-const CloseBtn = tw.button`
-  cursor-pointer
-`;
+
 const Main = tw.div`
   w-full
   h-full
   flex
-  mobile:flex-col
-  tablet:flex-row
+  flex-col
   items-center
   justify-center
-  tablet:gap-10
-  mobile:gap-3
-  tablet:px-4
+  gap-5
+  tablet:flex-row
+  tablet:justify-between
+  tablet:gap-3
 `;
+
 const ImgBox = tw.div`
   relative
   flex
   justify-center
   items-center
-  h-28
-  w-28
+  h-32
+  w-32
   rounded-lg
   shadow-lg
   bg-white
-  mb-2
 `;
+
 const Bookmark = tw.button<{ $isBookmark: boolean }>`
   w-8
   h-8
@@ -199,11 +188,13 @@ const Bookmark = tw.button<{ $isBookmark: boolean }>`
   ${(p: { $isBookmark: boolean }) =>
     p.$isBookmark ? 'bg-blue-dark' : 'bg-gray-light'} 
 `;
+
 const Img = tw(Image)`
   rounded-xl
   object-cover
   object-center
 `;
+
 const Info = tw.ul`
   flex
   flex-col
@@ -212,45 +203,47 @@ const Info = tw.ul`
   mobile:w-full
   tablet:w-56
 `;
+
 const Item = tw.li`
   flex
-  gap-3
+  gap-1
   items-center
   justify-between
-  mobile:text-[14px]
-  tablet:text-base
+  text-base
 `;
+
 const Name = tw.div`
-  tablet:w-16
-  mobile:w-14
+  w-16
   text-gray
+  tablet:w-16
 `;
+
 const ItemInfo = tw.span` 
   text-end
   break-all
-  w-fit
+  w-[70%]
   max-w-[150px]
 `;
+
 const Input = tw.input`
-  w-36
+  w-3/5
+  p-2
   rounded-lg
-  px-2
-  py-1
   shadow-md
   text-end
-  bg-white
   appearance-none
+  bg-white
 `;
+
 const SubmitBtn = tw.button`
   mt-3
-  p-2
-  h-10
+  py-3
   rounded-lg
-  bg-green
   shadow-lg
+  bg-green
   text-white
-  tablet:text-base
-  mobile:text-md
+  text-base
+  font-bold
 `;
 
 export default Modal;

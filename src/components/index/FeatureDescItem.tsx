@@ -20,9 +20,7 @@ const FeatureDescItem = ({ contents, imgUrl }: IFeatureDescItemProps) => {
           src={imgUrl}
           alt='즐겨찾기 식품 리스트'
           fill
-          sizes='(max-width: 768px) 300px,
-          (max-width: 1200px) 100px,
-          30px'
+          sizes='100px'
           priority
         />
       </ImgBox>

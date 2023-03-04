@@ -43,8 +43,8 @@ const Compartment = ({ children, foods, spaceKey }: ICompartmentProps) => {
 const Space = tw.div`
   overflow-hidden
   mx-auto
+  p-0.5
   tablet:p-1
-  mobile:p-0.5
   w-full
   flex-1
   bg-white
@@ -55,6 +55,7 @@ const Space = tw.div`
   justify-end
   cursor-pointer
 `;
+
 const FoodList = tw.ul`
   flex
   flex-wrap-reverse

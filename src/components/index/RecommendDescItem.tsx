@@ -16,15 +16,7 @@ const RecommendDescItem = ({ contents, imgUrl }: IRecommendDescItemProps) => {
     <Item ref={targetDom} style={{ ...style }}>
       <Desc>{contents}</Desc>
       <ImgBox>
-        <Image
-          src={imgUrl}
-          alt='집밥요리'
-          fill
-          sizes='(max-width: 768px) 300px,
-          (max-width: 1200px) 100px,
-          30px'
-          priority
-        />
+        <Image src={imgUrl} alt='집밥요리' fill sizes='100px' priority />
       </ImgBox>
     </Item>
   );

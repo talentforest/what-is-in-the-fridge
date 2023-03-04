@@ -42,16 +42,17 @@ const Btns = tw.div`
   justify-between
   gap-2
 `;
+
 const Btn = tw.button`
   w-full
   h-14
   flex
   tablet:flex-row
-  mobile:flex-col
+  flex-col
   justify-center
   items-center
-  tablet:gap-2
-  mobile:gap-1
+  gap-1
+  text-sm
   ${(p: { $color: boolean }) => p.$color}
   cursor-pointer
   shadow-lg
@@ -60,7 +61,7 @@ const Btn = tw.button`
   px-0.5
   text-white
   tablet:text-base
-  mobile:text-[12px]
+  tablet:gap-2
 `;
 
 export default AddedFoodBtns;

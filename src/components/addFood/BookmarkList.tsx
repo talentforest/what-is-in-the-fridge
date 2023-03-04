@@ -2,11 +2,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Emoji } from 'emoji-picker-react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { cutLetter } from 'src/utils/cutLetter';
-import { faCartPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCartPlus,
+  faChevronLeft,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from 'react';
 import { changeFoodInfo } from 'src/lib/slice';
 import { initialState } from 'src/hooks/useAddFood';
 import { useHandleBookmark } from 'src/hooks';
+import { BackBtn, Title } from './SearchResult';
 import Image from 'next/image';
 import AddFoodForm from './AddFoodForm';
 import tw from 'tailwind-styled-components';
@@ -19,29 +24,38 @@ const BookmarkList = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (tab === 'bookmark') {
+    if (tab === '즐겨찾는 식품') {
       dispatch(changeFoodInfo(initialState));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onBackClick = () => {
+    const result = { ...food, id: '' };
+    dispatch(changeFoodInfo(result));
+  };
+
   return !food?.id ? (
-    <Wrapper>
+    <BookmarkBox>
       <Title>즐겨찾는 식료품 목록에서 추가하기</Title>
       <List>
         {bookmark?.length ? (
           bookmark.map((item) => (
             <BookmarkItem key={item.id}>
-              <ImgBox>
+              <FoodBox>
                 {item?.imgUrl ? (
-                  <ImgBox>
-                    <Img src={item.imgUrl} alt={item.name} fill priority />
-                  </ImgBox>
+                  <Image
+                    src={item.imgUrl}
+                    alt={item.name}
+                    width={70}
+                    height={70}
+                    priority
+                  />
                 ) : (
-                  <Emoji unified={item.emoji} size={35} />
+                  <Emoji unified={item.emoji} size={40} />
                 )}
-              </ImgBox>
-              <Info>{cutLetter(item.name, 11)}</Info>
+                <Info>{cutLetter(item.name, 12)}</Info>
+              </FoodBox>
               <Btns>
                 <Btn icon={faCartPlus} onClick={() => onAddFoodClick(item)} />
                 <Btn icon={faTrashCan} onClick={() => onRemoveClick(item)} />
@@ -52,9 +66,28 @@ const BookmarkList = () => {
           <EmptyBox>아직 등록된 즐겨찾는 식료품이 없습니다.</EmptyBox>
         )}
       </List>
-    </Wrapper>
+    </BookmarkBox>
   ) : (
-    <AddFoodForm />
+    <>
+      {tab === '즐겨찾는 식품' && (
+        <BackBtn onClick={onBackClick}>
+          <FontAwesomeIcon icon={faChevronLeft} />
+          <span>뒤로가기</span>
+        </BackBtn>
+      )}
+      {food?.imgUrl && (
+        <ImgBox>
+          <Image
+            src={food.imgUrl as string}
+            alt={food.name}
+            width={100}
+            height={100}
+            priority
+          />
+        </ImgBox>
+      )}
+      <AddFoodForm />
+    </>
   );
 };
 
@@ -62,87 +95,84 @@ const EmptyBox = tw.div`
   text-center
   p-8
   text-md
-  tablet:col-span-3
-  mobile:col-span-2
   rounded-lg
   bg-white
   shadow-xl
+  col-span-2
+  tablet:col-span-3
 `;
-const Title = tw.h2`
-  text-md
-`;
-const Wrapper = tw.div`
+
+const BookmarkBox = tw.div`
   w-full
   h-full
-`;
-const List = tw.div`
+  overflow-scroll
   scrollbar-hide
-  p-2
-  -mx-2
-  mt-2
+`;
+
+const List = tw.ul`
   grid
-  tablet:grid-cols-3
-  mobile:grid-cols-2
+  grid-cols-2
   auto-rows-min
   gap-2
-  desktop:h-[93vh]
+  tablet:grid-cols-3
   tablet:h-[95vh]
-  mobile:h-[90vh]
-  overflow-scroll
+  desktop:h-[93vh]
 `;
-const BookmarkItem = tw.div`
+
+const BookmarkItem = tw.li`
   bg-white
-  p-2
+  p-3
   rounded-xl
-  shadow-lg
+  shadow-md
+  flex
+  h-32
+  justify-between
+  items-center
+  gap-2
+`;
+
+const FoodBox = tw.div`
+  relative
+  w-full
+  h-fit
   flex
   flex-col
   justify-between
-  items-center
   gap-1
-  
+  item-center
 `;
+
+const ImgBox = tw.div`
+  relative
+  w-fit
+  h-fit
+  mb-3
+`;
+
 const Btns = tw.div`
-  w-full
+  gap-8
   flex
-  justify-between
+  flex-col
+  justify-center
 `;
+
 const Btn = tw(FontAwesomeIcon)`
-  w-4
-  h-4
+  w-5
+  h-5
   cursor-pointer
   first:text-blue-dark
-  text-gray
+  text-red-light
 `;
-const ImgBox = tw.div`
-  border-gray-light
-  border
-  relative
-  w-10
-  h-10
-  rounded-lg
-  flex
-  justify-center
-  items-center
-  mb-1
-`;
-const Img = tw(Image)`
-  absolute
-  top-0
-  
-  rounded-lg
-  object-cover
-  object-center
-`;
+
 const Info = tw.div`
-  h-8
+  w-full
+  h-12
   flex 
   flex-col
   justify-center
   text-center
-  text-[11px]
+  text-sm
   break-words
-  w-full
 `;
 
 export default BookmarkList;

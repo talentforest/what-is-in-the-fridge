@@ -1,17 +1,21 @@
-import { faDeleteLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faDeleteLeft,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Input } from './FoodIconName';
-import { useSearchFood, useWindowSize } from 'src/hooks';
+import { useSearchFood } from 'src/hooks';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetcher, url } from 'src/pages/api/productInfo';
 import { useEffect, useRef } from 'react';
-import { changeKeyword } from 'src/lib/slice';
-import { screens } from 'src/utils/screens';
+import { changeFoodInfo, changeKeyword } from 'src/lib/slice';
 import SearchItem from './SearchItem';
 import AddFoodForm from './AddFoodForm';
 import useSWR, { SWRConfig } from 'swr';
-import tw from 'tailwind-styled-components';
 import Loading from '../common/Loading';
+import tw from 'tailwind-styled-components';
+import Image from 'next/image';
 
 export interface IFoodData {
   item: {
@@ -37,27 +41,27 @@ const SearchResult = () => {
   const { tab } = useAppSelector((state) => state.tab);
   const { keyword } = useAppSelector((state) => state.keyword);
   const { food } = useAppSelector((state) => state.food);
-  const { open, close } = useAppSelector((state) => state.addFoodArea);
-  const { windowSize } = useWindowSize();
   const { onKeywordChange, onKeywordSubmit, removeKeyword } = useSearchFood();
-
-  const fetch_condition = keyword !== '' && food.name ? url(food.name) : null;
-  const { data, isLoading } = useSWR(fetch_condition, fetcher);
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const fetchUrl = () => {
+    if (keyword !== '' && food.name) return url(food.name);
+    return null;
+  };
+  const { data, isLoading } = useSWR(fetchUrl(), fetcher);
+
   useEffect(() => {
-    if (tab === 'search') {
+    if (tab === '식품 검색') {
       dispatch(changeKeyword(''));
     }
-    if (open && windowSize.width < screens.desktop) {
-      inputRef.current?.focus();
-    }
-    if (!close && windowSize.width > screens.desktop) {
-      inputRef.current?.focus();
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, close, windowSize.width]);
+  }, [tab]);
+
+  const onBackClick = () => {
+    const result = { ...food, id: '' };
+    dispatch(changeFoodInfo(result));
+  };
 
   return (
     <SWRConfig
@@ -68,35 +72,37 @@ const SearchResult = () => {
       }}
     >
       {!food?.id ? (
-        <>
-          <Title>상품 검색하기</Title>
+        <FirstStepBox>
           <Form onSubmit={onKeywordSubmit}>
-            <Input
-              ref={inputRef}
-              type='text'
-              value={keyword}
-              onChange={onKeywordChange}
-              placeholder='냉장고 넣을 식품을 검색해보세요.'
-            />
-            {data && keyword !== '' ? (
-              <SearchBtn type='button' onClick={removeKeyword}>
-                <FontAwesomeIcon icon={faDeleteLeft} size='lg' />
-              </SearchBtn>
-            ) : (
-              <SearchBtn type='submit'>
-                <FontAwesomeIcon icon={faSearch} size='lg' />
-              </SearchBtn>
-            )}
+            <Title>상품 검색하기</Title>
+            <InputBox>
+              <Input
+                ref={inputRef}
+                type='text'
+                value={keyword}
+                onChange={onKeywordChange}
+                placeholder='냉장고 넣을 식품을 검색해보세요.'
+              />
+              {data && keyword !== '' ? (
+                <SearchBtn type='button' onClick={removeKeyword}>
+                  <FontAwesomeIcon icon={faDeleteLeft} size='lg' />
+                </SearchBtn>
+              ) : (
+                <SearchBtn type='submit'>
+                  <FontAwesomeIcon icon={faSearch} size='lg' />
+                </SearchBtn>
+              )}
+            </InputBox>
+            <Desc>
+              검색 결과는 한국식품안전관리인증원 HACCP에서 제공하는 식품 정보만
+              제공됩니다.
+            </Desc>
           </Form>
-          <ResultDesc>
-            검색 결과는 한국식품안전관리인증원 HACCP에서 제공하는 정보만
-            제공됩니다.
-          </ResultDesc>
           {!isLoading ? (
             <>
               {data?.body && (
                 <ResultNum>
-                  <span>검색결과</span>
+                  <span>검색결과:</span>
                   <span>{`${data?.body.items.length}건`}</span>
                 </ResultNum>
               )}
@@ -113,63 +119,93 @@ const SearchResult = () => {
           ) : (
             <Loading />
           )}
-        </>
+        </FirstStepBox>
       ) : (
-        <AddFoodForm />
+        <NextStepBox>
+          {tab === '식품 검색' && (
+            <BackBtn onClick={onBackClick}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+              <span>뒤로가기</span>
+            </BackBtn>
+          )}
+          {food?.imgUrl && (
+            <ImgBox>
+              <Img
+                src={food.imgUrl}
+                alt={food.name}
+                fill
+                sizes='300px'
+                priority
+              />
+            </ImgBox>
+          )}
+          <AddFoodForm />
+        </NextStepBox>
       )}
     </SWRConfig>
   );
 };
 
-export const Title = tw.h2`
-  text-md
-  mb-3
-  font-semibold
+const FirstStepBox = tw.div`
+  h-full
+  flex
+  flex-col
 `;
+
 const Form = tw.form`
   flex
+  flex-col
   gap-1
   mb-2
 `;
-const SearchBtn = tw.button`
-  bg-white
-  absolute
-  right-4
-  px-1
-  m-1
-  text-gray
-  w-fit
-  h-8
-  text-[14px]
-`;
-const ResultDesc = tw.p`
-  inline-block
-  p-1
-  text-[11px]
+
+export const Title = tw.h2`
+  text-md
   mb-2
-  text-gray
+  font-bold
 `;
+
+const InputBox = tw.div`
+  relative
+`;
+
+const SearchBtn = tw.button`
+  absolute
+  w-fit
+  h-9
+  top-0
+  right-0
+  px-1.5
+  m-1
+  text-md
+  text-gray
+  bg-white
+`;
+
+const Desc = tw.p`
+  inline-block
+  text-sm
+  my-1
+`;
+
 const ResultNum = tw.div`
   text-[12px]
   flex
-  justify-between
-  pt-1
-  text-gray
+  items-center
+  gap-2
+  mb-2
 `;
+
 const ResultList = tw.section`
+  h-full  
+  overflow-scroll
   scrollbar-hide
-  mt-1
-  -mx-2
-  px-2
-  pb-4
   grid
   grid-cols-2
   auto-rows-min
   gap-2
-  h-[calc(100vh-theme(spacing.48))]
-  rounded-3xl
-  overflow-scroll
 `;
+
 const EmptyBox = tw.div`
   text-[14px]
   col-span-2
@@ -181,6 +217,37 @@ const EmptyBox = tw.div`
   shadow-lg
   py-5
   h-40
+`;
+
+const NextStepBox = tw.div`
+  h-full
+  overflow-auto
+  p-1
+`;
+
+export const BackBtn = tw.button`
+  w-fit
+  text-[14px]
+  flex
+  gap-1
+  items-center
+  mb-3
+`;
+
+const ImgBox = tw.div`
+  relative
+  w-24
+  h-24
+  rounded-lg
+  shadow-md
+  mb-4
+  bg-white
+`;
+
+const Img = tw(Image)`
+  rounded-lg
+  object-cover
+  object-center
 `;
 
 export default SearchResult;

@@ -55,7 +55,7 @@ export const useSubmitFood = () => {
   const onQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
     const result = {
       ...food,
-      quantity: e.target?.value,
+      quantity: e.target?.value ? Math.abs(+e.target?.value) : '',
     };
     dispatch(changeFoodInfo(result));
   };

@@ -8,9 +8,6 @@ export { changeFoodInfo } from './foodSlice';
 export { changeFreezerDoor, changeFreezerInner } from './freezerFoodsSlice';
 export { changeFridgeInner, changeFridgeDoor } from './fridgeFoodsSlice';
 export { addToShoppingBag, removeShoppingBagFood } from './shoppingBagSlice';
-export {
-  closeAddFoodArea,
-  openAddFoodArea,
-} from './openCloseState/addFoodAreaSlice';
+export { closeAddFoodArea } from './openCloseState/addFoodAreaSlice';
 export { showAddedFoodModal } from './openCloseState/showAddedFoodModal';
 export { showFoodModal } from './openCloseState/showFoodModalSlice';

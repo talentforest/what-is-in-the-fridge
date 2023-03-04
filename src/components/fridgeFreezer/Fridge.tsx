@@ -2,11 +2,9 @@ import tw from 'tailwind-styled-components';
 import styles from 'styles/DoorOpen.module.css';
 import Compartment from './Compartment';
 import ShoppingBagFood from './ShoppingBagFood';
+import ToggleDoorBtn from '../common/ToggleDoorBtn';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { changeFridgeOpen } from 'src/lib/slice';
-import { CloseBtn } from './Freezer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDoorClosed } from '@fortawesome/free-solid-svg-icons';
 
 const Fridge = () => {
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
@@ -20,12 +18,7 @@ const Fridge = () => {
   return (
     <>
       <div className={`${styles.fridge} ${fridgeOpen ? styles.open : ''}`}>
-        {fridgeOpen && (
-          <CloseBtn onClick={onFridgeOpenClick}>
-            <FontAwesomeIcon icon={faDoorClosed} color='#333' />
-            <span>문닫기</span>
-          </CloseBtn>
-        )}
+        {fridgeOpen && <ToggleDoorBtn onToggleDoorClick={onFridgeOpenClick} />}
         <Door className={styles.leftDoor}>
           {Object.keys(fridge.inner).map((spaceKey: string) => (
             <Compartment
@@ -67,6 +60,7 @@ const Door = tw.div`
   border
   border-gray
 `;
+
 export const Knob = tw.div`
   cursor-pointer
   bg-gray-dark
@@ -80,6 +74,7 @@ export const Knob = tw.div`
   mobile:ml-3
   mt-4
 `;
+
 export const Shelf = tw.div`
   w-full
   border 
