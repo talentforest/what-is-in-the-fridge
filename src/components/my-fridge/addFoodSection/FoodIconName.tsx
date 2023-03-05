@@ -5,7 +5,7 @@ import { showEmojiBox } from 'src/lib/slice/index';
 import { useSubmitFood } from 'src/hooks';
 import { useEffect, useRef } from 'react';
 import { Desc } from './FoodQuantity';
-import styles from 'styles/emojiBox.module.css';
+import styles from 'styles/EmojiBox.module.css';
 import tw from 'tailwind-styled-components';
 
 const FoodIconName = () => {

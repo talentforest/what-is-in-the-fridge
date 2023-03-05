@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import styles from 'styles/doorOpen.module.css';
+import styles from 'styles/DoorOpen.module.css';
 import Compartment from './Compartment';
 import ToggleDoorBtn from './ToggleDoorBtn';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
