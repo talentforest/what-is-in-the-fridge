@@ -11,16 +11,16 @@ import tw from 'tailwind-styled-components';
 const FoodIconName = () => {
   const { emoji } = useAppSelector((state) => state.emoji);
   const { food } = useAppSelector((state) => state.food);
-  const { open, close } = useAppSelector((state) => state.addFoodArea);
+  const { close } = useAppSelector((state) => state.addFoodArea);
   const { onEmojiClick, onNameChange } = useSubmitFood();
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!close || open) {
+    if (!close) {
       inputRef.current?.focus();
     }
-  }, [close, open]);
+  }, [close]);
 
   return (
     <>
