@@ -1,31 +1,37 @@
 import { useAppSelector } from 'src/lib/hooks';
-import TabBtns, { Name, TabBtn } from 'src/components/addFood/TabBtns';
+import TabBtns, {
+  Name,
+  TabBtn,
+} from 'src/components/my-fridge/addFoodSection/TabBtns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion, useAnimation } from 'framer-motion';
 import { useSlideAnimation } from 'src/hooks';
 import {
-  faCartPlus,
+  faBars,
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import Head from 'next/head';
-import Freezer from 'src/components/fridgeFreezer/Freezer';
-import Fridge from 'src/components/fridgeFreezer/Fridge';
-import Modal from 'src/components/fridgeFreezer/Modal';
+import Freezer from 'src/components/my-fridge/Freezer';
+import Fridge from 'src/components/my-fridge/Fridge';
+import Modal from 'src/components/common/Modal';
 import tw from 'tailwind-styled-components';
-import SearchResult from 'src/components/addFood/SearchResult';
-import AddFoodForm from 'src/components/addFood/AddFoodForm';
-import BookmarkList from 'src/components/addFood/BookmarkList';
-import AddModal from 'src/components/addFood/AddModal';
+import SearchResult from 'src/components/my-fridge/addFoodSection/SearchResult';
+import AddFoodForm from 'src/components/my-fridge/addFoodSection/AddFoodForm';
+import BookmarkList from 'src/components/my-fridge/addFoodSection/BookmarkList';
+import ShoppingBagFood from 'src/components/my-fridge/ShoppingBagFood';
 
 const MyFridge = () => {
-  const { modal } = useAppSelector((state) => state.addedFoodModal);
+  const { newFood } = useAppSelector((state) => state.newFood);
+  const { storedFood } = useAppSelector((state) => state.storedFood);
   const { freezerOpen, fridgeOpen } = useAppSelector((state) => state.doorOpen);
-  const { tab } = useAppSelector((state) => state.tab);
-  const { modal: addFoodModal } = useAppSelector((state) => state.foodModal);
-  const { close } = useAppSelector((state) => state.addFoodArea);
+  const { tabBtn } = useAppSelector((state) => state.tabBtn);
+  const { close } = useAppSelector((state) => state.addFoodSection);
   const slideXAnimation = useAnimation();
   const { onSlideClick, CLOSE_X } = useSlideAnimation(slideXAnimation);
+  const { newFoodModal, storedFoodModal } = useAppSelector(
+    (state) => state.modal
+  );
 
   return (
     <>
@@ -44,62 +50,57 @@ const MyFridge = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Main>
-        <FridgeBox>
-          {!fridgeOpen && <Freezer />}
-          {!freezerOpen && <Fridge />}
-        </FridgeBox>
-        {modal && <Modal />}
+        {!fridgeOpen && <Freezer />}
+        {!freezerOpen && <Fridge />}
+        <ShoppingBagFood />
+        {newFoodModal && <Modal food={newFood} />}
+        <OpenTabBtn onClick={onSlideClick}>
+          <CartIcon icon={faBars} color='#375fff' />
+        </OpenTabBtn>
+        <AddFoodSection
+          transition={{ type: 'linear', duration: 0.6 }}
+          initial={{ x: CLOSE_X }}
+          animate={slideXAnimation}
+        >
+          <TabBtns onSlideClick={onSlideClick}>
+            <TabBtn onClick={onSlideClick}>
+              <FontAwesomeIcon
+                icon={close ? faChevronRight : faChevronLeft}
+                color='#666'
+              />
+              <Name>{close ? '열기' : '닫기'}</Name>
+            </TabBtn>
+          </TabBtns>
+          {tabBtn === '식품 검색' && <SearchResult />}
+          {tabBtn === '직접 식품 입력' && <AddFoodForm />}
+          {tabBtn === '즐겨찾는 식품' && <BookmarkList />}
+        </AddFoodSection>
+        {storedFoodModal && <Modal food={storedFood} />}
       </Main>
-      <AddBtn onClick={onSlideClick}>
-        <CartIcon icon={faCartPlus} color='#66a8ea' />
-      </AddBtn>
-      {addFoodModal && <AddModal />}
-      <AddFoodTab
-        transition={{ type: 'linear', duration: 0.6 }}
-        initial={{ x: CLOSE_X }}
-        animate={slideXAnimation}
-      >
-        <TabBtns onSlideClick={onSlideClick}>
-          <TabBtn onClick={onSlideClick}>
-            <FontAwesomeIcon
-              icon={close ? faChevronRight : faChevronLeft}
-              color='#666'
-            />
-            <Name>{close ? '열기' : '닫기'}</Name>
-          </TabBtn>
-        </TabBtns>
-        {tab === '식품 검색' && <SearchResult />}
-        {tab === '직접 식품 입력' && <AddFoodForm />}
-        {tab === '즐겨찾는 식품' && <BookmarkList />}
-      </AddFoodTab>
     </>
   );
 };
 
 const Main = tw.main`
   relative
-  h-screen
-`;
-
-const FridgeBox = tw.div`
+  overflow-hidden
   flex 
   flex-col
   justify-center
   items-center
-  h-full
   w-full
-  pb-10
+  h-screen
   m-auto
-  tablet:pb-0
+  desktop:pt-16
 `;
 
-const AddFoodTab = tw(motion.section)`
-  z-5
+const AddFoodSection = tw(motion.section)`
+  z-10
   absolute
   top-0
+  left-0
   bottom-0
   w-10/12
-  p-4
   flex
   flex-col
   max-w-[300px]
@@ -108,28 +109,23 @@ const AddFoodTab = tw(motion.section)`
   tablet:w-96
   tablet:rounded-r-2xl
   tablet:max-w-[400px]
-  tablet:p-6
+  py-4
 `;
 
-const AddBtn = tw.button`
-  absolute
-  bottom-4
+const OpenTabBtn = tw.button`
+  fixed
+  z-10
+  top-3.5
   right-4
-  w-24
-  h-24
-  flex
-  justify-center
-  items-center
-  shadow-xl
-  rounded-full
+  w-6
+  h-6
   cursor-pointer
-  bg-yellow
   tablet:hidden
 `;
 
 const CartIcon = tw(FontAwesomeIcon)`
-  h-10
-  tablet:h-16
+  h-5
+  w-5
 `;
 
 export default MyFridge;

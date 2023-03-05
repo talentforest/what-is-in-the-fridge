@@ -1,13 +1,17 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { addBookmark, removeBookmark } from 'src/lib/slice';
-import { changeFoodInfo, IFood, ISearchedFood } from 'src/lib/slice/foodSlice';
+import {
+  changeNewFood,
+  IFood,
+  ISearchedFood,
+} from 'src/lib/slice/newFoodSlice';
 import { useEditFood } from './useEditFood';
 import { v4 as uuidv4 } from 'uuid';
 import { useCheckExistFood } from 'src/hooks';
 
 export const useHandleBookmark = () => {
-  const { food } = useAppSelector((state) => state.food);
-  const { addedFood } = useAppSelector((state) => state.addedFood);
+  const { newFood } = useAppSelector((state) => state.newFood);
+  const { storedFood } = useAppSelector((state) => state.storedFood);
   const { changeFridgeFreezerArr } = useEditFood();
   const { isExistedFood, isFridgeFoodAlert, isFreezerFoodAlert } =
     useCheckExistFood();
@@ -15,17 +19,17 @@ export const useHandleBookmark = () => {
 
   const changeBookmarkState = () => {
     const editedBookmarkFood = {
-      ...addedFood,
-      bookmark: !addedFood.bookmark,
+      ...storedFood,
+      bookmark: !storedFood.bookmark,
     } as IFood;
     changeFridgeFreezerArr(editedBookmarkFood);
   };
 
   const onBookmarkClick = () => {
-    const { id, name, type, emoji, imgUrl, bookmark } = addedFood;
+    const { id, name, type, emoji, imgUrl, bookmark } = storedFood;
     const bookmarkInfo = { id, name, type, emoji, imgUrl, bookmark: !bookmark };
     changeBookmarkState();
-    !addedFood.bookmark
+    !storedFood.bookmark
       ? dispatch(addBookmark(bookmarkInfo))
       : dispatch(removeBookmark(bookmarkInfo));
   };
@@ -44,7 +48,7 @@ export const useHandleBookmark = () => {
       isFreezerFoodAlert(item);
     } else {
       const result = {
-        ...food,
+        ...newFood,
         id: uuidv4(),
         imgUrl: item.imgUrl,
         name: item.name,
@@ -52,7 +56,7 @@ export const useHandleBookmark = () => {
         emoji: item.emoji,
         bookmark: true,
       };
-      dispatch(changeFoodInfo(result));
+      dispatch(changeNewFood(result));
     }
   };
 

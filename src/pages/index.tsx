@@ -1,13 +1,10 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { featureDecsArr, recommendDescArr } from 'src/utils/descriptions';
 import { useScrollFadeIn } from 'src/hooks';
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
 import Link from 'next/link';
-import RecommendDescItem from 'src/components/index/RecommendDescItem';
-import FeatureDescItem from 'src/components/index/FeatureDescItem';
 import tw from 'tailwind-styled-components';
 import Image from 'next/image';
 
@@ -75,7 +72,7 @@ export default function Home() {
               animate='end'
               strokeWidth={4}
               transition={{
-                default: { duration: 1 },
+                default: { duration: 3 },
               }}
               strokeLinecap='round'
               strokeLinejoin='round'
@@ -89,30 +86,14 @@ export default function Home() {
         <SubTitle ref={targetDom} style={{ ...style }}>
           <strong>냉장고에 뭐가 있지?</strong>는 이럴 때 쓰시면 좋아요.
         </SubTitle>
-        <List>
-          {recommendDescArr.map((item) => (
-            <RecommendDescItem
-              key={item.contents}
-              imgUrl={item.imgUrl}
-              contents={item.contents}
-            />
-          ))}
-        </List>
+        <List></List>
       </Section>
       <Section $color>
         <SubTitle>
           <strong>냉장고에 뭐가 있지?</strong>는 다양한 냉장고 관리 기능이
           있어요.
         </SubTitle>
-        <List>
-          {featureDecsArr.map((item) => (
-            <FeatureDescItem
-              key={item.contents}
-              imgUrl={item.imgUrl}
-              contents={item.contents}
-            />
-          ))}
-        </List>
+        <List></List>
       </Section>
       <Section>
         <SubTitle>한번 체험해보시겠어요?</SubTitle>
@@ -137,19 +118,19 @@ const Section = tw.section<{ $color: boolean }>`
 `;
 
 const Contents = tw.div` 
+  w-fit
   flex
   flex-col
-  mobile:items-center
+  items-center
   tablet:items-start
-  w-fit
 `;
 
 const Title = tw.h1`
-  mobile:text-[24px]
+  mb-5
+  text-[24px]
+  font-bold
   tablet:text-[28px]
   desktop:text-[40px]
-  font-bold
-  mobile:mb-5
 `;
 
 const Btn = tw(Link)`
@@ -188,25 +169,24 @@ const Search = tw.svg`
   left-0
   right-12
   m-auto
-  stroke-yellow
-  font-bold
+  stroke-white
 `;
 
 const SubTitle = tw.h2`
   mb-10
-  tablet:text-[30px]
-  mobile:text-[18px]
-  text-center
-  desktop:w-full
   p-10
+  text-[18px]
+  text-center
   break-keep
+  tablet:text-[30px]
+  desktop:w-full
 `;
 
 const List = tw.ul`
   tablet:grid
   tablet:grid-cols-2
-  desktop:grid-cols-4
   tablet:gap-16
   tablet:gap-x-20
   tablet:p-10
+  desktop:grid-cols-4
 `;

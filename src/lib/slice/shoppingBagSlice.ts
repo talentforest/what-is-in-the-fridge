@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IFood } from 'src/lib/slice/foodSlice';
+import { IFood } from 'src/lib/slice/newFoodSlice';
 
 interface IShoppingBagFoods {
   shoppingBagFoods: IFood[];

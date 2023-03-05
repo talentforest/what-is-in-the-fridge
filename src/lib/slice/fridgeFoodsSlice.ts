@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IFood } from 'src/lib/slice/foodSlice';
+import { IFood } from './newFoodSlice';
 
 type spaceType = { [key: string]: IFood[] };
 type keyType = {

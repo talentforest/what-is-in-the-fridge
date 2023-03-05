@@ -1,3 +1,5 @@
 export function cutLetter(letter: string, length: number) {
-  return letter?.length > length ? `${letter?.slice(0, length)}...` : letter;
+  if (letter?.length > length) return `${letter?.slice(0, length)}...`;
+
+  return letter;
 }

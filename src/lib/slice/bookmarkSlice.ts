@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ISearchedFood } from './foodSlice';
+import { ISearchedFood } from './newFoodSlice';
 
 const initialState = {
   bookmark: [] as ISearchedFood[],

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
-  changeFoodInfo,
-  showFoodModal,
+  changeNewFood,
+  toggleNewFoodModal,
   addToShoppingBag,
 } from 'src/lib/slice/index';
 import { changeKeyword } from 'src/lib/slice';
@@ -18,28 +18,28 @@ export const initialState = {
 };
 
 export const useAddFood = () => {
-  const { food } = useAppSelector((state) => state.food);
+  const { newFood } = useAppSelector((state) => state.newFood);
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);
   const dispatch = useAppDispatch();
 
   const onAddFoodClick = () => {
     if (shoppingBagFoods.length >= 8) {
       alert('장바구니에 식료품을 8개 넣을 수 없습니다.');
-      dispatch(showFoodModal());
+      dispatch(toggleNewFoodModal());
       return;
     }
     dispatch(changeKeyword(''));
-    dispatch(showFoodModal());
-    dispatch(changeFoodInfo(initialState));
-    dispatch(addToShoppingBag([...shoppingBagFoods, food]));
+    dispatch(toggleNewFoodModal());
+    dispatch(changeNewFood(initialState));
+    dispatch(addToShoppingBag([...shoppingBagFoods, newFood]));
   };
 
-  const closeFoodModal = () => {
-    dispatch(showFoodModal());
+  const closeFoodToAddModal = () => {
+    dispatch(toggleNewFoodModal());
   };
 
   return {
-    closeFoodModal,
+    closeFoodToAddModal,
     onAddFoodClick,
   };
 };

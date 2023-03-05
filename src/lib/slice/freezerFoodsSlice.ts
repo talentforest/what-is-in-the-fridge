@@ -1,12 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IFood } from 'src/lib/slice/foodSlice';
+import { IFood } from './newFoodSlice';
 
 type spaceType = { [key: string]: IFood[] };
 type keyType = {
   [key: string]: freezerInner | freezerDoor;
-};
-type key = {
-  [key: string]: FreezerSide;
 };
 
 interface freezerInner extends spaceType {

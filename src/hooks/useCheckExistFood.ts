@@ -1,5 +1,5 @@
 import { useAppSelector } from 'src/lib/hooks';
-import { ISearchedFood } from 'src/lib/slice/foodSlice';
+import { ISearchedFood } from 'src/lib/slice/newFoodSlice';
 
 export const useCheckExistFood = () => {
   const { shoppingBagFoods } = useAppSelector((state) => state.shoppingBag);

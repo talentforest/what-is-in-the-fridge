@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo } from 'src/lib/slice/index';
+import { changeNewFood } from 'src/lib/slice/index';
 import { addDay, addMonth, addYear } from 'src/utils/dateUtils';
 
 export const usePlusDate = () => {
-  const { food } = useAppSelector((state) => state.food);
+  const { newFood } = useAppSelector((state) => state.newFood);
   const dispatch = useAppDispatch();
 
   const onDatePlusClick = (
@@ -13,20 +13,20 @@ export const usePlusDate = () => {
     e.preventDefault();
     switch (type) {
       case '하루':
-        const nextday = addDay(food.expiryDate, 1);
-        dispatch(changeFoodInfo({ ...food, expiryDate: nextday }));
+        const nextday = addDay(newFood.expiryDate, 1);
+        dispatch(changeNewFood({ ...newFood, expiryDate: nextday }));
         break;
       case '일주일':
-        const nextWeek = addDay(food.expiryDate, 7);
-        dispatch(changeFoodInfo({ ...food, expiryDate: nextWeek }));
+        const nextWeek = addDay(newFood.expiryDate, 7);
+        dispatch(changeNewFood({ ...newFood, expiryDate: nextWeek }));
         break;
       case '한달':
-        const nextMonth = addMonth(food.expiryDate);
-        dispatch(changeFoodInfo({ ...food, expiryDate: nextMonth }));
+        const nextMonth = addMonth(newFood.expiryDate);
+        dispatch(changeNewFood({ ...newFood, expiryDate: nextMonth }));
         break;
       case '일년':
-        const nextYear = addYear(food.expiryDate);
-        dispatch(changeFoodInfo({ ...food, expiryDate: nextYear }));
+        const nextYear = addYear(newFood.expiryDate);
+        dispatch(changeNewFood({ ...newFood, expiryDate: nextYear }));
         break;
       default:
         break;
@@ -35,11 +35,11 @@ export const usePlusDate = () => {
 
   const onDateChange = (e: React.FormEvent<HTMLInputElement>) => {
     const result = {
-      ...food,
+      ...newFood,
       expiryDate: e.currentTarget.value,
     };
 
-    dispatch(changeFoodInfo(result));
+    dispatch(changeNewFood(result));
   };
 
   return {

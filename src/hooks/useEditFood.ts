@@ -1,24 +1,24 @@
 import { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { IFood, ISearchedFood } from 'src/lib/slice/foodSlice';
+import { IFood, ISearchedFood } from 'src/lib/slice/newFoodSlice';
 import {
   changeFreezerDoor,
   changeFreezerInner,
   changeFridgeDoor,
   changeFridgeInner,
-  changeAddedFoodInfo,
-  showAddedFoodModal,
+  changeStoredFood,
+  toggleStoredFoodModal,
   modifyBookmark,
 } from 'src/lib/slice/index';
-import { getSpaceType } from 'src/utils/getSpaceType';
+import { getSpaceName } from 'src/utils/getSpaceName';
 import { useCheckExistFood } from 'src/hooks';
 
 export const useEditFood = () => {
-  const [edit, setEdit] = useState(false);
+  const [editing, setEditing] = useState(false);
   const { freezerOpen } = useAppSelector((state) => state.doorOpen);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
-  const { addedFood } = useAppSelector((state) => state.addedFood);
+  const { storedFood } = useAppSelector((state) => state.storedFood);
   const { bookmark } = useAppSelector((state) => state.bookmark);
   const {
     isExistedFood,
@@ -37,11 +37,11 @@ export const useEditFood = () => {
   const changeInnerState = freezerOpen ? changeFreezerInner : changeFridgeInner;
 
   const closeAddedFoodModal = () => {
-    dispatch(showAddedFoodModal());
+    dispatch(toggleStoredFoodModal());
   };
 
   const insertItemInArr = (arr: IFood[], editedItem: IFood) => {
-    const targetIndex = arr.findIndex((food) => food.id === addedFood.id);
+    const targetIndex = arr.findIndex((food) => food.id === storedFood.id);
     return [
       ...arr.slice(0, targetIndex),
       editedItem,
@@ -50,35 +50,35 @@ export const useEditFood = () => {
   };
 
   const changeFridgeFreezerArr = (editedFood: IFood) => {
-    const spaceType = getSpaceType(addedFood.space, freezerOpen);
-    const spaceArr = [...currentMode[spaceType][addedFood.space]];
+    const spaceType = getSpaceName(storedFood.space, freezerOpen);
+    const spaceArr = [...currentMode[spaceType][storedFood.space]];
 
     const editedSpaceArr = insertItemInArr(spaceArr, editedFood);
     const newState = {
       ...currentMode[spaceType],
-      [addedFood.space]: editedSpaceArr,
+      [storedFood.space]: editedSpaceArr,
     };
 
     if (spaceType === 'door') {
       dispatch(changeDoorState(newState));
-      dispatch(changeAddedFoodInfo(editedFood));
+      dispatch(changeStoredFood(editedFood));
     } else {
       dispatch(changeInnerState(newState));
-      dispatch(changeAddedFoodInfo(editedFood));
+      dispatch(changeStoredFood(editedFood));
     }
   };
 
   const onEditSubmitClick = () => {
     const editedFood = {
-      ...addedFood,
+      ...storedFood,
       name: nameRef.current?.value,
       quantity: quantityRef.current?.value,
       expiryDate: dateRef.current?.value,
     } as IFood;
 
-    if (nameRef.current?.value === addedFood.name) {
+    if (nameRef.current?.value === storedFood.name) {
       changeFridgeFreezerArr(editedFood);
-      return setEdit((prev) => !prev);
+      return setEditing((prev) => !prev);
     }
     if (isExistedFood(editedFood as ISearchedFood)) {
       isShoppingBagFoodAlert(editedFood as ISearchedFood);
@@ -88,7 +88,7 @@ export const useEditFood = () => {
       changeFridgeFreezerArr(editedFood);
       const editedArr = insertItemInArr(bookmark, editedFood);
       dispatch(modifyBookmark(editedArr));
-      setEdit((prev) => !prev);
+      setEditing((prev) => !prev);
     }
   };
 
@@ -99,7 +99,7 @@ export const useEditFood = () => {
     nameRef,
     quantityRef,
     dateRef,
-    edit,
-    setEdit,
+    editing,
+    setEditing,
   };
 };

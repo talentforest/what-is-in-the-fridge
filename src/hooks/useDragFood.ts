@@ -1,4 +1,4 @@
-import { IFood, spaceName } from 'src/lib/slice/foodSlice';
+import { IFood, spaceName } from 'src/lib/slice/newFoodSlice';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
   changeFridgeDoor,
@@ -6,7 +6,7 @@ import {
   changeFreezerDoor,
   changeFreezerInner,
 } from 'src/lib/slice/index';
-import { getSpaceType } from 'src/utils/getSpaceType';
+import { getSpaceName } from 'src/utils/getSpaceName';
 
 export const useDragFood = () => {
   const { freezerOpen } = useAppSelector((state) => state.doorOpen);
@@ -23,7 +23,7 @@ export const useDragFood = () => {
       ...prevFood,
       space: spaceKey as IFood['space'],
     };
-    const spaceType = getSpaceType(spaceKey, freezerOpen);
+    const spaceType = getSpaceName(spaceKey, freezerOpen);
     const newState = {
       ...currentMode[spaceType],
       [spaceKey]: [...currentMode[spaceType][spaceKey], itemToAdd],
@@ -34,7 +34,7 @@ export const useDragFood = () => {
   };
 
   const removeFoodFromPrevSpace = (prevFood: IFood) => {
-    const removingSpaceType = getSpaceType(prevFood.space, freezerOpen);
+    const removingSpaceType = getSpaceName(prevFood.space, freezerOpen);
     const newState = {
       ...currentMode[removingSpaceType],
       [prevFood.space]: currentMode[removingSpaceType][prevFood.space].filter(
@@ -51,8 +51,8 @@ export const useDragFood = () => {
       ...prevFood,
       space: spaceKey as IFood['space'],
     };
-    const spaceType = getSpaceType(spaceKey, freezerOpen);
-    const prevSpaceType = getSpaceType(prevFood.space, freezerOpen);
+    const spaceType = getSpaceName(spaceKey, freezerOpen);
+    const prevSpaceType = getSpaceName(prevFood.space, freezerOpen);
     const newState = {
       ...currentMode[spaceType],
       [spaceKey]: [...currentMode[spaceType][spaceKey], innerItem],
@@ -66,7 +66,7 @@ export const useDragFood = () => {
   };
 
   const changeDoorItems = (spaceKey: spaceName, prevItem: IFood) => {
-    const prevSpaceType = getSpaceType(prevItem.space, freezerOpen);
+    const prevSpaceType = getSpaceName(prevItem.space, freezerOpen);
     if (prevSpaceType === 'door') {
       addAndRemoveFoods(spaceKey, prevItem); // door -> door
     } else {
@@ -76,7 +76,7 @@ export const useDragFood = () => {
   };
 
   const changeInnerItems = (spaceKey: spaceName, prevItem: IFood) => {
-    const prevSpaceType = getSpaceType(prevItem.space, freezerOpen);
+    const prevSpaceType = getSpaceName(prevItem.space, freezerOpen);
     if (prevSpaceType === 'inner') {
       addAndRemoveFoods(spaceKey, prevItem); // inner -> inner
     } else {
@@ -87,7 +87,7 @@ export const useDragFood = () => {
 
   const changeFoodsState = (spaceKey: spaceName, prevItem: IFood) => {
     if (prevItem.space === spaceKey) return;
-    const spaceType = getSpaceType(spaceKey, freezerOpen);
+    const spaceType = getSpaceName(spaceKey, freezerOpen);
     if (prevItem.space === 'shoppingBag') {
       return addFoodAtNewSpace(spaceKey, prevItem);
     }

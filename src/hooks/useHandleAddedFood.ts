@@ -1,19 +1,19 @@
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { IFood } from 'src/lib/slice/foodSlice';
+import { IFood } from 'src/lib/slice/newFoodSlice';
 import {
   changeFreezerDoor,
   changeFreezerInner,
   changeFridgeDoor,
   changeFridgeInner,
-  showAddedFoodModal,
+  toggleStoredFoodModal,
 } from 'src/lib/slice/index';
-import { getSpaceType } from 'src/utils/getSpaceType';
+import { getSpaceName } from 'src/utils/getSpaceName';
 
 export const useHandleAddedFood = () => {
   const { freezerOpen } = useAppSelector((state) => state.doorOpen);
   const { fridge } = useAppSelector((state) => state.fridgeFoods);
   const { freezer } = useAppSelector((state) => state.freezerFoods);
-  const { addedFood } = useAppSelector((state) => state.addedFood);
+  const { storedFood } = useAppSelector((state) => state.storedFood);
   const dispatch = useAppDispatch();
 
   const currentMode = freezerOpen ? freezer : fridge;
@@ -24,7 +24,7 @@ export const useHandleAddedFood = () => {
   const moveToAnotherMode = () => {
     removeAddedFood();
     const movedItem = {
-      ...addedFood,
+      ...storedFood,
       space: 'space_1' as IFood['space'],
     };
     const newState = {
@@ -37,20 +37,20 @@ export const useHandleAddedFood = () => {
   };
 
   const removeAddedFood = () => {
-    const { space } = addedFood;
-    const spaceType = getSpaceType(space, freezerOpen);
-    const removedSpaceArr = currentMode[spaceType][addedFood.space].filter(
-      (food) => food.id !== addedFood.id
+    const { space } = storedFood;
+    const spaceType = getSpaceName(space, freezerOpen);
+    const removedSpaceArr = currentMode[spaceType][storedFood.space].filter(
+      (food) => food.id !== storedFood.id
     );
     const newState = {
       ...currentMode[spaceType],
       [space]: removedSpaceArr,
     };
-    getSpaceType(space, freezerOpen) === 'door'
+    getSpaceName(space, freezerOpen) === 'door'
       ? dispatch(changeDoorState(newState))
       : dispatch(changeInnerState(newState));
 
-    dispatch(showAddedFoodModal());
+    dispatch(toggleStoredFoodModal());
   };
 
   return {

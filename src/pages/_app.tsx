@@ -1,7 +1,6 @@
 import 'styles/globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
-import Layout from 'src/layout/layout';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { store } from '../lib/store';
@@ -9,6 +8,7 @@ config.autoAddCss = false;
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import localFont from '@next/font/local';
+import Navigation from 'src/components/common/Navigation';
 
 const myFont = localFont({
   src: [
@@ -35,9 +35,8 @@ const App = ({ Component, pageProps }: AppProps) => {
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
         <main className={myFont.className}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Navigation />
+          <Component {...pageProps} />
         </main>
       </DndProvider>
     </Provider>

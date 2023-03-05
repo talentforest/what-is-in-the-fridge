@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
-import { changeFoodInfo } from 'src/lib/slice';
+import { changeNewFood } from 'src/lib/slice';
 import { changeKeyword } from 'src/lib/slice';
 import { v4 as uuidv4 } from 'uuid';
 
 export const useSearchFood = () => {
-  const { food } = useAppSelector((state) => state.food);
+  const { newFood } = useAppSelector((state) => state.newFood);
   const { keyword } = useAppSelector((state) => state.keyword);
   const dispatch = useAppDispatch();
 
@@ -13,10 +13,10 @@ export const useSearchFood = () => {
     const { value } = e.currentTarget;
     if (keyword.length === 0) {
       const result = {
-        ...food,
+        ...newFood,
         name: '',
       };
-      dispatch(changeFoodInfo(result));
+      dispatch(changeNewFood(result));
     }
     dispatch(changeKeyword(value));
   };
@@ -24,21 +24,21 @@ export const useSearchFood = () => {
   const onKeywordSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const result = {
-      ...food,
+      ...newFood,
       name: keyword,
     };
 
-    dispatch(changeFoodInfo(result));
+    dispatch(changeNewFood(result));
   };
 
   const onCartIconClick = (name: string, imgUrl: string) => {
     const result = {
-      ...food,
+      ...newFood,
       name,
       id: uuidv4(),
       imgUrl,
     };
-    dispatch(changeFoodInfo(result));
+    dispatch(changeNewFood(result));
   };
 
   const removeKeyword = () => {

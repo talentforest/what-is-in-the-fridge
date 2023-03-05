@@ -9,7 +9,7 @@ const Overlay = ({ closeModal }: IOverlayProps) => {
 };
 
 const Box = tw.div`
-  z-20  
+  z-20 
   absolute
   top-0
   right-0
