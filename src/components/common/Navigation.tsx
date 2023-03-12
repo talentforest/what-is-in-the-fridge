@@ -1,11 +1,19 @@
 import tw from 'tailwind-styled-components';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navigation() {
   return (
     <Nav>
       <LogoBox href='/'>
-        <Logo>What&#39;s in my FRIDGE?</Logo>
+        <Image
+          src={`/assets/로고.png`}
+          alt='로고'
+          width={100}
+          height={0}
+          className='w-full h-auto'
+          priority
+        />
       </LogoBox>
     </Nav>
   );
@@ -21,10 +29,11 @@ const Nav = tw.nav`
   justify-between
   items-center
   text-md
-  bg-blue-light
+  bg-green
+  tablet:bg-blue-light
   tablet:text-base
   tablet:px-12
-  desktop:h-12
+  tablet:h-14
 `;
 
 const LogoBox = tw(Link)` 
@@ -38,4 +47,5 @@ const LogoBox = tw(Link)`
 const Logo = tw.h1`
   text-orange
   text-md
+  tablet:text-lg
 `;

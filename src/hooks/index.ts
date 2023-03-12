@@ -1,4 +1,3 @@
-export { useScrollFadeIn } from './useScrollFadeIn';
 export { useHandleBookmark } from './useHandleBookmark';
 export { useSearchFood } from './useSearchFood';
 export { useAddFood } from './useAddFood';

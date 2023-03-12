@@ -1,38 +1,29 @@
-export const featureDecsArr = [
-  {
-    contents: '냉장고에 넣을 식품을 검색할 수 있어요.',
-    imgUrl: '/assets/검색.png',
-  },
-  {
-    contents: '냉장고 속 식재료의 정보를 간단히 작성하고 수정할 수 있어요.',
-    imgUrl: '/assets/식료품정보.png',
-  },
-  {
-    contents:
-      '자주먹는 식료품은 즐겨찾기에 저장하고, 냉장고로 쉽게 추가할 수 있어요.',
-    imgUrl: '/assets/즐겨찾기.png',
-  },
-  {
-    contents: '냉장고에 넣은 식료품을 자유롭게 이동할 수 있어요.',
-    imgUrl: '/assets/이동.jpg',
-  },
+export const fadeInItems = [
+  { id: 1, desc: '냉장고에 뭐가 있는지 잘 모르겠을 때', img: '궁금증' },
+  { id: 2, desc: '집에서 잘 요리해먹고 싶을 때', img: '요리하는 사람' },
+  { id: 3, desc: '유통기한이 지나 음식물을 버리게 될 때', img: '상한 음식' },
+  { id: 4, desc: '계획적으로 장을 보고 싶을 때', img: '온라인쇼핑' },
 ];
 
-export const recommendDescArr = [
+export const slides = [
   {
-    contents: '조금이라도 집밥을 해먹고 싶을 때',
-    imgUrl: '/assets/요리.jpg',
+    id: 1,
+    img: '상품 검색 추가 기능',
+    desc: '식재료를 검색해서 손쉽게 추가할 수 있어요',
   },
   {
-    contents: '냉장고에 넣어놓고 뭐가 있는지 잊어버릴 때',
-    imgUrl: '/assets/냉장고안.jpg',
+    id: 2,
+    img: '유통기한 기능',
+    desc: '유통기한이 임박한 식재료가 무엇인지 한눈에 알 수 있어요',
   },
   {
-    contents: '유통기한이 언제인지 쉽게 확인하고 싶을 때',
-    imgUrl: '/assets/유통기한.jpeg',
+    id: 3,
+    img: '즐겨찾기 기능',
+    desc: '즐겨찾는 식재료를 등록할 수 있어요',
   },
   {
-    contents: '음식물 쓰레기를 조금이라도 줄이고 싶을 때',
-    imgUrl: '/assets/foodwaste.jpg',
+    id: 4,
+    img: '식재료 정보 기능',
+    desc: '냉장고에서 식재료를 자유롭게 이동시킬 수 있어요.',
   },
 ];

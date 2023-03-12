@@ -1,26 +1,13 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useScrollFadeIn } from 'src/hooks';
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { fadeInItems, slides } from 'src/utils/descriptions';
 import Head from 'next/head';
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 import Image from 'next/image';
-
-const pathVariants = {
-  start: {
-    pathLength: 0,
-  },
-  end: {
-    pathLength: 1,
-  },
-};
+import FadeInItem from 'src/components/index/FadeInItem';
 
 export default function Home() {
-  const targetDom = useRef<HTMLElement>(null);
-  const { style } = useScrollFadeIn({ targetDom });
-
   return (
     <>
       <Head>
@@ -30,20 +17,16 @@ export default function Home() {
           name='description'
           content='관리는 한눈에 파악하는 것에서부터 시작해요. 냉장고 안 식재료를 한눈에 보고 상태를 파악하고 싶으세요? 냉장고 안 식재료 관리에 도음을 드립니다.'
         />
-        <meta
-          name='image'
-          property='og:image'
-          content='/assets/bookmarklist.png'
-        />
+        <meta name='image' property='og:image' content='/assets/냉장고.png' />
         <meta
           name='keywords'
           content='냉장고, 냉장고 지도, 냉장고 관리, 식재료, 식재료 관리, 식료품, 유통기한, 냉파, 냉장고 파먹기, 냉장고 재료, 즐겨찾는 식품, 즐겨찾기'
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      {/* First Page */}
-      <Section>
+      <FirstScreen>
         <Contents>
+          <TitleDesc>냉장고를 한눈에 관리하는</TitleDesc>
           <Title>냉장고에 뭐가 있지?</Title>
           <Btn href='/my-fridge'>
             <span>냉장고 관리 체험해보기</span>
@@ -52,100 +35,111 @@ export default function Home() {
         </Contents>
         <ImgBox>
           <Image
-            src='/assets/냉장고.png'
+            src='/assets/냉장고 정리.png'
             alt='냉장고'
-            width={280}
-            height={280}
+            fill
+            sizes='(max-width: 768px) 100vw,
+            (max-width: 1200px) 50vw,
+            33vw'
             priority
+            className='animate-[wiggle_1s_ease-in-out_2]'
           />
-          <Search
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth='4'
-            stroke='white'
-            className='w-16 h-16'
-          >
-            <motion.path
-              variants={pathVariants}
-              initial='start'
-              animate='end'
-              strokeWidth={4}
-              transition={{
-                default: { duration: 3 },
-              }}
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z'
-            />
-          </Search>
         </ImgBox>
-      </Section>
-      {/* Second Page */}
-      <Section $color>
-        <SubTitle ref={targetDom} style={{ ...style }}>
-          <strong>냉장고에 뭐가 있지?</strong>는 이럴 때 쓰시면 좋아요.
-        </SubTitle>
-        <List></List>
-      </Section>
-      <Section $color>
+      </FirstScreen>
+      <Section>
         <SubTitle>
-          <strong>냉장고에 뭐가 있지?</strong>는 다양한 냉장고 관리 기능이
-          있어요.
+          이럴 때 <strong>냉장고에 뭐가 있지?</strong>를 써보세요
         </SubTitle>
-        <List></List>
+        <List>
+          {fadeInItems.map((item) => (
+            <FadeInItem key={item.id} item={item} smImg />
+          ))}
+        </List>
       </Section>
       <Section>
-        <SubTitle>한번 체험해보시겠어요?</SubTitle>
-        <Title>냉장고에 뭐가 있지?</Title>
-        <Btn href='/my-fridge'>
+        <SubTitle>
+          <strong>냉장고에 뭐가 있지?</strong>로 냉장고를 이렇게 관리하실 수
+          있어요
+        </SubTitle>
+        <FeatList>
+          {slides.map((item) => (
+            <FadeInItem key={item.id} item={item} />
+          ))}
+        </FeatList>
+        <BigBtn href='/my-fridge'>
           <span>냉장고 관리 체험해보기</span>
           <FontAwesomeIcon icon={faChevronRight} size='sm' />
-        </Btn>
+        </BigBtn>
       </Section>
     </>
   );
 }
 
-const Section = tw.section<{ $color: boolean }>`
-  border-bottom
-  py-10
+const FirstScreen = tw.section`
+  relative
   flex
   flex-col
-  justify-center
+  justify-between
   items-center
-  min-h-screen
+  py-28
+  tablet:pt-28
+  tablet:pb-44
+  desktop:h-screen
+  desktop:flex-row
+  desktop:pt-48
+  desktop:px-20
+`;
+
+const ImgBox = tw.div`
+  relative
+  aspect-square
+  w-3/4
+  h-auto
+  tablet:w-2/5
+  desktop:w-1/2
 `;
 
 const Contents = tw.div` 
   w-fit
+  h-fit
   flex
   flex-col
   items-center
-  tablet:items-start
+  desktop:items-start
+  desktop:pb-10
+`;
+
+const TitleDesc = tw.p`
+  mb-2
+  text-gray-dark
+  text-[19px]
+  tablet:text-[23px]
+  desktop:text-[30px]
+  desktop:mb-0
 `;
 
 const Title = tw.h1`
-  mb-5
-  text-[24px]
   font-bold
-  tablet:text-[28px]
+  text-[24px]
+  tablet:text-[30px]
   desktop:text-[40px]
 `;
 
 const Btn = tw(Link)`
-  border-2
-  border-gray-light
+  absolute
+  bottom-12
   cursor-pointer
   flex
   items-center
   justify-center
   gap-2
-  p-4
+  p-3
+  text-md
   font-bold
-  text-base
   rounded-full
   shadow-lg
+  border-2
+  border-gray-light
   bg-yellow
   text-blue-dark
   hover:text-yellow
@@ -155,38 +149,64 @@ const Btn = tw(Link)`
   duration-300
   ease-in-out
   appearance-none
+  tablet:bottom-20
+  tablet:p-4
+  tablet:text-base
+  desktop:static
+  desktop:mt-5
 `;
 
-const ImgBox = tw.div`
+const BigBtn = tw(Btn)`
+  p-6
+  tablet:h-20
+  tablet:w-60
+  text-lg
+  mt-20
+  mb-28
+  tablet:m-28
+  static
+ 
+`;
+
+const Section = tw.section`
   relative
-  mt-10
+  pt-12
+  px-5
+  flex
+  flex-col
+  justify-center
+  items-center
+  pb-28
 `;
 
-const Search = tw.svg`
-  absolute
-  top-20
-  bottom-0
-  left-0
-  right-12
-  m-auto
-  stroke-white
-`;
-
-const SubTitle = tw.h2`
+const SubTitle = tw.h4`
   mb-10
-  p-10
-  text-[18px]
+  text-[20px]
   text-center
   break-keep
-  tablet:text-[30px]
+  tablet:text-[26px]
   desktop:w-full
 `;
 
 const List = tw.ul`
+  w-[90%]
+  flex
+  flex-col
+  space-y-10
+  tablet:space-y-0
+  tablet:w-[70%]
   tablet:grid
   tablet:grid-cols-2
-  tablet:gap-16
-  tablet:gap-x-20
-  tablet:p-10
-  desktop:grid-cols-4
+  tablet:gap-6
+  desktop:gap-12
+  
+`;
+
+const FeatList = tw(List)`
+  tablet:w-[85%]
+  desktop:grid
+  desktop:grid-cols-2
+  desktop:gap-12
+  desktop:w-3/4
+  desktop:mb-20
 `;
