@@ -23,7 +23,7 @@ const SearchItem = ({ result }: SearchItemProps) => {
         alt={prdlstNm}
         width={300}
         height={300}
-        className='h-28 w-28 object-cover'
+        className='h-20 w-20 object-cover'
         unoptimized
       />
       <PlusCartBtn

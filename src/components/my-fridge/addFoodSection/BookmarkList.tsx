@@ -49,7 +49,7 @@ const BookmarkList = () => {
                     alt={item.name}
                     width={200}
                     height={200}
-                    className='h-28 w-28 object-cover rounded-md shadow-md'
+                    className='h-12 w-12 object-cover rounded-md shadow-md'
                     unoptimized
                   />
                 ) : (
