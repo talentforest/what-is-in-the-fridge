@@ -41,7 +41,7 @@ export default function Home() {
             sizes='(max-width: 768px) 100vw,
             (max-width: 1200px) 50vw,
             33vw'
-            priority
+            unoptimized
             className='animate-[wiggle_1s_ease-in-out_2]'
           />
         </ImgBox>

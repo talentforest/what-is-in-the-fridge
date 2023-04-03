@@ -21,8 +21,8 @@ const FadeInItem = ({ item, smImg }: IFadeInItem) => {
         alt={img}
         width={smImg ? 180 : 400}
         height={120}
-        priority
         className='p-2 w-auto h-auto'
+        unoptimized
       />
     </Item>
   );

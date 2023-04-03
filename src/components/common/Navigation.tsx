@@ -10,7 +10,7 @@ export default function Navigation() {
           src={`/assets/로고.png`}
           alt='로고'
           width={100}
-          height={0}
+          height={20}
           className='w-full h-auto'
           priority
         />

@@ -44,15 +44,14 @@ const BookmarkList = () => {
             <BookmarkItem key={item.id}>
               <FoodBox>
                 {item?.imgUrl ? (
-                  <ImgBox>
-                    <Image
-                      src={item.imgUrl}
-                      alt={item.name}
-                      fill
-                      sizes='50px'
-                      priority
-                    />
-                  </ImgBox>
+                  <Image
+                    src={item.imgUrl}
+                    alt={item.name}
+                    width={200}
+                    height={200}
+                    className='h-28 w-28 object-cover rounded-md shadow-md'
+                    unoptimized
+                  />
                 ) : (
                   <Emoji unified={item.emoji} size={40} />
                 )}
@@ -138,14 +137,6 @@ const FoodBox = tw.div`
   w-full
   h-fit
   pt-1
-`;
-
-const ImgBox = tw.div`
-  relative
-  w-12
-  h-12
-  object-cover
-  object-center
 `;
 
 const Btns = tw.div`

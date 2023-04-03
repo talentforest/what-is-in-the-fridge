@@ -56,16 +56,17 @@ const Modal = ({ food }: IModalProps) => {
           <CloseBtn onCloseClick={onCloseClick()} />
         </Header>
         <Main>
-          <ImgBox>
+          <div className='relative flex justify-center items-center h-28 w-28 rounded-lg shadow-lg bg-white'>
             {!food?.imgUrl ? (
               <Emoji unified={food?.emoji} size={60} />
             ) : (
-              <Img
-                src={food?.imgUrl}
+              <Image
+                src={`${food?.imgUrl}`}
                 alt={food?.name}
-                fill
-                sizes='150px'
-                priority
+                width={300}
+                height={300}
+                className='h-24 w-24 object-cover rounded-md shadow-lg'
+                unoptimized
               />
             )}
             {!editing && storedFoodModal && (
@@ -76,7 +77,7 @@ const Modal = ({ food }: IModalProps) => {
                 />
               </Bookmark>
             )}
-          </ImgBox>
+          </div>
           {!editing ? (
             <InfoList>
               {Object.keys(foodInfoNames).map((name) => (
@@ -155,8 +156,10 @@ export const ModalBox = tw.div`
   right-0
   bottom-0
   m-auto
-  w-4/5
-  h-fit
+  w-3/5
+  max-w-[300px]
+  h-3/5
+  min-h-[400px]
   p-4
   flex
   flex-col
@@ -195,18 +198,6 @@ const Main = tw.div`
   tablet:gap-3
 `;
 
-const ImgBox = tw.div`
-  relative
-  flex
-  justify-center
-  items-center
-  h-32
-  w-32
-  rounded-lg
-  shadow-lg
-  bg-white
-`;
-
 const Bookmark = tw.button<{ $isBookmark: boolean }>`
   absolute
   bottom-0
@@ -221,12 +212,6 @@ const Bookmark = tw.button<{ $isBookmark: boolean }>`
   bg-yellow
   ${(p: { $isBookmark: boolean }) =>
     p.$isBookmark ? 'bg-blue-dark' : 'bg-gray-light'} 
-`;
-
-const Img = tw(Image)`
-  rounded-xl
-  object-cover
-  object-center
 `;
 
 const InfoList = tw.ul`

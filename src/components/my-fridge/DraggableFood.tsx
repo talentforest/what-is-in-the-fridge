@@ -58,9 +58,14 @@ const DraggableFood = ({ food, type }: IFoodProps) => {
       <CoverBox />
       <ExpiryDateAlert $leftDays={getLeftDays(food.expiryDate)} />
       {food.imgUrl ? (
-        <ImgBox>
-          <Img src={food.imgUrl} alt={food.name} fill sizes='30px' priority />
-        </ImgBox>
+        <Image
+          src={`${food.imgUrl}`}
+          alt={food.name}
+          width={50}
+          height={50}
+          className='h-8 w-8 object-cover rounded-md shadow-md'
+          unoptimized
+        />
       ) : (
         <Emoji unified={food.emoji} size={30} />
       )}
@@ -104,25 +109,6 @@ const CoverBox = tw.div`
   flex
   justify-center
   items-center
-`;
-
-const ImgBox = tw.div`
-  relative
-  w-[30px]
-  h-[30px]
-  rounded-lg
-  overflow-hidden
-`;
-
-const Img = tw(Image)`
-  absolute
-  -top-1
-  left-0
-  w-10
-  h-10
-  object-cover
-  scale-x-[-1]
-  border
 `;
 
 export default DraggableFood;

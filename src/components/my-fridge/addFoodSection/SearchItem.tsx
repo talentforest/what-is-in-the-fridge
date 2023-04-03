@@ -18,9 +18,14 @@ const SearchItem = ({ result }: SearchItemProps) => {
 
   return (
     <ResultItem>
-      <ImgBox>
-        <Img src={imgurl1} alt={prdlstNm} fill sizes='150px' priority />
-      </ImgBox>
+      <Image
+        src={imgurl1}
+        alt={prdlstNm}
+        width={300}
+        height={300}
+        className='h-28 w-28 object-cover'
+        unoptimized
+      />
       <PlusCartBtn
         role='button'
         onClick={() => onCartIconClick(prdlstNm, imgurl1)}
@@ -65,22 +70,6 @@ const PlusCartBtn = tw(FontAwesomeIcon)`
   text-[14px]
   rounded-full
   p-2
-`;
-
-const ImgBox = tw.div`
-  relative
-  w-20
-  h-20
-  shadow-md
-  rounded-lg
-  border
-  border-gray-light
-`;
-
-const Img = tw(Image)`
-  rounded-lg
-  object-cover
-  object-center
 `;
 
 const Info = tw.div`

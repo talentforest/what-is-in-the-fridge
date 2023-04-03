@@ -10,11 +10,11 @@ const ShoppingBagFood = () => {
   return shoppingBagFoods.length !== 0 ? (
     <ShoppingBag>
       <Icon icon={faBagShopping} strokeWidth={4} />
-      <EmojiBox>
+      <FoodList>
         {shoppingBagFoods?.map((food) => (
           <DraggableFood key={food.id} food={food} type='shoppingBag' />
         ))}
-      </EmojiBox>
+      </FoodList>
     </ShoppingBag>
   ) : (
     <></>
@@ -45,7 +45,7 @@ const Icon = tw(FontAwesomeIcon)`
   tablet:h-56
 `;
 
-const EmojiBox = tw.div`
+const FoodList = tw.div`
   absolute
   left-4
   bottom-2
@@ -58,8 +58,9 @@ const EmojiBox = tw.div`
   gap-0.5
   tablet:w-48
   tablet:h-20
+  tablet:bottom-6
   tablet:left-4
-  tablet:gap-1
+  tablet:gap-2
 `;
 
 export default ShoppingBagFood;
